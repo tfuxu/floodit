@@ -1,0 +1,7 @@
+package constants
+
+var AppID = "@APP_ID@"
+var RootPath = "@ROOT_PATH@"
+var DataDir = "@DATA_DIR@"
+var PkgDataDir = "@PKGDATA_DIR@"
+var LocaleDir = "@LOCALE_DIR@"

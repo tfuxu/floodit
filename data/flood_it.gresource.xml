@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gresources>
+  <gresource prefix="/io/github/tfuxu/flood_it">
+    <file preprocess="xml-stripblanks">ui/main_window.ui</file>
+  </gresource>
+  <gresource prefix="/io/github/tfuxu/flood_it/icons/scalable/actions/">
+    <file preprocess="xml-stripblanks" alias="dice2-symbolic.svg">icons/scalable/actions/dice2-symbolic.svg</file>
+  </gresource>
+</gresources>

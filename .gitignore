@@ -1,0 +1,77 @@
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,meson,go
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,meson,go
+
+### Go ###
+# If you prefer the allow list template instead of the deny list, see community template:
+# https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
+#
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# Go workspace file
+# go.work
+
+### Meson ###
+# subproject directories
+/subprojects/*
+!/subprojects/*.wrap
+
+# Meson Directories
+meson-logs
+meson-private
+
+# Build directory
+builddir
+
+# Meson Files
+meson_benchmark_setup.dat
+meson_test_setup.dat
+sanitycheckcpp.cc     # C++ specific
+sanitycheckcpp.exe    # C++ specific
+
+# Ninja
+build.ninja
+.ninja_deps
+.ninja_logs
+
+# Misc
+compile_commands.json
+
+### VisualStudioCode ###
+.vscode
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+.ionide
+
+# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,meson,go
+
+# Generated constants.go
+src/constants/constants.go
+
+# .mo files
+*.mo
+
+## flatpak-builder folders
+.flatpak-builder
+repo

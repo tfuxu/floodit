@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkApplicationWindow" id="main_window">
+    <property name="default-height">300</property>
+    <property name="default-width">300</property>
+    <property name="resizable">True</property>
+    <property name="title">Gotk4 Meson Example</property>
+
+    <child>
+      <object class="GtkBox" id="main_box">
+        <property name="orientation">vertical</property>
+
+        <property name="margin-top">20</property>
+        <property name="margin-bottom">20</property>
+        <property name="margin-start">20</property>
+        <property name="margin-end">20</property>
+
+        <property name="hexpand">True</property>
+        <property name="vexpand">True</property>
+        <property name="valign">center</property>
+        <property name="halign">center</property>
+
+        <property name="spacing">20</property>
+
+        <child>
+          <object class="GtkLabel" id="example_label">
+            <property name="label" translatable="yes">Hello from Golang!</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="example_button">
+            <child>
+              <object class="GtkBox">
+                <property name="orientation">horizontal</property>
+                <property name="spacing">6</property>
+
+                <child>
+                  <object class="GtkImage">
+                    <property name="icon-name">dice2-symbolic</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label" translatable="yes">Press me!</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
