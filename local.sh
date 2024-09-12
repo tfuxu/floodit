@@ -10,4 +10,4 @@ meson setup builddir
 meson configure builddir -Dprefix="$(pwd)/builddir" -Dbuildtype=debug
 
 ninja -C builddir install
-meson devenv -C builddir ./bin/flood_it
+meson devenv -C builddir ./bin/floodit

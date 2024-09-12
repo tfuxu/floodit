@@ -1,4 +1,4 @@
-project('flood_it',
+project('floodit',
           version: '1.0.0',
     meson_version: '>= 0.64.0',
   default_options: [ 'warning_level=2',
@@ -11,16 +11,16 @@ gnome = import('gnome')
 i18n = import('i18n')
 
 # Project information
-PROJECT_URL = 'https://github.com/tfuxu/flood_it'
-BUGTRACKER_URL = 'https://github.com/tfuxu/flood_it/issues'
-HELP_URL = 'https://github.com/tfuxu/flood_it/discussions'
-#TRANSLATE_URL = 'https://hosted.weblate.org/projects/tfuxu/flood_it'
+PROJECT_URL = 'https://github.com/tfuxu/floodit'
+BUGTRACKER_URL = 'https://github.com/tfuxu/floodit/issues'
+HELP_URL = 'https://github.com/tfuxu/floodit/discussions'
+#TRANSLATE_URL = 'https://hosted.weblate.org/projects/tfuxu/floodit'
 
 # Constants
-PROJECT_RDNN_NAME = 'io.github.tfuxu.flood_it'
-ROOT_PATH = '/io/github/tfuxu/flood_it'
+PROJECT_RDNN_NAME = 'io.github.tfuxu.floodit'
+ROOT_PATH = '/io/github/tfuxu/Floodit'
 PKGDATA_DIR = join_paths(get_option('prefix'), get_option('datadir'), meson.project_name())
-MODULE_DIR = join_paths(PKGDATA_DIR, 'flood_it')
+#MODULE_DIR = join_paths(PKGDATA_DIR, 'floodit')
 
 git_bin = find_program('git', required: false)
 
@@ -44,7 +44,8 @@ endif
 
 # Required dependencies
 dependency('glib-2.0')
-dependency('gtk4', version: '>= 4.10.0')
+dependency('gtk4', version: '>= 4.14.0')
+dependency('libadwaita-1', version: '>= 1.5.0')
 
 go_root = run_command('printenv', 'GOROOT', check: false)
 
@@ -54,11 +55,6 @@ if go_root.returncode() != 0
 else
   go_bin = find_program(join_paths(go_root.stdout().strip(), 'bin', 'go'))
 endif
-
-module_sources = files(
-  'go.mod',
-  'go.sum'
-)
 
 # Install configuration data
 conf = configuration_data()
@@ -74,24 +70,22 @@ conf.set('SOURCE_DIR', meson.current_source_dir())
 conf.set('BUILD_DIR', meson.current_build_dir())
 
 # Subdirs
+subdir('src')
 subdir('data')
 subdir('po')
-subdir('src')
 
-flood_it_build_path = join_paths(meson.current_source_dir(), 'src')
-#sources = [module_sources, go_sources]
+floodit_build_path = join_paths(meson.current_source_dir(), 'src')
 
 # Compile project
-go_build = custom_target(
+custom_target(
   'go-build',
   build_by_default: true,
   build_always_stale: true,
-  #input: module_sources,
   output: meson.project_name(),
   console: true,
   install: true,
   install_dir: get_option('bindir'),
-  command: [go_bin, 'build', '-v', '-o', '@OUTPUT@', flood_it_build_path]
+  command: [go_bin, 'build', '-v', '-o', '@OUTPUT@', floodit_build_path]
 )
 
 # Execute post-installation GTK/GNOME scripts

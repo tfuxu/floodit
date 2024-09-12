@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gresources>
+  <gresource prefix="/io/github/tfuxu/Floodit">
+    <file preprocess="xml-stripblanks">ui/color_keyboard.ui</file>
+    <file preprocess="xml-stripblanks">ui/custom_mode_page.ui</file>
+    <file preprocess="xml-stripblanks">ui/difficulty_page.ui</file>
+    <file preprocess="xml-stripblanks">ui/game_page.ui</file>
+    <file preprocess="xml-stripblanks">ui/game_rules_page.ui</file>
+    <file preprocess="xml-stripblanks" alias="gtk/help-overlay.ui">ui/help_overlay.ui</file>
+    <file preprocess="xml-stripblanks">ui/main_window.ui</file>
+    <file preprocess="xml-stripblanks">ui/result_page.ui</file>
+    <file preprocess="xml-stripblanks">ui/starting_view.ui</file>
+    <file>style.css</file>
+  </gresource>
+  <gresource prefix="/io/github/tfuxu/Floodit/icons/scalable/actions/">
+    <file preprocess="xml-stripblanks" alias="question-round-outline-symbolic.svg">icons/scalable/actions/question-round-outline-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="open-book-symbolic.svg">icons/scalable/actions/open-book-symbolic.svg</file>
+  </gresource>
+</gresources>

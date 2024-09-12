@@ -1,12 +1,12 @@
 {
-  "app-id" : "io.github.tfuxu.flood_it",
+  "app-id" : "io.github.tfuxu.floodit",
   "runtime" : "org.gnome.Platform",
-  "runtime-version" : "45",
+  "runtime-version" : "46",
   "sdk" : "org.gnome.Sdk",
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.golang"
   ],
-  "command" : "flood_it",
+  "command" : "floodit",
   "finish-args" : [
       "--share=ipc",
       "--device=dri",
@@ -24,20 +24,31 @@
       "*.la",
       "*.a"
   ],
-  "build-options": {
-    "build-args": [
-      "--share=network"
-    ],
-    "env": {
-      "GOBIN": "/app/bin",
-      "GOROOT": "/usr/lib/sdk/golang"
-    }
-  },
   "modules" : [
       {
-          "name" : "flood_it",
+        "name" : "blueprint-compiler",
+        "buildsystem" : "meson",
+        "cleanup": [
+            "*"
+        ],
+        "sources" : [
+            {
+                "type" : "git",
+                "url" : "https://gitlab.gnome.org/jwestman/blueprint-compiler",
+                "tag" : "v0.14.0"
+            }
+        ]
+      },
+      {
+          "name" : "floodit",
           "builddir" : true,
           "buildsystem" : "meson",
+          "build-options": {
+            "env": {
+              "GOBIN": "/app/bin",
+              "GOROOT": "/usr/lib/sdk/golang"
+            }
+          },
           "config-opts": [
               "-Dbuildtype=release"
           ],

@@ -1,0 +1,115 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.Bin result_page {
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-title: false;
+
+      [end]
+      Gtk.MenuButton {
+        tooltip-text: _("Main Menu");
+        icon-name: "open-menu-symbolic";
+        menu-model: result_menu;
+        primary: true;
+      }
+    }
+
+    content: Gtk.ScrolledWindow {
+      hscrollbar-policy: never;
+      propagate-natural-height: true;
+
+      child: Gtk.Box {
+        orientation: vertical;
+        valign: center;
+
+        Adw.Clamp {
+          maximum-size: 600;
+          tightening-threshold: 400;
+
+          child: Gtk.Box {
+            orientation: vertical;
+            valign: center;
+
+            Gtk.Label title_label {
+              wrap: true;
+              wrap-mode: word_char;
+              justify: center;
+
+              styles [
+                "title-1"
+              ]
+            }
+
+            Gtk.Label description_label {
+              wrap: true;
+              wrap-mode: word_char;
+              justify: center;
+              use-markup: true;
+
+              margin-top: 12;
+            }
+
+            Gtk.Box {
+              orientation: horizontal;
+              halign: center;
+              spacing: 10;
+
+              margin-top: 36;
+
+              Gtk.Button {
+                label: _("_Go Home");
+                use-underline: true;
+                action-name: "win.show-welcome";
+                //clicked => $on_return_clicked();
+
+                styles [
+                  "pill"
+                ]
+              }
+
+              Gtk.Button {
+                label: _("_Play Again");
+                use-underline: true;
+                action-name: "win.show-game-select";
+                //clicked => $on_play_again_clicked();
+
+                styles [
+                  "suggested-action",
+                  "pill"
+                ]
+              }
+            }
+          };
+        }
+      };
+    };
+  };
+}
+
+menu result_menu {
+  section {
+    item {
+      label: _("New Game");
+      action: "win.show-game-select";
+    }
+  }
+
+  section {
+    /*item {
+      label: _("Preferences");
+      action: "app.preferences";
+    }*/
+
+    item {
+      label: _("Keyboard Shortcuts");
+      action: "win.show-help-overlay";
+    }
+
+    item {
+      label: _("About Flood It");
+      action: "app.about";
+    }
+  }
+}

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schemalist gettext-domain="flood_it">
+<schemalist gettext-domain="floodit">
   <schema id="@APP_ID@" path="@ROOT_PATH@/">
-    <key name="window-width" type="i">
-      <default>300</default>
-    </key>
     <key name="window-height" type="i">
-      <default>300</default>
+      <default>600</default>
+    </key>
+    <key name="window-width" type="i">
+      <default>400</default>
     </key>
     <key name="window-maximized" type="b">
       <default>false</default>

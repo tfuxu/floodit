@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='utf-8'?>
+<component type="desktop-application">
+  <id>@APP_ID@</id>
+  <name>Flood It</name>
+  <summary>Flood the board</summary>
+  <developer id="io.github.tfuxu">
+    <name translate="no">tfuxu</name>
+  </developer>
+  <launchable type="desktop-id">@APP_ID@.desktop</launchable>
+  <translation type="gettext">floodit</translation>
+  <metadata_license>CC-BY-SA-4.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <update_contact>tfuxu@tutanota.com</update_contact>
+  <content_rating type="oars-1.1"/>
+
+  <description>
+    <p>
+      Flood It is a game with the simple premise of flooding the entire board with one color in the least amount of moves possible.
+
+      Challenge yourself with this simple, yet addictive strategy game, where you need to flood-it as efficiently as you can!
+    </p>
+  </description>
+
+  <screenshots>
+    <screenshot>
+      <image type="source">https://raw.githubusercontent.com/tfuxu/floodit/main/data/screenshots/screenshot-1.png</image>
+    </screenshot>
+    <screenshot type="default">
+      <image type="source">https://raw.githubusercontent.com/tfuxu/floodit/main/data/screenshots/screenshot-2.png</image>
+    </screenshot>
+    <screenshot>
+      <image type="source">https://raw.githubusercontent.com/tfuxu/floodit/main/data/screenshots/screenshot-3.png</image>
+    </screenshot>
+  </screenshots>
+
+  <branding>
+    <color type="primary" scheme_preference="light">#62a0ea</color>
+    <color type="primary" scheme_preference="dark">#1a5fb4</color>
+  </branding>
+
+  <url type="homepage">@PROJECT_URL@</url>
+  <url type="bugtracker">@BUGTRACKER_URL@</url>
+  <url type="help">@HELP_URL@</url>
+  <!--<url type="translate">@TRANSLATE_URL@</url>-->
+
+  <kudos>
+    <kudo>HiDpiIcon</kudo>
+    <kudo>ModernToolkit</kudo>
+  </kudos>
+
+  <requires>
+    <internet>offline-only</internet>
+    <display_length compare="ge">360</display_length>
+  </requires>
+
+  <recommends>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>touch</control>
+  </recommends>
+
+  <custom>
+    <value key="Purism::form_factor">mobile</value>
+  </custom>
+
+  <releases>
+    <release version="1.0.0" date="2024-09-12">
+      <description>
+        <p translate="no">
+          This is the first release of Flood It!
+        </p>
+      </description>
+    </release>
+  </releases>
+</component>

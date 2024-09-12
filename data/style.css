@@ -1,0 +1,20 @@
+.color-button {
+  min-width: 50px;
+  min-height: 50px;
+}
+
+.color-button:not(:active) {
+  animation: press 0.2s 1 linear;
+}
+
+@keyframes press {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.86);
+  }
+  to {
+    transform: scale(1);
+  }
+}

@@ -1,0 +1,69 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.ApplicationWindow main_window {
+  title: _("Flood It");
+  default-height: 600;
+  default-width: 360;
+
+  content: Adw.ToastOverlay toast_overlay {
+    Gtk.Stack main_stack {
+      transition-type: slide_left_right;
+
+      Gtk.StackPage {
+        name: "stack_welcome_page";
+
+        child: Adw.ToolbarView {
+          [top]
+          Adw.HeaderBar {
+            centering-policy: strict;
+
+            [end]
+            Gtk.Button {
+              tooltip-text: _("About Flood It");
+              icon-name: "help-about-symbolic";
+              action-name: "app.about";
+            }
+          }
+
+          content: Adw.StatusPage status_page {
+            title: "Flood It";
+            description: _("Flood the board");
+            hexpand: true;
+            vexpand: true;
+
+            child: Gtk.Box {
+              halign: center;
+              orientation: vertical;
+              spacing: 14;
+
+              Gtk.Button play_button {
+                valign: center;
+                halign: center;
+                label: _("_Play");
+                use-underline: true;
+
+                styles [
+                  "suggested-action",
+                  "pill",
+                ]
+              }
+
+              /*Gtk.Button help_button {
+                child: Adw.ButtonContent {
+                  icon-name: "open-book-symbolic";
+                  label: _("_Read Rules");
+                  use-underline: true;
+                };
+
+                styles [
+                  "pill"
+                ]
+              }*/
+            };
+          };
+        };
+      }
+    }
+  };
+}

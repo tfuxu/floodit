@@ -2,39 +2,59 @@ package main
 
 import (
 	"fmt"
+	"log/slog"
 	"os"
 	"path/filepath"
 
-	"github.com/tfuxu/flood_it/src/constants"
+	"github.com/tfuxu/floodit/src/constants"
+	"github.com/tfuxu/floodit/src/views"
+	"github.com/tfuxu/floodit/src/views/about"
 
-	//"github.com/diamondburned/gotk4/pkg/cairo"
+	"github.com/diamondburned/gotk4-adwaita/pkg/adw"
 	"github.com/diamondburned/gotk4/pkg/gio/v2"
-	"github.com/diamondburned/gotk4/pkg/gtk/v4"
-	//"github.com/diamondburned/gotkit/app/locale"
+	"github.com/diamondburned/gotk4/pkg/glib/v2"
 )
 
 func init() {
+	// Select Logger level depending on current build type
+	if constants.BuildType == "debug" {
+		slog.SetLogLoggerLevel(slog.LevelDebug)
+	} else {
+		slog.SetLogLoggerLevel(slog.LevelInfo)
+	}
+
+	// Set `XDG_DATA_DIRS` to <builddir>/data if running in devenv
+	if os.Getenv("MESON_DEVENV") == "1" {
+		var data_dirs string
+
+		if len(os.Getenv("XDG_DATA_DIRS")) != 0 {
+			data_dirs = os.Getenv("XDG_DATA_DIRS")
+		} else {
+			data_dirs = "/usr/local/share/:/usr/share/"
+		}
+
+		os.Setenv("XDG_DATA_DIRS", fmt.Sprintf("%s:%s", constants.DataDir, data_dirs))
+	}
+
 	// Load resources
-	resources, error := gio.ResourceLoad(filepath.Join(constants.PkgDataDir, "flood_it.gresource"))
+	resources, error := gio.ResourceLoad(filepath.Join(constants.PkgDataDir, "floodit.gresource"))
 	if error != nil {
-		fmt.Println(error)
+		slog.Error(error.Error())
 		os.Exit(1)
 	}
 	gio.ResourcesRegister(resources)
-
-	// Initialize translations
-	/*locale_fs := os.DirFS(constants.LocaleDir)
-	locale.LoadLocale(locale_fs)
-	locale.Current().AddDomain("flood_it")*/
 }
 
 func main() {
 	settings := gio.NewSettings(constants.AppID)
 
-	app := gtk.NewApplication(constants.AppID, gio.ApplicationFlagsNone)
+	app := adw.NewApplication(constants.AppID, gio.ApplicationFlagsNone)
 	app.SetResourceBasePath(constants.RootPath)
+
+	setupActions(app)
+
 	app.ConnectActivate(func() {
-		activate(app, settings)
+		doActivate(app, settings)
 	})
 
 	if code := app.Run(os.Args); code > 0 {
@@ -42,34 +62,35 @@ func main() {
 	}
 }
 
-func activate(app *gtk.Application, settings *gio.Settings) {
-	builder := gtk.NewBuilderFromResource(constants.RootPath + "/ui/main_window.ui")
-	builder.SetTranslationDomain("flood_it")
-	println(builder.TranslationDomain())
-
-	window := builder.GetObject("main_window").Cast().(*gtk.ApplicationWindow)
-	window.SetApplication(app)
-	window.SetDefaultSize(
-		settings.Int("window-width"), settings.Int("window-height"),
-	)
-
-	window.ConnectUnrealize(func() {
-		saveWindowProps(window, settings)
-	})
-
-	button := builder.GetObject("example_button").Cast().(*gtk.Button)
-	//button.SetLabel(locale.Get("Press me!"))
-	button.ConnectClicked(func() {
-		println("Hi ^_^")
-	})
-
-	window.Show()
+func doActivate(app *adw.Application, settings *gio.Settings) {
+	window := views.NewMainWindow(app, settings)
+	window.Present()
 }
 
-func saveWindowProps(window *gtk.ApplicationWindow, settings *gio.Settings) {
-	width, height := window.DefaultSize()
+func setupActions(app *adw.Application) {
+	aboutAction := gio.NewSimpleAction("about", nil)
+	aboutAction.ConnectActivate(func(parameter *glib.Variant) {
+		onAbout(app)
+	})
+	app.AddAction(aboutAction)
 
-	settings.SetInt("window-width", width)
-	settings.SetInt("window-height", height)
-	settings.SetBoolean("window-maximized", window.IsMaximized())
+	quitAction := gio.NewSimpleAction("quit", nil)
+	quitAction.ConnectActivate(func(parameter *glib.Variant) {
+		onQuit(app)
+	})
+	app.AddAction(quitAction)
+
+	app.SetAccelsForAction("win.show-help-overlay", []string{"<Primary>question"})
+	app.SetAccelsForAction("win.show-game-select", []string{"<Primary>N"})
+	//app.SetAccelsForAction("win.show-game-rules", []string{"F1"})
+	app.SetAccelsForAction("app.quit", []string{"<Primary>Q"})
+}
+
+func onAbout(app *adw.Application) {
+	a := about.NewAboutDialog()
+	a.Present(app.ActiveWindow())
+}
+
+func onQuit(app *adw.Application) {
+	app.Quit()
 }

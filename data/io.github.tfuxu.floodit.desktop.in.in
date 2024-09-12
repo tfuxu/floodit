@@ -1,14 +1,13 @@
 [Desktop Entry]
-Encoding=UTF-8
 Version=1.0
 Type=Application
 Terminal=false
-Exec=flood_it
-Name=Flood It!
-Comment=An example of compiling Gotk4 projects using Meson
-Categories=GTK;
+Exec=floodit
+Name=Flood It
+Comment=Flood the board
+Categories=GNOME;GTK;Game;StrategyGame;BoardGame;
 Icon=@APP_ID@
 # Translators: These are search terms to find this application. Do NOT translate or localize the semicolons. The list MUST also end with a semicolon.
-Keywords=gtk4;golang;meson;
+Keywords=game;strategy;flood;flood-it;
 # Translators: Do NOT translate or transliterate this text (these are enum types)!
 X-Purism-FormFactor=Workstation;Mobile;

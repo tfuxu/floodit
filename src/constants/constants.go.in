@@ -1,7 +1,15 @@
 package constants
 
 var AppID = "@APP_ID@"
+var RelVer = "@RELEASE_VER@"
+var Version = "@VERSION@"
+var BuildType = "@BUILD_TYPE@"
+
 var RootPath = "@ROOT_PATH@"
 var DataDir = "@DATA_DIR@"
 var PkgDataDir = "@PKGDATA_DIR@"
 var LocaleDir = "@LOCALE_DIR@"
+
+var ProjectUrl = "@PROJECT_URL@"
+var BugtrackerUrl = "@BUGTRACKER_URL@"
+var HelpUrl = "@HELP_URL@"

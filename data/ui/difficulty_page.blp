@@ -1,0 +1,61 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.NavigationPage difficulty_page {
+  title: _("Select Difficulty");
+  tag: "difficulty-select";
+
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-title: false;
+
+      [start]
+      Gtk.Button back_button {
+        icon-name: "go-previous-symbolic";
+        tooltip-text: _("Back");
+        action-name: "win.show-welcome";
+      }
+    }
+
+    content: Gtk.Box {
+      orientation: vertical;
+
+      Adw.StatusPage {
+        hexpand: true;
+        vexpand: true;
+
+        title: _("Select Difficulty");
+        description: _("Play casually or challenge yourself");
+
+        Adw.PreferencesPage {
+          Adw.PreferencesGroup {
+            Adw.ActionRow easy_mode_row {
+              activatable: true;
+              title: _("Easy");
+              subtitle: _("A 6x6 board with 15 moves");
+            }
+
+            Adw.ActionRow normal_mode_row {
+              activatable: true;
+              title: _("Normal");
+              subtitle: _("A 10x10 board with 20 moves");
+            }
+
+            Adw.ActionRow hard_mode_row {
+              activatable: true;
+              title: _("Hard");
+              subtitle: _("A 14x14 board with 25 moves");
+            }
+
+            Adw.ActionRow custom_mode_row {
+              activatable: true;
+              title: _("Custom");
+              subtitle: _("Specify your own board size and move limit");
+            }
+          }
+        }
+      }
+    };
+  };
+}

@@ -1,0 +1,71 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.NavigationPage custom_mode_page {
+  title: _("Custom Mode");
+  tag: "custom-mode";
+
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-title: false;
+    }
+
+    content: Gtk.Box {
+      orientation: vertical;
+
+      Adw.StatusPage {
+        hexpand: true;
+        vexpand: true;
+
+        title: _("Custom Mode");
+        description: _("Choose your own board size and move limit");
+
+        Adw.PreferencesPage {
+          Adw.PreferencesGroup {
+            Adw.SpinRow board_size_row {
+              title: _("Board Size");
+              subtitle: _("Range 2 to 32");
+              adjustment: Gtk.Adjustment {
+                lower: 2;
+                upper: 32;
+                step-increment: 1;
+                page-increment: 2;
+              };
+            }
+          }
+
+          Adw.PreferencesGroup {
+            Adw.SwitchRow enable_custom_move_limit_row {
+              title: _("Custom Move Limit");
+            }
+
+            Adw.SpinRow move_limit_row {
+              title: _("Move Limit");
+              sensitive: false;
+              adjustment: Gtk.Adjustment {
+                lower: 1;
+                upper: 999;
+                step-increment: 1;
+                page-increment: 5;
+              };
+            }
+          }
+
+          Adw.PreferencesGroup {
+            Gtk.Button play_button {
+              halign: center;
+              label: _("_Play");
+              use-underline: true;
+
+              styles [
+                "pill",
+                "suggested-action"
+              ]
+            }
+          }
+        }
+      }
+    };
+  };
+}

@@ -1,1 +1,1 @@
-i18n.gettext('flood_it', preset: 'glib')
+i18n.gettext('floodit', preset: 'glib')

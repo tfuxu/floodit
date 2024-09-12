@@ -1,0 +1,89 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.Bin game_page {
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      [title]
+      Adw.WindowTitle game_info_title {
+        //title: bind main_window.title;  // NOTE: This is changed dynamically in code
+      }
+
+      [end]
+      Gtk.MenuButton {
+        tooltip-text: _("Main Menu");
+        icon-name: "open-menu-symbolic";
+        menu-model: game_menu;
+        primary: true;
+      }
+    }
+
+    content: Gtk.Box game_box {
+      orientation: vertical;
+      spacing: 40;
+
+      margin-top: 20;
+      margin-bottom: 20;
+      margin-start: 20;
+      margin-end: 20;
+
+      hexpand: true;
+      vexpand: true;
+      valign: center;
+      halign: center;
+
+      Gtk.Box board {
+        orientation: vertical;
+
+        // TODO: Add a breakpoint that will set a higher content size when window width is >= 600px
+        Gtk.DrawingArea draw_area {
+          hexpand: true;
+          vexpand: true;
+          margin-top: 10;
+          margin-bottom: 10;
+          margin-start: 10;
+          margin-end: 10;
+
+          content-height: 300;
+          content-width: 300;
+        }
+
+        styles [
+          "card"
+        ]
+      }
+    };
+  };
+}
+
+menu game_menu {
+  section {
+    item {
+      label: _("New Game");
+      action: "win.show-game-select";
+    }
+  }
+
+  section {
+    /*item {
+      label: _("Preferences");
+      action: "app.preferences";
+    }*/
+
+    item {
+      label: _("Keyboard Shortcuts");
+      action: "win.show-help-overlay";
+    }
+
+    /*item {
+      label: _("Game Rules");
+      action: "win.show-game-rules";
+    }*/
+
+    item {
+      label: _("About Flood It");
+      action: "app.about";
+    }
+  }
+}

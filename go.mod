@@ -1,10 +1,14 @@
-module github.com/tfuxu/flood_it
+module github.com/tfuxu/floodit
 
-go 1.19
-
-require github.com/diamondburned/gotk4/pkg v0.0.6-0.20230825053034-ad325703aa2e
+go 1.22.0
 
 require (
-	go4.org/unsafe/assume-no-moving-gc v0.0.0-20230525183740-e7c30c78aeb2 // indirect
-	golang.org/x/sync v0.3.0 // indirect
+	github.com/diamondburned/gotk4-adwaita/pkg v0.0.0-20240712143708-824c3ce8a5f4
+	github.com/diamondburned/gotk4/pkg v0.3.0
+)
+
+require (
+	github.com/KarpelesLab/weak v0.1.1 // indirect
+	go4.org/unsafe/assume-no-moving-gc v0.0.0-20231121144256-b99613f794b6 // indirect
+	golang.org/x/sync v0.7.0 // indirect
 )

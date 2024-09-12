@@ -1,5 +1,7 @@
 gnome = import('gnome')
 
+subdir('ui')
+
 # Translate and install desktop file
 desktop_file = i18n.merge_file(
   input: configure_file(
@@ -18,23 +20,25 @@ desktop_file = i18n.merge_file(
 desktop_utils = find_program('desktop-file-validate', required: false)
 if desktop_utils.found()
   test('Validate desktop file', desktop_utils,
-    args: [desktop_file.full_path()]
+    args: [desktop_file.full_path()],
+    depends: desktop_file
   )
 endif
 
 # Compile resources
-gnome.compile_resources('flood_it',
-  'flood_it.gresource.xml',
+gnome.compile_resources('floodit',
+  'floodit.gresource.xml',
   gresource_bundle: true,
   source_dir: meson.current_build_dir(),
   install: true,
   install_dir: PKGDATA_DIR,
+  dependencies: blueprints
 )
 
 # Translate and install Appstream file
-appstream_file = i18n.merge_file(
+metainfo_file = i18n.merge_file(
   input: configure_file(
-    input: '@0@.appdata.xml.in.in'.format(PROJECT_RDNN_NAME),
+    input: '@0@.metainfo.xml.in.in'.format(PROJECT_RDNN_NAME),
     output: '@BASENAME@',
     configuration: configuration_data({
       'APP_ID': APPLICATION_ID,
@@ -44,17 +48,18 @@ appstream_file = i18n.merge_file(
       #'TRANSLATE_URL': TRANSLATE_URL
     })
   ),
-  output: '@0@.appdata.xml'.format(APPLICATION_ID),
+  output: '@0@.metainfo.xml'.format(APPLICATION_ID),
   po_dir: '../po',
   install: true,
-  install_dir: join_paths(get_option('datadir'), 'appdata')
+  install_dir: join_paths(get_option('datadir'), 'metainfo')
 )
 
 # Appstream validation
-appstream_util = find_program('appstream-util', required: false)
-if appstream_util.found()
-  test('Validate appstream file', appstream_util,
-    args: ['validate', appstream_file.full_path()]
+appstream_cli = find_program('appstreamcli', required: false)
+if appstream_cli.found()
+  test('Validate appstream file', appstream_cli,
+    args: ['validate', '--no-net', '--explain', metainfo_file.full_path()],
+    depends: metainfo_file
   )
 endif
 
