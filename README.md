@@ -125,3 +125,5 @@ I've got an idea to create Flood It after playing [Flood](https://man.serenityos
 Some parts of the backend code used to generate and flood board are based on code from [Open Flood](https://github.com/GunshipPenguin/open_flood) and [The FloodIt! game](https://otfried.org/scala/floodit.html) example made by [Otfried Cheong](https://github.com/otfried/).
 
 I also read explanations of [Flood fill](https://en.wikipedia.org/wiki/Flood_fill) algorithm implementations to better understand the process of board filling in game.
+
+The general structure of this project is based on my [Gotk4 Go + Meson project template](https://github.com/tfuxu/gotk4_meson).
