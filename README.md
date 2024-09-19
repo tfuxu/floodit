@@ -19,11 +19,9 @@ You can install Flood It in many ways, here are some listed:
 
 **1. Official Flatpak package:**
 
-Not available yet.
-
-<!--<a href='https://flathub.org/apps/details/io.github.tfuxu.floodit'>
+<a href='https://flathub.org/apps/details/io.github.tfuxu.floodit'>
   <img width='192' alt='Download on Flathub' src='https://flathub.org/api/badge?svg&locale=en'/>
-</a><br>-->
+</a><br>
 
 **2. Alternative package distributions:**
 > **Warning**
@@ -51,12 +49,12 @@ This is the easiest way of building Flood It if you want to build it as a Flatpa
 #### Prerequisites:
 
 - Flatpak Builder `flatpak-builder`
-- GNOME SDK runtime `org.gnome.Sdk//46`
-- GNOME Platform runtime `org.gnome.Platform//46`
+- GNOME SDK runtime `org.gnome.Sdk//47`
+- GNOME Platform runtime `org.gnome.Platform//47`
 
 Install required runtimes:
 ```sh
-flatpak install org.gnome.Sdk//46 org.gnome.Platform//46
+flatpak install org.gnome.Sdk//47 org.gnome.Platform//47
 ```
 
 #### Building Instructions:
