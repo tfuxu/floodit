@@ -23,13 +23,13 @@
 
   <screenshots>
     <screenshot type="default">
+      <image type="source">https://raw.githubusercontent.com/tfuxu/floodit/master/data/screenshots/screenshot-3.png</image>
+    </screenshot>
+    <screenshot>
       <image type="source">https://raw.githubusercontent.com/tfuxu/floodit/master/data/screenshots/screenshot-2.png</image>
     </screenshot>
     <screenshot>
-      <image type="source">https://raw.githubusercontent.com/tfuxu/floodit/master/data/screenshots/screenshot-1.png</image>
-    </screenshot>
-    <screenshot>
-      <image type="source">https://raw.githubusercontent.com/tfuxu/floodit/master/data/screenshots/screenshot-3.png</image>
+      <image type="source">https://raw.githubusercontent.com/tfuxu/floodit/master/data/screenshots/screenshot-4.png</image>
     </screenshot>
   </screenshots>
 
