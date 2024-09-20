@@ -24,7 +24,7 @@ You can install Flood It in many ways, here are some listed:
 </a><br>
 
 **2. Alternative package distributions:**
-> **Warning**
+> [!WARNING]
 > Although some of the methods listed here may be maintained by the Flood It maintainers, these methods **are not** officially supported and issues related to packaging in them should be reported outside this project's bug tracker.
 
 <a href="https://repology.org/project/floodit/versions">
