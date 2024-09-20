@@ -14,3 +14,10 @@ body:
       options:
         - label: I have checked the existing issues
           required: true
+
+  - type: textarea
+    attributes:
+      label: Describe your requested feature
+      description: A clear and concise description of the requested feature.
+    validations:
+      required: true
