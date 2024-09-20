@@ -8,7 +8,7 @@ Challenge yourself with this simple, yet addictive strategy game, where you need
 
 <div align="center">
 
-![screenshot-1](data/screenshots/screenshot-2.png)
+![screenshot-1](data/screenshots/screenshot-3.png)
 
 </div>
 
