@@ -1,0 +1,16 @@
+name: Feature Request
+description: Suggest an idea for this project
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this feature request!
+
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please check if a issue already exists for your request
+      options:
+        - label: I have checked the existing issues
+          required: true
