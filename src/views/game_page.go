@@ -145,11 +145,6 @@ func (gp *GamePage) onDraw(area *gtk.DrawingArea, ctx *cairo.Context, width, hei
 }
 
 func (gp *GamePage) onColorKeyboardUsed(colorName string) {
-	if gp.maxSteps - gp.board.Step < 1 {
-		gp.ActivateAction("win.show-finish", glib.NewVariantBoolean(false))
-		return
-	}
-
 	gp.board.Flood(colorName)
 
 	if gp.board.IsAllFilled() {
@@ -158,6 +153,11 @@ func (gp *GamePage) onColorKeyboardUsed(colorName string) {
 	}
 
 	stepsLeft := int(gp.maxSteps - gp.board.Step)
+	if stepsLeft < 1 {
+		gp.ActivateAction("win.show-finish", glib.NewVariantBoolean(false))
+		return
+	}
+
 	// TODO: Translate this
 	gp.gameInfoTitle.SetSubtitle(fmt.Sprintf("Steps Left: %d", stepsLeft))
 
