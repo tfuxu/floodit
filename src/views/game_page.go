@@ -3,6 +3,7 @@ package views
 import (
 	"fmt"
 	"log/slog"
+	"math"
 
 	"github.com/tfuxu/floodit/src/backend/utils"
 	"github.com/tfuxu/floodit/src/constants"
@@ -114,6 +115,10 @@ func (gp *GamePage) drawBoard(ctx *cairo.Context, width, height int) error {
 	xOffset := (width - rectWidth*boardCols) / 2
 	yOffset := (height - rectHeight*boardRows) / 2
 
+	gp.roundedRect(ctx, float64(xOffset), float64(yOffset), float64(rectWidth*boardCols), float64(rectHeight*boardRows), 6.0)
+	ctx.Clip()
+
+	ctx.NewPath()
 	for row := 0; row < boardRows; row++ {
 		for col := 0; col < boardCols; col++ {
 			x := rectWidth*col + xOffset
@@ -144,6 +149,15 @@ func (gp *GamePage) onDraw(area *gtk.DrawingArea, ctx *cairo.Context, width, hei
 		gp.toastOverlay.AddToast(adw.NewToast("Failed to retrieve colors for board points"))
 		slog.Error("Failed to convert hex values to Cairo compatible RGB channels:", "msg", err)
 	}
+}
+
+func (gp *GamePage) roundedRect(ctx *cairo.Context, x, y, width, height, cornerRadius float64) {
+	ctx.NewSubPath()
+	ctx.Arc(x+width-cornerRadius, y+cornerRadius, cornerRadius, -math.Pi/2, 0)
+	ctx.Arc(x+width-cornerRadius, y+height-cornerRadius, cornerRadius, 0, math.Pi/2)
+	ctx.Arc(x+cornerRadius, y+height-cornerRadius, cornerRadius, math.Pi/2, math.Pi)
+	ctx.Arc(x+cornerRadius, y+cornerRadius, cornerRadius, math.Pi, 3*math.Pi/2)
+	ctx.ClosePath()
 }
 
 func (gp *GamePage) onColorKeyboardUsed(colorName string) {
