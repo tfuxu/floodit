@@ -109,13 +109,15 @@ func (gp *GamePage) drawBoard(ctx *cairo.Context, width, height int) error {
 	boardRows := gp.board.Rows
 	boardCols := gp.board.Columns
 
-	rectWidth := float64(width) / float64(boardCols)
-	rectHeight := float64(height) / float64(boardRows)
+	rectWidth := width / boardCols
+	rectHeight := height / boardRows
+	xOffset := (width - rectWidth*boardCols) / 2
+	yOffset := (height - rectHeight*boardRows) / 2
 
 	for row := 0; row < boardRows; row++ {
 		for col := 0; col < boardCols; col++ {
-			x := float64(rectWidth) * float64(col)
-			y := float64(rectHeight) * float64(row)
+			x := rectWidth*col + xOffset
+			y := rectHeight*row + yOffset
 
 			hexCode := backend.DefaultColors[boardMatrix[row][col]]
 			cairoRGB, err := utils.HexToCairoRGB(hexCode)
@@ -128,7 +130,7 @@ func (gp *GamePage) drawBoard(ctx *cairo.Context, width, height int) error {
 			blue := cairoRGB[2]
 
 			ctx.SetSourceRGB(red, green, blue)
-			ctx.Rectangle(x, y, float64(rectWidth), float64(rectHeight))
+			ctx.Rectangle(float64(x), float64(y), float64(rectWidth), float64(rectHeight))
 			ctx.Fill()
 		}
 	}
