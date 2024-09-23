@@ -30,7 +30,6 @@ type GamePage struct {
 	gameInfoTitle *adw.WindowTitle
 
 	gameBox     *gtk.Box
-	boardView   *gtk.Box
 	drawingArea *gtk.DrawingArea
 }
 
@@ -49,7 +48,6 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 	gameInfoTitle := builder.GetObject("game_info_title").Cast().(*adw.WindowTitle)
 
 	gameBox := builder.GetObject("game_box").Cast().(*gtk.Box)
-	boardView := builder.GetObject("board").Cast().(*gtk.Box)
 	drawArea := builder.GetObject("draw_area").Cast().(*gtk.DrawingArea)
 
 	board := backend.InitializeBoard(10, 10)
@@ -67,7 +65,6 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 		gameInfoTitle: gameInfoTitle,
 
 		gameBox:     gameBox,
-		boardView:   boardView,
 		drawingArea: drawArea,
 	}
 
@@ -115,7 +112,7 @@ func (gp *GamePage) drawBoard(ctx *cairo.Context, width, height int) error {
 	xOffset := (width - rectWidth*boardCols) / 2
 	yOffset := (height - rectHeight*boardRows) / 2
 
-	gp.roundedRect(ctx, float64(xOffset), float64(yOffset), float64(rectWidth*boardCols), float64(rectHeight*boardRows), 6.0)
+	gp.roundedRect(ctx, float64(xOffset), float64(yOffset), float64(rectWidth*boardCols), float64(rectHeight*boardRows), 12.0)
 	ctx.Clip()
 
 	ctx.NewPath()
