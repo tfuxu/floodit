@@ -22,8 +22,8 @@ type GamePage struct {
 	settings *gio.Settings
 	parent   *MainWindow
 
-	board     backend.Board
-	maxSteps  uint
+	board    backend.Board
+	maxSteps uint
 
 	toastOverlay  *adw.ToastOverlay
 	gameInfoTitle *adw.WindowTitle
@@ -59,8 +59,8 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 		settings: settings,
 		parent:   parent,
 
-		board:     board,
-		maxSteps:  maxSteps,
+		board:    board,
+		maxSteps: maxSteps,
 
 		toastOverlay:  toastOverlay,
 		gameInfoTitle: gameInfoTitle,
@@ -167,3 +167,4 @@ func (gp *GamePage) onColorKeyboardUsed(colorName string) {
 
 	gp.drawingArea.QueueDraw()
 }
+
