@@ -136,6 +136,10 @@ func (gp *GamePage) drawBoard(ctx *cairo.Context, width, height int) error {
 	return nil
 }
 
+func (gp *GamePage) getStepsLeft() int {
+	return int(gp.maxSteps - gp.board.Step)
+}
+
 func (gp *GamePage) onDraw(area *gtk.DrawingArea, ctx *cairo.Context, width, height int) {
 	err := gp.drawBoard(ctx, width, height)
 	if err != nil {
@@ -145,6 +149,11 @@ func (gp *GamePage) onDraw(area *gtk.DrawingArea, ctx *cairo.Context, width, hei
 }
 
 func (gp *GamePage) onColorKeyboardUsed(colorName string) {
+	if gp.getStepsLeft() < 1 {
+		gp.ActivateAction("win.show-finish", glib.NewVariantBoolean(false))
+		return
+	}
+
 	gp.board.Flood(colorName)
 
 	if gp.board.IsAllFilled() {
@@ -152,7 +161,7 @@ func (gp *GamePage) onColorKeyboardUsed(colorName string) {
 		return
 	}
 
-	stepsLeft := int(gp.maxSteps - gp.board.Step)
+	stepsLeft := gp.getStepsLeft()
 	if stepsLeft < 1 {
 		gp.ActivateAction("win.show-finish", glib.NewVariantBoolean(false))
 		return
