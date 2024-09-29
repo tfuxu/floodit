@@ -63,7 +63,7 @@ func (ck *ColorKeyboard) setupButtons(colorPalette map[string]string, callback f
 		button := gtk.NewButton()
 		button.SetTooltipText(key) // TODO: Capitalize text
 		buttonColors = append(buttonColors, fmt.Sprintf(".%s-button { background-color: %s; }", key, colorPalette[key]))
-		button.SetCSSClasses([]string{"circular", "color-button", fmt.Sprintf("%s-button", key)})
+		button.SetCSSClasses([]string{"card", "circular", "color-button", fmt.Sprintf("%s-button", key)})
 		colorName := key
 
 		button.ConnectClicked(func() {

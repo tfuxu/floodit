@@ -176,4 +176,3 @@ func (gp *GamePage) onColorKeyboardUsed(colorName string) {
 
 	gp.drawingArea.QueueDraw()
 }
-

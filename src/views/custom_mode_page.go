@@ -86,5 +86,5 @@ func (cmp *CustomModePage) onPlayButtonClicked() {
 		maxSteps = 0
 	}
 
-	cmp.parent.parent.StartNewGame("Custom", rows, cols, maxSteps)  // TODO: Make this translatable
+	cmp.parent.parent.StartNewGame("Custom", rows, cols, maxSteps) // TODO: Make this translatable
 }
