@@ -22,8 +22,8 @@ type GamePage struct {
 	settings *gio.Settings
 	parent   *MainWindow
 
-	board     backend.Board
-	maxSteps  uint
+	board    backend.Board
+	maxSteps uint
 
 	toastOverlay  *adw.ToastOverlay
 	gameInfoTitle *adw.WindowTitle
@@ -59,8 +59,8 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 		settings: settings,
 		parent:   parent,
 
-		board:     board,
-		maxSteps:  maxSteps,
+		board:    board,
+		maxSteps: maxSteps,
 
 		toastOverlay:  toastOverlay,
 		gameInfoTitle: gameInfoTitle,
@@ -136,6 +136,10 @@ func (gp *GamePage) drawBoard(ctx *cairo.Context, width, height int) error {
 	return nil
 }
 
+func (gp *GamePage) getStepsLeft() int {
+	return int(gp.maxSteps - gp.board.Step)
+}
+
 func (gp *GamePage) onDraw(area *gtk.DrawingArea, ctx *cairo.Context, width, height int) {
 	err := gp.drawBoard(ctx, width, height)
 	if err != nil {
@@ -145,7 +149,7 @@ func (gp *GamePage) onDraw(area *gtk.DrawingArea, ctx *cairo.Context, width, hei
 }
 
 func (gp *GamePage) onColorKeyboardUsed(colorName string) {
-	if gp.maxSteps - gp.board.Step < 1 {
+	if gp.getStepsLeft() < 1 {
 		gp.ActivateAction("win.show-finish", glib.NewVariantBoolean(false))
 		return
 	}
@@ -157,7 +161,12 @@ func (gp *GamePage) onColorKeyboardUsed(colorName string) {
 		return
 	}
 
-	stepsLeft := int(gp.maxSteps - gp.board.Step)
+	stepsLeft := gp.getStepsLeft()
+	if stepsLeft < 1 {
+		gp.ActivateAction("win.show-finish", glib.NewVariantBoolean(false))
+		return
+	}
+
 	// TODO: Translate this
 	gp.gameInfoTitle.SetSubtitle(fmt.Sprintf("Steps Left: %d", stepsLeft))
 
@@ -167,3 +176,4 @@ func (gp *GamePage) onColorKeyboardUsed(colorName string) {
 
 	gp.drawingArea.QueueDraw()
 }
+
