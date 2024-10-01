@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: floodit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-29 19:57+0200\n"
+"POT-Creation-Date: 2024-10-01 21:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,7 +68,8 @@ msgstr ""
 msgid "Move Limit"
 msgstr ""
 
-#: data/ui/custom_mode_page.blp:58 data/ui/main_window.blp:43
+#. Translators: The prefixed underscore is used to indicate a mnemonic. Do NOT remove it.
+#: data/ui/custom_mode_page.blp:59 data/ui/main_window.blp:44
 msgid "_Play"
 msgstr ""
 
@@ -120,16 +121,16 @@ msgstr ""
 msgid "Main Menu"
 msgstr ""
 
-#: data/ui/game_page.blp:63 data/ui/result_page.blp:94
+#: data/ui/game_page.blp:63 data/ui/result_page.blp:96
 msgid "New Game"
 msgstr ""
 
-#: data/ui/game_page.blp:75 data/ui/result_page.blp:106
+#: data/ui/game_page.blp:75 data/ui/result_page.blp:108
 msgid "Keyboard Shortcuts"
 msgstr ""
 
 #: data/ui/game_page.blp:85 data/ui/main_window.blp:23
-#: data/ui/result_page.blp:111
+#: data/ui/result_page.blp:113
 msgid "About Flood It"
 msgstr ""
 
@@ -158,10 +159,12 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr ""
 
-#: data/ui/result_page.blp:62
+#. Translators: The prefixed underscore is used to indicate a mnemonic. Do NOT remove it.
+#: data/ui/result_page.blp:63
 msgid "_Go Home"
 msgstr ""
 
-#: data/ui/result_page.blp:73
+#. Translators: The prefixed underscore is used to indicate a mnemonic. Do NOT remove it.
+#: data/ui/result_page.blp:75
 msgid "_Play Again"
 msgstr ""
