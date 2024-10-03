@@ -33,25 +33,13 @@ Adw.Bin game_page {
       valign: center;
       halign: center;
 
-      Gtk.Box board {
-        orientation: vertical;
+      // TODO: Add a breakpoint that will set a higher content size when window width is >= 600px
+      Gtk.DrawingArea draw_area {
+        hexpand: true;
+        vexpand: true;
 
-        // TODO: Add a breakpoint that will set a higher content size when window width is >= 600px
-        Gtk.DrawingArea draw_area {
-          hexpand: true;
-          vexpand: true;
-          margin-top: 10;
-          margin-bottom: 10;
-          margin-start: 10;
-          margin-end: 10;
-
-          content-height: 300;
-          content-width: 300;
-        }
-
-        styles [
-          "card"
-        ]
+        content-height: 300;
+        content-width: 300;
       }
     };
   };

@@ -3,6 +3,7 @@ package views
 import (
 	"fmt"
 	"log/slog"
+	"math"
 
 	"github.com/tfuxu/floodit/src/backend/utils"
 	"github.com/tfuxu/floodit/src/constants"
@@ -29,7 +30,6 @@ type GamePage struct {
 	gameInfoTitle *adw.WindowTitle
 
 	gameBox     *gtk.Box
-	boardView   *gtk.Box
 	drawingArea *gtk.DrawingArea
 }
 
@@ -48,7 +48,6 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 	gameInfoTitle := builder.GetObject("game_info_title").Cast().(*adw.WindowTitle)
 
 	gameBox := builder.GetObject("game_box").Cast().(*gtk.Box)
-	boardView := builder.GetObject("board").Cast().(*gtk.Box)
 	drawArea := builder.GetObject("draw_area").Cast().(*gtk.DrawingArea)
 
 	board := backend.InitializeBoard(10, 10)
@@ -66,7 +65,6 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 		gameInfoTitle: gameInfoTitle,
 
 		gameBox:     gameBox,
-		boardView:   boardView,
 		drawingArea: drawArea,
 	}
 
@@ -109,13 +107,19 @@ func (gp *GamePage) drawBoard(ctx *cairo.Context, width, height int) error {
 	boardRows := gp.board.Rows
 	boardCols := gp.board.Columns
 
-	rectWidth := float64(width) / float64(boardCols)
-	rectHeight := float64(height) / float64(boardRows)
+	rectWidth := width / boardCols
+	rectHeight := height / boardRows
+	xOffset := (width - rectWidth*boardCols) / 2
+	yOffset := (height - rectHeight*boardRows) / 2
 
+	gp.roundedRect(ctx, float64(xOffset), float64(yOffset), float64(rectWidth*boardCols), float64(rectHeight*boardRows), 12.0)
+	ctx.Clip()
+
+	ctx.NewPath()
 	for row := 0; row < boardRows; row++ {
 		for col := 0; col < boardCols; col++ {
-			x := float64(rectWidth) * float64(col)
-			y := float64(rectHeight) * float64(row)
+			x := rectWidth*col + xOffset
+			y := rectHeight*row + yOffset
 
 			hexCode := backend.DefaultColors[boardMatrix[row][col]]
 			cairoRGB, err := utils.HexToCairoRGB(hexCode)
@@ -128,7 +132,7 @@ func (gp *GamePage) drawBoard(ctx *cairo.Context, width, height int) error {
 			blue := cairoRGB[2]
 
 			ctx.SetSourceRGB(red, green, blue)
-			ctx.Rectangle(x, y, float64(rectWidth), float64(rectHeight))
+			ctx.Rectangle(float64(x), float64(y), float64(rectWidth), float64(rectHeight))
 			ctx.Fill()
 		}
 	}
@@ -146,6 +150,15 @@ func (gp *GamePage) onDraw(area *gtk.DrawingArea, ctx *cairo.Context, width, hei
 		gp.toastOverlay.AddToast(adw.NewToast("Failed to retrieve colors for board points"))
 		slog.Error("Failed to convert hex values to Cairo compatible RGB channels:", "msg", err)
 	}
+}
+
+func (gp *GamePage) roundedRect(ctx *cairo.Context, x, y, width, height, cornerRadius float64) {
+	ctx.NewSubPath()
+	ctx.Arc(x+width-cornerRadius, y+cornerRadius, cornerRadius, -math.Pi/2, 0)
+	ctx.Arc(x+width-cornerRadius, y+height-cornerRadius, cornerRadius, 0, math.Pi/2)
+	ctx.Arc(x+cornerRadius, y+height-cornerRadius, cornerRadius, math.Pi/2, math.Pi)
+	ctx.Arc(x+cornerRadius, y+cornerRadius, cornerRadius, math.Pi, 3*math.Pi/2)
+	ctx.ClosePath()
 }
 
 func (gp *GamePage) onColorKeyboardUsed(colorName string) {
