@@ -43,11 +43,6 @@
   <url type="help">@HELP_URL@</url>
   <!--<url type="translate">@TRANSLATE_URL@</url>-->
 
-  <kudos>
-    <kudo>HiDpiIcon</kudo>
-    <kudo>ModernToolkit</kudo>
-  </kudos>
-
   <requires>
     <internet>offline-only</internet>
     <display_length compare="ge">360</display_length>
@@ -64,6 +59,17 @@
   </custom>
 
   <releases>
+    <release version="1.1.0" date="2024-10-06">
+      <description>
+        <p translate="no">
+          <ul>
+            <li>Trigger game lost screen when the number of steps left is zero</li>
+            <li>Fixed line artifacts showing one some parts of the board</li>
+            <li>Rounded the corners of the board</li>
+          </ul>
+        </p>
+      </description>
+    </release>
     <release version="1.0.0" date="2024-09-12">
       <description>
         <p translate="no">
