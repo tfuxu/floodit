@@ -35,6 +35,16 @@ You can install Flood It in many ways, here are some listed:
 
 If you don't find any other options appealing to you, then you can always compile code on your machine from source and install it that way. For more information, check out [How to build](#how-to-build) section.
 
+## How can I contribute?
+1. Read [GNOME Code of Conduct](https://conduct.gnome.org/)
+2. Fork this repository: https://github.com/tfuxu/floodit/fork
+3. Clone your fork: `git clone https://github.com/👁️you👁️/floodit.git`
+4. Create a local branch with your changes: `git checkout -b new-thingies`
+5. When changing stuff in Python, try to follow [PEP8](https://pep8.org/)
+6. Commit your changes: `git commit`
+7. Push the changes to fork: `git push origin new-thingies`
+8. Create a new pull request
+
 ## How to build:
 
 ### GNOME Builder:
