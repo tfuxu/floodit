@@ -63,7 +63,7 @@
       <description>
         <ul translate="no">
           <li>Trigger game lost screen when the number of steps left is zero</li>
-          <li>Fixed line artifacts showing one some parts of the board</li>
+          <li>Fixed line artifacts showing on some parts of the board</li>
           <li>Rounded the corners of the board</li>
         </ul>
       </description>
