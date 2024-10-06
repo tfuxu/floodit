@@ -61,13 +61,11 @@
   <releases>
     <release version="1.1.0" date="2024-10-06">
       <description>
-        <p translate="no">
-          <ul>
-            <li>Trigger game lost screen when the number of steps left is zero</li>
-            <li>Fixed line artifacts showing one some parts of the board</li>
-            <li>Rounded the corners of the board</li>
-          </ul>
-        </p>
+        <ul translate="no">
+          <li>Trigger game lost screen when the number of steps left is zero</li>
+          <li>Fixed line artifacts showing one some parts of the board</li>
+          <li>Rounded the corners of the board</li>
+        </ul>
       </description>
     </release>
     <release version="1.0.0" date="2024-09-12">
