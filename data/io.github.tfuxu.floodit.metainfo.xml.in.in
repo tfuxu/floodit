@@ -42,6 +42,7 @@
   <url type="bugtracker">@BUGTRACKER_URL@</url>
   <url type="help">@HELP_URL@</url>
   <!--<url type="translate">@TRANSLATE_URL@</url>-->
+  <url type="vcs-browser">@VCS_BROWSER_URL</url>
 
   <requires>
     <internet>offline-only</internet>
