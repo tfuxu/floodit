@@ -60,8 +60,8 @@
 
   <releases>
     <release version="1.1.0" date="2024-10-06">
-      <description>
-        <ul translate="no">
+      <description translate="no">
+        <ul>
           <li>Trigger game lost screen when the number of steps left is zero</li>
           <li>Fixed line artifacts showing on some parts of the board</li>
           <li>Rounded the corners of the board</li>
@@ -69,8 +69,8 @@
       </description>
     </release>
     <release version="1.0.0" date="2024-09-12">
-      <description>
-        <p translate="no">
+      <description translate="no">
+        <p>
           This is the first release of Flood It!
         </p>
       </description>
