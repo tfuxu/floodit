@@ -1,0 +1,172 @@
+# Turkish translations for io.github.tfuxu.floodit package.
+# Copyright (C) 2024 io.github.tfuxu.floodit's COPYRIGHT HOLDER
+# This file is distributed under the same license as the io.github.tfuxu.floodit package.
+#
+# Sabri Ünal <yakushabb@gmail.com>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: io.github.tfuxu.floodit\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-06 00:30+0300\n"
+"PO-Revision-Date: 2024-11-06 00:37+0300\n"
+"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
+"Language-Team: Türkçe <takim@gnome.org.tr>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.5\n"
+
+#: data/io.github.tfuxu.floodit.metainfo.xml.in.in:4
+#: data/io.github.tfuxu.floodit.desktop.in.in:7 data/ui/main_window.blp:5
+msgid "Flood It"
+msgstr "Flood It"
+
+#: data/io.github.tfuxu.floodit.metainfo.xml.in.in:5
+#: data/io.github.tfuxu.floodit.desktop.in.in:8 data/ui/main_window.blp:31
+msgid "Flood the board"
+msgstr "Panoyu doldur"
+
+#: data/io.github.tfuxu.floodit.metainfo.xml.in.in:17
+msgid ""
+"Flood It is a game with the simple premise of flooding the entire board with "
+"one color in the least amount of moves possible. Challenge yourself with "
+"this simple, yet addictive strategy game, where you need to flood-it as "
+"efficiently as you can!"
+msgstr ""
+"Flood It, mümkün olan en az hamlede tüm panoyu tek renkle doldurmanızı "
+"isteyen eğlenceli bir oyundur. Basit fakat bağımlılık yapan strateji "
+"oyunuyla kendinize meydan okurken olabildiğince verimli şekilde panoyu "
+"renklere boyayın!"
+
+#. Translators: These are search terms to find this application. Do NOT translate or localize the semicolons. The list MUST also end with a semicolon.
+#: data/io.github.tfuxu.floodit.desktop.in.in:12
+msgid "game;strategy;flood;flood-it;"
+msgstr "game;strategy;flood;flood-it;oyun;strateji;sel;baskın;taşkın;"
+
+#: data/ui/custom_mode_page.blp:5 data/ui/custom_mode_page.blp:21
+msgid "Custom Mode"
+msgstr "Özel Kip"
+
+#: data/ui/custom_mode_page.blp:22
+msgid "Choose your own board size and move limit"
+msgstr "Kendi pano boyutunuzu ve hamle sınırınızı seçin"
+
+#: data/ui/custom_mode_page.blp:27
+msgid "Board Size"
+msgstr "Pano Boyutu"
+
+#: data/ui/custom_mode_page.blp:28
+msgid "Range 2 to 32"
+msgstr "2-32 arası"
+
+#: data/ui/custom_mode_page.blp:40
+msgid "Custom Move Limit"
+msgstr "Özel Hamle Sınırı"
+
+#: data/ui/custom_mode_page.blp:44
+msgid "Move Limit"
+msgstr "Hamle Sınırı"
+
+#. Translators: The prefixed underscore is used to indicate a mnemonic. Do NOT remove it.
+#: data/ui/custom_mode_page.blp:59 data/ui/main_window.blp:44
+msgid "_Play"
+msgstr "_Oyna"
+
+#: data/ui/difficulty_page.blp:5 data/ui/difficulty_page.blp:28
+msgid "Select Difficulty"
+msgstr "Zorluk Seç"
+
+#: data/ui/difficulty_page.blp:16
+msgid "Back"
+msgstr "Geri"
+
+#: data/ui/difficulty_page.blp:29
+msgid "Play casually or challenge yourself"
+msgstr "Rahatça oynayın ya da kendinize meydan okuyun"
+
+#: data/ui/difficulty_page.blp:35
+msgid "Easy"
+msgstr "Kolay"
+
+#: data/ui/difficulty_page.blp:36
+msgid "A 6x6 board with 15 moves"
+msgstr "6x6 panoda 15 hamle"
+
+#: data/ui/difficulty_page.blp:41
+msgid "Normal"
+msgstr "Olağan"
+
+#: data/ui/difficulty_page.blp:42
+msgid "A 10x10 board with 20 moves"
+msgstr "10x10 panoda 20 hamle"
+
+#: data/ui/difficulty_page.blp:47
+msgid "Hard"
+msgstr "Zor"
+
+#: data/ui/difficulty_page.blp:48
+msgid "A 14x14 board with 25 moves"
+msgstr "14x14 panoda 25 hamle"
+
+#: data/ui/difficulty_page.blp:53
+msgid "Custom"
+msgstr "Özel"
+
+#: data/ui/difficulty_page.blp:54
+msgid "Specify your own board size and move limit"
+msgstr "Pano boyutunuzu ve hamle sınırınızı belirleyin"
+
+#: data/ui/game_page.blp:15 data/ui/result_page.blp:12
+msgid "Main Menu"
+msgstr "Ana Menü"
+
+#: data/ui/game_page.blp:51 data/ui/result_page.blp:96
+msgid "New Game"
+msgstr "Yeni Oyun"
+
+#: data/ui/game_page.blp:63 data/ui/result_page.blp:108
+msgid "Keyboard Shortcuts"
+msgstr "Klavye Kısayolları"
+
+#: data/ui/game_page.blp:73 data/ui/main_window.blp:23
+#: data/ui/result_page.blp:113
+msgid "About Flood It"
+msgstr "Flood It Hakkında"
+
+#: data/ui/help_overlay.blp:11
+msgctxt "shortcut window"
+msgid "Game"
+msgstr "Oyun"
+
+#: data/ui/help_overlay.blp:14
+msgctxt "shortcut window"
+msgid "Start New Game"
+msgstr "Yeni Oyun Başlat"
+
+#: data/ui/help_overlay.blp:20
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Genel"
+
+#: data/ui/help_overlay.blp:23
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "Kısayolları Göster"
+
+#: data/ui/help_overlay.blp:33
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Çık"
+
+#. Translators: The prefixed underscore is used to indicate a mnemonic. Do NOT remove it.
+#: data/ui/result_page.blp:63
+msgid "_Go Home"
+msgstr "Eve _Git"
+
+#. Translators: The prefixed underscore is used to indicate a mnemonic. Do NOT remove it.
+#: data/ui/result_page.blp:75
+msgid "_Play Again"
+msgstr "Yeniden _Oyna"
