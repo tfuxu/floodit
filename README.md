@@ -50,6 +50,9 @@ If you don't find any other options appealing to you, then you can always compil
 ### GNOME Builder:
 This is the easiest way of building Flood It if you want to build it as a Flatpak package. Highly recommended, but probably not for everyone, as GNOME Builder and Flatpak can be quite resource hungry.
 
+> [!IMPORTANT]
+> Building with GNOME Builder isn't currently supported. If you need to build a Flatpak package, see the [Flatpak Builder](https://github.com/tfuxu/floodit?tab=readme-ov-file#flatpak-builder) section.
+
 1. Download [GNOME Builder](https://flathub.org/apps/details/org.gnome.Builder).
 2. In Builder, click the _Clone Repository_ button at the bottom, using `https://github.com/tfuxu/floodit.git` as the URL.
 3. Click the _Build_ button at the top once the project is loaded.
