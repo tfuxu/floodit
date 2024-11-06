@@ -14,6 +14,7 @@ i18n = import('i18n')
 PROJECT_URL = 'https://github.com/tfuxu/floodit'
 BUGTRACKER_URL = 'https://github.com/tfuxu/floodit/issues'
 HELP_URL = 'https://github.com/tfuxu/floodit/discussions'
+VCS_BROWSER_URL = 'https://github.com/tfuxu/floodit.git'
 #TRANSLATE_URL = 'https://hosted.weblate.org/projects/tfuxu/floodit'
 
 # Constants
