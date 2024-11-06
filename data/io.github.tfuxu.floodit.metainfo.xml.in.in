@@ -21,12 +21,6 @@
     </p>
   </description>
 
-  <categories>
-    <category>BoardGame</category>
-    <category>Game</category>
-    <category>StrategyGame</category>
-  </categories>
-
   <screenshots>
     <screenshot type="default">
       <image type="source">https://raw.githubusercontent.com/tfuxu/floodit/master/data/screenshots/screenshot-3.png</image>
