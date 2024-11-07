@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: floodit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-01 21:20+0200\n"
+"POT-Creation-Date: 2024-11-07 21:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,10 +33,6 @@ msgid ""
 "one color in the least amount of moves possible. Challenge yourself with "
 "this simple, yet addictive strategy game, where you need to flood-it as "
 "efficiently as you can!"
-msgstr ""
-
-#: data/io.github.tfuxu.floodit.metainfo.xml.in.in:69
-msgid "This is the first release of Flood It!"
 msgstr ""
 
 #. Translators: These are search terms to find this application. Do NOT translate or localize the semicolons. The list MUST also end with a semicolon.
@@ -121,15 +117,15 @@ msgstr ""
 msgid "Main Menu"
 msgstr ""
 
-#: data/ui/game_page.blp:63 data/ui/result_page.blp:96
+#: data/ui/game_page.blp:51 data/ui/result_page.blp:96
 msgid "New Game"
 msgstr ""
 
-#: data/ui/game_page.blp:75 data/ui/result_page.blp:108
+#: data/ui/game_page.blp:63 data/ui/result_page.blp:108
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: data/ui/game_page.blp:85 data/ui/main_window.blp:23
+#: data/ui/game_page.blp:73 data/ui/main_window.blp:23
 #: data/ui/result_page.blp:113
 msgid "About Flood It"
 msgstr ""
