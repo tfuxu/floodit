@@ -7,7 +7,7 @@ Name=Flood It
 Comment=Flood the board
 Categories=GNOME;GTK;Game;StrategyGame;BoardGame;
 Icon=@APP_ID@
-# Translators: These are search terms to find this application. Do NOT translate or localize the semicolons. The list MUST also end with a semicolon.
+# Translators: These are search terms to find this application. Keep the English keywords and append your own keywords in your language. Do NOT translate or localize the semicolons. The list MUST also end with a semicolon.
 Keywords=game;strategy;flood;flood-it;
 # Translators: Do NOT translate or transliterate this text (these are enum types)!
 X-Purism-FormFactor=Workstation;Mobile;

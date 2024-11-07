@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: floodit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 21:41+0100\n"
+"POT-Creation-Date: 2024-11-07 21:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,7 +35,7 @@ msgid ""
 "efficiently as you can!"
 msgstr ""
 
-#. Translators: These are search terms to find this application. Do NOT translate or localize the semicolons. The list MUST also end with a semicolon.
+#. Translators: These are search terms to find this application. Keep the English keywords and append your own keywords in your language. Do NOT translate or localize the semicolons. The list MUST also end with a semicolon.
 #: data/io.github.tfuxu.floodit.desktop.in.in:12
 msgid "game;strategy;flood;flood-it;"
 msgstr ""
