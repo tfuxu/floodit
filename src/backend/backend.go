@@ -2,17 +2,19 @@ package backend
 
 import (
 	"math/rand"
+	"time"
 )
 
-// TODO: Allow users to provide a custom palette and check if it consists of: min 3 colors; max 8 colors
-var DefaultColors = map[string]string{
-	"blue":   "#3584e4",
-	"green":  "#33d17a",
-	"yellow": "#f6d32d",
-	"orange": "#ff7800",
-	"red":    "#ed333b",
-	"purple": "#9141ac",
-	//"brown":  "#b5835a",
+// TODO: Allow users to provide a custom palette and check if it consists of:
+// min 3 colors; max 8 colors
+var DefaultColors = [][2]string{
+	{"blue",   "#3584e4"},
+	{"green",  "#33d17a"},
+	{"yellow", "#f6d32d"},
+	{"orange", "#ff7800"},
+	{"red",    "#ed333b"},
+	{"purple", "#9141ac"},
+	//{"brown",  "#b5835a"},
 }
 
 type Position struct {
@@ -21,34 +23,49 @@ type Position struct {
 }
 
 type Board struct {
+	Seed int64
+
 	Rows    int
 	Columns int
 
 	Step uint
 
+	// TODO: Make matrix take color array indexes instead
 	Matrix [][]string
 }
 
-// InitializeBoard creates a new Board instance with generated "cubicle" matrix of provided size in rows and columns.
-func InitializeBoard(rows, cols int) Board {
+// InitializeBoard creates a new Board instance with generated "cubicle"
+// matrix of provided size in rows and columns.
+//
+// If provided a value different than 0 in `seed` argument, it will be
+// used as a seed in every random action of this struct instance.
+func InitializeBoard(rows, cols int, seed int64) Board {
 	matrix := make([][]string, rows)
 	for i := range matrix {
 		matrix[i] = make([]string, cols)
 	}
 
 	var availableColors []string
-	for key := range DefaultColors {
-		availableColors = append(availableColors, key)
+	for _, value := range DefaultColors {
+		availableColors = append(availableColors, value[0])
 	}
+
+	if seed == 0 {
+		seed = time.Now().UnixNano()
+	}
+
+	random := rand.New(rand.NewSource(seed))
 
 	for row := 0; row < rows; row++ {
 		for col := 0; col < cols; col++ {
-			cubicleColor := availableColors[rand.Intn(len(availableColors))]
+			cubicleColor := availableColors[random.Intn(len(availableColors))]
 			matrix[row][col] = cubicleColor
 		}
 	}
 
 	board := Board{
+		Seed: seed,
+
 		Rows:    rows,
 		Columns: cols,
 
