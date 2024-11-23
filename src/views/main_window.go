@@ -114,10 +114,15 @@ func (w *MainWindow) setupStack() {
 	w.mainStack.AddNamed(w.resultPage, "stack_result_page")
 }
 
-// StartNewGame calls NewBoard to initialize board, and changes view in main stack to show game page.
-// NOTE: To get calculated amount of steps, you need to set maxSteps parameter to 0.
-func (w *MainWindow) StartNewGame(name string, rows int, cols int, maxSteps uint) {
-	w.gamePage.NewBoard(name, rows, cols, maxSteps)
+// StartNewGame calls NewBoard to initialize board, and changes view in
+// main stack to show game page.
+// 
+// To get a calculated amount of steps, you need to set the
+// `maxSteps` parameter to 0.
+//
+// To use a random seed, set the `seed` parameter to 0.
+func (w *MainWindow) StartNewGame(name string, rows, cols int, maxSteps uint, seed int64) {
+	w.gamePage.NewBoard(name, rows, cols, maxSteps, seed)
 	w.mainStack.SetVisibleChildName("stack_game_page")
 }
 
