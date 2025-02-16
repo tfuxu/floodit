@@ -21,7 +21,7 @@ type ColorKeyboard struct {
 
 // NewColorKeyboard creates a new instance of ColorKeyboard.
 // It takes currently used color palette and a function to call when the button is pressed.
-func NewColorKeyboard(colorPalette map[string]string, callback func(colorName string)) *ColorKeyboard {
+func NewColorKeyboard(colorPalette [][2]string, callback func(colorName string)) *ColorKeyboard {
 	builder := gtk.NewBuilderFromResource(constants.RootPath + "/ui/color_keyboard.ui")
 
 	keyboard := builder.GetObject("color_keyboard").Cast().(*gtk.Box)
@@ -51,27 +51,25 @@ func NewColorKeyboard(colorPalette map[string]string, callback func(colorName st
 	return &ck
 }
 
-func (ck *ColorKeyboard) setupButtons(colorPalette map[string]string, callback func(colorName string)) {
+func (ck *ColorKeyboard) setupButtons(colorPalette [][2]string, callback func(colorName string)) {
 	buttonStore := make([]*gtk.Button, len(colorPalette))
 
 	var buttonColors []string
 
-	// NOTE: Since colorPalette is a [string]string map, its iteration output will be random,
-	// but it doesn't really matter here.
-	index := 0
-	for key := range colorPalette {
+	for i, color := range colorPalette {
+		colorName := color[0]
+		colorHex := color[1]
+
 		button := gtk.NewButton()
-		button.SetTooltipText(key) // TODO: Capitalize text
-		buttonColors = append(buttonColors, fmt.Sprintf(".%s-button { background-color: %s; }", key, colorPalette[key]))
-		button.SetCSSClasses([]string{"card", "circular", "color-button", fmt.Sprintf("%s-button", key)})
-		colorName := key
+		button.SetTooltipText(colorName) // TODO: Capitalize text
+		buttonColors = append(buttonColors, fmt.Sprintf(".%s-button { background-color: %s; }", colorName, colorHex))
+		button.SetCSSClasses([]string{"card", "circular", "color-button", fmt.Sprintf("%s-button", colorName)})
 
 		button.ConnectClicked(func() {
 			callback(colorName)
 		})
 
-		buttonStore[index] = button
-		index += 1
+		buttonStore[i] = button
 	}
 
 	ckCSS := strings.Join(buttonColors, " ")

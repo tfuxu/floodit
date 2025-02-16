@@ -50,7 +50,7 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 	gameBox := builder.GetObject("game_box").Cast().(*gtk.Box)
 	drawArea := builder.GetObject("draw_area").Cast().(*gtk.DrawingArea)
 
-	board := backend.InitializeBoard(10, 10)
+	board := backend.InitializeBoard(10, 10, 0)
 	maxSteps := board.CalculateMaxSteps()
 
 	gp := GamePage{
@@ -80,10 +80,15 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 	return &gp
 }
 
-// NewBoard initializes board, sets value for max amount of moves and queues a board draw
-// NOTE: To get calculated amount of steps, you need to set maxSteps parameter to 0.
-func (gp *GamePage) NewBoard(name string, rows int, cols int, maxSteps uint) {
-	gp.board = backend.InitializeBoard(rows, cols)
+// NewBoard initializes board, sets value for maximum amount of moves
+// and queues a board draw.
+//
+// To get a calculated amount of steps, you need to set the
+// `maxSteps` parameter to 0.
+//
+// To use a random seed, set the `seed` parameter to 0.
+func (gp *GamePage) NewBoard(name string, rows, cols int, maxSteps uint, seed int64) {
+	gp.board = backend.InitializeBoard(rows, cols, seed)
 
 	if maxSteps == 0 {
 		gp.maxSteps = gp.board.CalculateMaxSteps()
@@ -112,7 +117,14 @@ func (gp *GamePage) drawBoard(ctx *cairo.Context, width, height int) error {
 	xOffset := (width - rectWidth*boardCols) / 2
 	yOffset := (height - rectHeight*boardRows) / 2
 
-	gp.roundedRect(ctx, float64(xOffset), float64(yOffset), float64(rectWidth*boardCols), float64(rectHeight*boardRows), 12.0)
+	gp.roundedRect(
+		ctx,
+		float64(xOffset),
+		float64(yOffset),
+		float64(rectWidth*boardCols),
+		float64(rectHeight*boardRows),
+		12.0,
+	)
 	ctx.Clip()
 
 	ctx.NewPath()
@@ -120,8 +132,16 @@ func (gp *GamePage) drawBoard(ctx *cairo.Context, width, height int) error {
 		for col := 0; col < boardCols; col++ {
 			x := rectWidth*col + xOffset
 			y := rectHeight*row + yOffset
+			var hexCode string
 
-			hexCode := backend.DefaultColors[boardMatrix[row][col]]
+			// TODO: This is a dirty workaround to get this working with array.
+			// Make sure in future to use array indexes in game matrix instead.
+			for _, color := range backend.DefaultColors {
+				if color[0] == boardMatrix[row][col] {
+					hexCode = color[1]
+				}
+			}
+
 			cairoRGB, err := utils.HexToCairoRGB(hexCode)
 			if err != nil {
 				return err

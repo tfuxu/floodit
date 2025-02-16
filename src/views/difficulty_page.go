@@ -62,15 +62,15 @@ func (dp *DifficultyPage) setupSignals() {
 }*/
 
 func (dp *DifficultyPage) onEasyModeRowActivated() {
-	dp.parent.parent.StartNewGame("Easy", 6, 6, 15) // TODO: Make this translatable
+	dp.parent.parent.StartNewGame("Easy", 6, 6, 15, 0) // TODO: Make this translatable
 }
 
 func (dp *DifficultyPage) onNormalModeRowActivated() {
-	dp.parent.parent.StartNewGame("Normal", 10, 10, 20) // TODO: Make this translatable
+	dp.parent.parent.StartNewGame("Normal", 10, 10, 20, 0) // TODO: Make this translatable
 }
 
 func (dp *DifficultyPage) onHardModeRowActivated() {
-	dp.parent.parent.StartNewGame("Hard", 14, 14, 25) // TODO: Make this translatable
+	dp.parent.parent.StartNewGame("Hard", 14, 14, 25, 0) // TODO: Make this translatable
 }
 
 func (dp *DifficultyPage) onCustomModeRowActivated() {
