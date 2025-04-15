@@ -32,13 +32,6 @@ type GamePage struct {
 	drawingArea *gtk.DrawingArea
 }
 
-type BoardConfig struct {
-	Rows    int
-	Columns int
-
-	MaxSteps int
-}
-
 func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.ToastOverlay) *GamePage {
 	builder := gtk.NewBuilderFromResource(constants.RootPath + "/ui/game_page.ui")
 
