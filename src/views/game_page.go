@@ -23,8 +23,7 @@ type GamePage struct {
 	settings *gio.Settings
 	parent   *MainWindow
 
-	board    backend.Board
-	maxSteps uint
+	board backend.Board
 
 	toastOverlay  *adw.ToastOverlay
 	gameInfoTitle *adw.WindowTitle
@@ -50,8 +49,7 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 	gameBox := builder.GetObject("game_box").Cast().(*gtk.Box)
 	drawArea := builder.GetObject("draw_area").Cast().(*gtk.DrawingArea)
 
-	board := backend.InitializeBoard(10, 10, 0)
-	maxSteps := board.CalculateMaxSteps()
+	board := backend.DefaultBoard()
 
 	gp := GamePage{
 		Bin:      gamePage,
@@ -59,7 +57,6 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 		parent:   parent,
 
 		board:    board,
-		maxSteps: maxSteps,
 
 		toastOverlay:  toastOverlay,
 		gameInfoTitle: gameInfoTitle,
@@ -87,20 +84,14 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 // `maxSteps` parameter to 0.
 //
 // To use a random seed, set the `seed` parameter to 0.
-func (gp *GamePage) NewBoard(name string, rows, cols int, maxSteps uint, seed int64) {
-	gp.board = backend.InitializeBoard(rows, cols, seed)
-
-	if maxSteps == 0 {
-		gp.maxSteps = gp.board.CalculateMaxSteps()
-	} else {
-		gp.maxSteps = maxSteps
-	}
+func (gp *GamePage) NewBoard(name string, rows, columns int, maxSteps uint, seed int64) {
+	gp.board = backend.InitializeBoard(name, rows, columns, seed, maxSteps)
 
 	gp.gameInfoTitle.SetTitle(name)
 	// TODO: Translate this
-	gp.gameInfoTitle.SetSubtitle(fmt.Sprintf("Steps Left: %d", gp.maxSteps))
+	gp.gameInfoTitle.SetSubtitle(fmt.Sprintf("Steps Left: %d", gp.board.GetStepsLeft()))
 
-	slog.Debug(fmt.Sprintf("maxSteps: %d", gp.maxSteps))
+	slog.Debug(fmt.Sprintf("maxSteps: %d", gp.board.MaxSteps))
 	slog.Debug(fmt.Sprintf("rows: %d columns: %d", gp.board.Rows, gp.board.Columns))
 
 	gp.drawingArea.QueueDraw()
@@ -160,8 +151,8 @@ func (gp *GamePage) drawBoard(ctx *cairo.Context, width, height int) error {
 	return nil
 }
 
-func (gp *GamePage) getStepsLeft() int {
-	return int(gp.maxSteps - gp.board.Step)
+func (gp *GamePage) GetCurrentSeed() int64 {
+	return gp.board.Seed
 }
 
 func (gp *GamePage) onDraw(area *gtk.DrawingArea, ctx *cairo.Context, width, height int) {
@@ -182,7 +173,7 @@ func (gp *GamePage) roundedRect(ctx *cairo.Context, x, y, width, height, cornerR
 }
 
 func (gp *GamePage) onColorKeyboardUsed(colorName string) {
-	if gp.getStepsLeft() < 1 {
+	if gp.board.GetStepsLeft() < 1 {
 		gp.ActivateAction("win.show-finish", glib.NewVariantBoolean(false))
 		return
 	}
@@ -194,7 +185,7 @@ func (gp *GamePage) onColorKeyboardUsed(colorName string) {
 		return
 	}
 
-	stepsLeft := gp.getStepsLeft()
+	stepsLeft := gp.board.GetStepsLeft()
 	if stepsLeft < 1 {
 		gp.ActivateAction("win.show-finish", glib.NewVariantBoolean(false))
 		return
