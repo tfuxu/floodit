@@ -71,6 +71,12 @@ func NewMainWindow(app *adw.Application, settings *gio.Settings) *MainWindow {
 }
 
 func (w *MainWindow) setupActions() {
+	playAgainAction := gio.NewSimpleAction("play-again", nil)
+	playAgainAction.ConnectActivate(func(parameter *glib.Variant) {
+		w.playAgain()
+	})
+	w.AddAction(playAgainAction)
+
 	showWelcomeAction := gio.NewSimpleAction("show-welcome", nil)
 	showWelcomeAction.ConnectActivate(func(parameter *glib.Variant) {
 		w.showWelcomePage()
@@ -116,14 +122,24 @@ func (w *MainWindow) setupStack() {
 
 // StartNewGame calls NewBoard to initialize board, and changes view in
 // main stack to show game page.
-// 
+//
 // To get a calculated amount of steps, you need to set the
 // `maxSteps` parameter to 0.
 //
 // To use a random seed, set the `seed` parameter to 0.
-func (w *MainWindow) StartNewGame(name string, rows, cols int, maxSteps uint, seed int64) {
-	w.gamePage.NewBoard(name, rows, cols, maxSteps, seed)
+func (w *MainWindow) StartNewGame(name string, rows, columns int, maxSteps uint, seed int64) {
+	w.gamePage.NewBoard(name, rows, columns, maxSteps, seed)
 	w.mainStack.SetVisibleChildName("stack_game_page")
+}
+
+func (w *MainWindow) playAgain() {
+	w.StartNewGame(
+		w.gamePage.board.Name,
+		w.gamePage.board.Rows,
+		w.gamePage.board.Columns,
+		w.gamePage.board.MaxSteps,
+		w.gamePage.board.Seed,
+	)
 }
 
 func (w *MainWindow) showWelcomePage() {
