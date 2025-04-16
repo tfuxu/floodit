@@ -71,6 +71,7 @@ func NewMainWindow(app *adw.Application, settings *gio.Settings) *MainWindow {
 }
 
 func (w *MainWindow) setupActions() {
+	// TODO: Disable this action in certain parts of the app to prevent undefined behavior
 	playAgainAction := gio.NewSimpleAction("play-again", nil)
 	playAgainAction.ConnectActivate(func(parameter *glib.Variant) {
 		w.playAgain()
