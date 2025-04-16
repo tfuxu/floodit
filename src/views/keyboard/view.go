@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/tfuxu/floodit/src/backend/utils"
 	"github.com/tfuxu/floodit/src/constants"
 
 	"github.com/diamondburned/gotk4/pkg/gdk/v4"
@@ -61,7 +62,7 @@ func (ck *ColorKeyboard) setupButtons(colorPalette [][2]string, callback func(co
 		colorHex := color[1]
 
 		button := gtk.NewButton()
-		button.SetTooltipText(colorName) // TODO: Capitalize text
+		button.SetTooltipText(utils.ToSentenceString(colorName))
 		buttonColors = append(buttonColors, fmt.Sprintf(".%s-button { background-color: %s; }", colorName, colorHex))
 		button.SetCSSClasses([]string{"card", "circular", "color-button", fmt.Sprintf("%s-button", colorName)})
 
