@@ -2,17 +2,19 @@ package backend
 
 import (
 	"math/rand"
+	"time"
 )
 
-// TODO: Allow users to provide a custom palette and check if it consists of: min 3 colors; max 8 colors
-var DefaultColors = map[string]string{
-	"blue":   "#3584e4",
-	"green":  "#33d17a",
-	"yellow": "#f6d32d",
-	"orange": "#ff7800",
-	"red":    "#ed333b",
-	"purple": "#9141ac",
-	//"brown":  "#b5835a",
+// TODO: Allow users to provide a custom palette and check if it consists of:
+// min 3 colors; max 8 colors
+var DefaultColors = [][2]string{
+	{"blue",   "#3584e4"},
+	{"green",  "#33d17a"},
+	{"yellow", "#f6d32d"},
+	{"orange", "#ff7800"},
+	{"red",    "#ed333b"},
+	{"purple", "#9141ac"},
+	//{"brown",  "#b5835a"},
 }
 
 type Position struct {
@@ -21,41 +23,85 @@ type Position struct {
 }
 
 type Board struct {
+	Name string
+	Seed int64
+
 	Rows    int
 	Columns int
 
-	Step uint
+	Step     uint
+	MaxSteps uint
 
+	// TODO: Make matrix take color array indexes instead
 	Matrix [][]string
 }
 
-// InitializeBoard creates a new Board instance with generated "cubicle" matrix of provided size in rows and columns.
-func InitializeBoard(rows, cols int) Board {
+// Creates a new empty Board instance to use when initializing stuff
+//
+// NOTE: Board matrix is set to nil, so make sure to fill it with data
+// before making operations on it.
+func DefaultBoard() Board {
+	b := Board{
+		Name: "Custom",
+
+		Rows: 0,
+		Columns: 0,
+
+		Step: 0,
+		MaxSteps: 1,
+	}
+
+	return b
+}
+
+// InitializeBoard creates a new Board instance with generated "cubicle"
+// matrix of provided size in rows and columns.
+//
+// To get a calculated amount of steps, you need to set the
+// `maxSteps` parameter to 0.
+//
+// To use a random seed, set the `seed` parameter to 0.
+func InitializeBoard(name string, rows, columns int, seed int64, maxSteps uint) Board {
 	matrix := make([][]string, rows)
 	for i := range matrix {
-		matrix[i] = make([]string, cols)
+		matrix[i] = make([]string, columns)
 	}
 
 	var availableColors []string
-	for key := range DefaultColors {
-		availableColors = append(availableColors, key)
+	for _, value := range DefaultColors {
+		availableColors = append(availableColors, value[0])
 	}
 
+	if seed == 0 {
+		seed = time.Now().UnixNano()
+	}
+
+	random := rand.New(rand.NewSource(seed))
+
 	for row := 0; row < rows; row++ {
-		for col := 0; col < cols; col++ {
-			cubicleColor := availableColors[rand.Intn(len(availableColors))]
+		for col := 0; col < columns; col++ {
+			cubicleColor := availableColors[random.Intn(len(availableColors))]
 			matrix[row][col] = cubicleColor
 		}
 	}
 
 	board := Board{
+		Name: name,
+		Seed: seed,
+
 		Rows:    rows,
-		Columns: cols,
+		Columns: columns,
 
 		Step: 0,
 
 		Matrix: matrix,
 	}
+
+	if maxSteps == 0 {
+		maxSteps = board.CalculateMaxSteps()
+	}
+
+	board.MaxSteps = maxSteps
 
 	return board
 }
@@ -118,6 +164,11 @@ func (b *Board) Flood(newColor string) {
 	}
 
 	b.Step++
+}
+
+// TODO: Check if this shouldn't use uint instead
+func (b *Board) GetStepsLeft() int {
+	return int(b.MaxSteps - b.Step)
 }
 
 // Formula provided from:

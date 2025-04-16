@@ -60,25 +60,25 @@ Adw.Bin result_page {
 
               Gtk.Button {
                 // Translators: The prefixed underscore is used to indicate a mnemonic. Do NOT remove it.
-                label: _("_Go Home");
+                label: _("_Play Again");
                 use-underline: true;
-                action-name: "win.show-welcome";
-                //clicked => $on_return_clicked();
+                action-name: "win.play-again";
+                //clicked => $on_play_again_clicked();
 
                 styles [
+                  "suggested-action",
                   "pill"
                 ]
               }
 
               Gtk.Button {
                 // Translators: The prefixed underscore is used to indicate a mnemonic. Do NOT remove it.
-                label: _("_Play Again");
+                label: _("_New Game");
                 use-underline: true;
                 action-name: "win.show-game-select";
-                //clicked => $on_play_again_clicked();
+                //clicked => $on_return_clicked();
 
                 styles [
-                  "suggested-action",
                   "pill"
                 ]
               }
@@ -95,6 +95,10 @@ menu result_menu {
     item {
       label: _("New Game");
       action: "win.show-game-select";
+    }
+    item {
+      label: _("Play Again");
+      action: "win.play-again";
     }
   }
 

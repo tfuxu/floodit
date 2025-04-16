@@ -66,10 +66,17 @@ func (r *ResultPage) refresh() {
 
 	if r.resultState == "win" {
 		classes = []string{"title-1", "success"}
-		description = fmt.Sprintf("You flooded the board in <b>%d</b> moves", r.parent.gamePage.board.Step) // TODO: Make this translatable
+		description = fmt.Sprintf(
+			"You flooded the <b>%s</b> board in <b>%d</b> moves!", // TODO: Make this translatable
+			r.parent.gamePage.board.Name,
+			r.parent.gamePage.board.Step,
+		)
 	} else {
 		classes = []string{"title-1", "error"}
-		description = "Better luck next time!" // TODO: Make this translatable
+		description = fmt.Sprintf(
+			"You failed to finish the <b>%s</b> board.\nBetter luck next time!", // TODO: Make this translatable
+			r.parent.gamePage.board.Name,
+		)
 	}
 
 	r.titleLabel.SetLabel(ResultStates[r.resultState])

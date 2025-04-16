@@ -23,21 +23,13 @@ type GamePage struct {
 	settings *gio.Settings
 	parent   *MainWindow
 
-	board    backend.Board
-	maxSteps uint
+	board backend.Board
 
 	toastOverlay  *adw.ToastOverlay
 	gameInfoTitle *adw.WindowTitle
 
 	gameBox     *gtk.Box
 	drawingArea *gtk.DrawingArea
-}
-
-type BoardConfig struct {
-	Rows    int
-	Columns int
-
-	MaxSteps int
 }
 
 func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.ToastOverlay) *GamePage {
@@ -50,8 +42,7 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 	gameBox := builder.GetObject("game_box").Cast().(*gtk.Box)
 	drawArea := builder.GetObject("draw_area").Cast().(*gtk.DrawingArea)
 
-	board := backend.InitializeBoard(10, 10)
-	maxSteps := board.CalculateMaxSteps()
+	board := backend.DefaultBoard()
 
 	gp := GamePage{
 		Bin:      gamePage,
@@ -59,7 +50,6 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 		parent:   parent,
 
 		board:    board,
-		maxSteps: maxSteps,
 
 		toastOverlay:  toastOverlay,
 		gameInfoTitle: gameInfoTitle,
@@ -80,22 +70,21 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 	return &gp
 }
 
-// NewBoard initializes board, sets value for max amount of moves and queues a board draw
-// NOTE: To get calculated amount of steps, you need to set maxSteps parameter to 0.
-func (gp *GamePage) NewBoard(name string, rows int, cols int, maxSteps uint) {
-	gp.board = backend.InitializeBoard(rows, cols)
-
-	if maxSteps == 0 {
-		gp.maxSteps = gp.board.CalculateMaxSteps()
-	} else {
-		gp.maxSteps = maxSteps
-	}
+// NewBoard initializes board, sets value for maximum amount of moves
+// and queues a board draw.
+//
+// To get a calculated amount of steps, you need to set the
+// `maxSteps` parameter to 0.
+//
+// To use a random seed, set the `seed` parameter to 0.
+func (gp *GamePage) NewBoard(name string, rows, columns int, maxSteps uint, seed int64) {
+	gp.board = backend.InitializeBoard(name, rows, columns, seed, maxSteps)
 
 	gp.gameInfoTitle.SetTitle(name)
 	// TODO: Translate this
-	gp.gameInfoTitle.SetSubtitle(fmt.Sprintf("Steps Left: %d", gp.maxSteps))
+	gp.gameInfoTitle.SetSubtitle(fmt.Sprintf("Steps Left: %d", gp.board.GetStepsLeft()))
 
-	slog.Debug(fmt.Sprintf("maxSteps: %d", gp.maxSteps))
+	slog.Debug(fmt.Sprintf("maxSteps: %d", gp.board.MaxSteps))
 	slog.Debug(fmt.Sprintf("rows: %d columns: %d", gp.board.Rows, gp.board.Columns))
 
 	gp.drawingArea.QueueDraw()
@@ -112,7 +101,14 @@ func (gp *GamePage) drawBoard(ctx *cairo.Context, width, height int) error {
 	xOffset := (width - rectWidth*boardCols) / 2
 	yOffset := (height - rectHeight*boardRows) / 2
 
-	gp.roundedRect(ctx, float64(xOffset), float64(yOffset), float64(rectWidth*boardCols), float64(rectHeight*boardRows), 12.0)
+	gp.roundedRect(
+		ctx,
+		float64(xOffset),
+		float64(yOffset),
+		float64(rectWidth*boardCols),
+		float64(rectHeight*boardRows),
+		12.0,
+	)
 	ctx.Clip()
 
 	ctx.NewPath()
@@ -120,8 +116,16 @@ func (gp *GamePage) drawBoard(ctx *cairo.Context, width, height int) error {
 		for col := 0; col < boardCols; col++ {
 			x := rectWidth*col + xOffset
 			y := rectHeight*row + yOffset
+			var hexCode string
 
-			hexCode := backend.DefaultColors[boardMatrix[row][col]]
+			// TODO: This is a dirty workaround to get this working with array.
+			// Make sure in future to use array indexes in game matrix instead.
+			for _, color := range backend.DefaultColors {
+				if color[0] == boardMatrix[row][col] {
+					hexCode = color[1]
+				}
+			}
+
 			cairoRGB, err := utils.HexToCairoRGB(hexCode)
 			if err != nil {
 				return err
@@ -140,8 +144,8 @@ func (gp *GamePage) drawBoard(ctx *cairo.Context, width, height int) error {
 	return nil
 }
 
-func (gp *GamePage) getStepsLeft() int {
-	return int(gp.maxSteps - gp.board.Step)
+func (gp *GamePage) GetCurrentSeed() int64 {
+	return gp.board.Seed
 }
 
 func (gp *GamePage) onDraw(area *gtk.DrawingArea, ctx *cairo.Context, width, height int) {
@@ -162,7 +166,7 @@ func (gp *GamePage) roundedRect(ctx *cairo.Context, x, y, width, height, cornerR
 }
 
 func (gp *GamePage) onColorKeyboardUsed(colorName string) {
-	if gp.getStepsLeft() < 1 {
+	if gp.board.GetStepsLeft() < 1 {
 		gp.ActivateAction("win.show-finish", glib.NewVariantBoolean(false))
 		return
 	}
@@ -174,7 +178,7 @@ func (gp *GamePage) onColorKeyboardUsed(colorName string) {
 		return
 	}
 
-	stepsLeft := gp.getStepsLeft()
+	stepsLeft := gp.board.GetStepsLeft()
 	if stepsLeft < 1 {
 		gp.ActivateAction("win.show-finish", glib.NewVariantBoolean(false))
 		return
