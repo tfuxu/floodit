@@ -6,7 +6,7 @@ import (
 )
 
 // TODO: Allow users to provide a custom palette and check if it consists of:
-// min 3 colors; max 8 colors
+// min 3 colors; max 9 colors
 var DefaultColors = [][2]string{
 	{"blue",   "#3584e4"},
 	{"green",  "#33d17a"},
@@ -78,8 +78,8 @@ func InitializeBoard(name string, rows, columns int, seed int64, maxSteps uint) 
 
 	random := rand.New(rand.NewSource(seed))
 
-	for row := 0; row < rows; row++ {
-		for col := 0; col < columns; col++ {
+	for row := range rows {
+		for col := range columns {
 			cubicleColor := availableColors[random.Intn(len(availableColors))]
 			matrix[row][col] = cubicleColor
 		}
@@ -180,8 +180,8 @@ func (b *Board) CalculateMaxSteps() uint {
 func (b *Board) IsAllFilled() bool {
 	targetColor := b.Matrix[0][0]
 
-	for row := 0; row < b.Rows; row++ {
-		for col := 0; col < b.Columns; col++ {
+	for row := range b.Rows {
+		for col := range b.Columns {
 			if b.Matrix[row][col] != targetColor {
 				return false
 			}
