@@ -28,7 +28,7 @@ func NewAboutDialog() *AboutDialog {
 	})
 
 	dialog.SetTranslatorCredits("translator-credits")
-	dialog.SetCopyright("Copyright © 2024 tfuxu")
+	dialog.SetCopyright("Copyright © 2024-2025 tfuxu")
 	dialog.SetLicenseType(gtk.LicenseGPL30)
 	dialog.SetVersion(constants.Version)
 	dialog.SetReleaseNotesVersion(constants.RelVer)
