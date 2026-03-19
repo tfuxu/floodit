@@ -80,7 +80,6 @@ func setupActions(app *adw.Application) {
 	})
 	app.AddAction(quitAction)
 
-	app.SetAccelsForAction("win.show-help-overlay", []string{"<Primary>question"})
 	app.SetAccelsForAction("win.play-again", []string{"<Primary>R"})
 	app.SetAccelsForAction("win.show-game-select", []string{"<Primary>N"})
 	//app.SetAccelsForAction("win.show-game-rules", []string{"F1"})

@@ -5,7 +5,7 @@ blueprints = custom_target('blueprints',
     'difficulty_page.blp',
     'game_page.blp',
     'game_rules_page.blp',
-    'help_overlay.blp',
+    'shortcuts_dialog.blp',
     'main_window.blp',
     'result_page.blp',
     'starting_view.blp'
