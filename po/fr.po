@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: floodit\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-07 21:53+0100\n"
-"PO-Revision-Date: 2026-03-17 22:09+0100\n"
+"PO-Revision-Date: 2026-03-19 19:52+0100\n"
 "Last-Translator: Malo Billoré <malo.billore@gmail.com>\n"
 "Language-Team: French <gnomefr@traduc.org>\n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Gtranslator 49.0\n"
+"X-Generator: Gtranslator 50.0\n"
 
 #: data/io.github.tfuxu.floodit.metainfo.xml.in.in:4
 #: data/io.github.tfuxu.floodit.desktop.in.in:7 data/ui/main_window.blp:5
@@ -44,7 +44,7 @@ msgstr ""
 #. Translators: These are search terms to find this application. Keep the English keywords and append your own keywords in your language. Do NOT translate or localize the semicolons. The list MUST also end with a semicolon.
 #: data/io.github.tfuxu.floodit.desktop.in.in:12
 msgid "game;strategy;flood;flood-it;"
-msgstr "game;strategy;flood;flood-it;jeu;stratégie;inonder;inondation"
+msgstr "game;strategy;flood;flood-it;jeu;stratégie;inonder;inondation;"
 
 #: data/ui/custom_mode_page.blp:5 data/ui/custom_mode_page.blp:21
 msgid "Custom Mode"
@@ -171,4 +171,3 @@ msgstr "_Retourner au menu"
 #: data/ui/result_page.blp:75
 msgid "_Play Again"
 msgstr "_Relancer une partie"
-
