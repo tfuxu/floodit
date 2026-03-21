@@ -5,9 +5,9 @@ import (
 
 	"github.com/tfuxu/floodit/src/constants"
 
-	"github.com/diamondburned/gotk4-adwaita/pkg/adw"
-	"github.com/diamondburned/gotk4/pkg/gio/v2"
-	"github.com/diamondburned/gotk4/pkg/gtk/v4"
+	"codeberg.org/puregotk/puregotk/v4/adw"
+	"codeberg.org/puregotk/puregotk/v4/gio"
+	"codeberg.org/puregotk/puregotk/v4/gtk"
 )
 
 // TODO: Make this translatable
@@ -31,20 +31,27 @@ type ResultPage struct {
 func NewResultPage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.ToastOverlay) *ResultPage {
 	builder := gtk.NewBuilderFromResource(constants.RootPath + "/ui/result_page.ui")
 
-	resultPage := builder.GetObject("result_page").Cast().(*adw.Bin)
+	var resultPage adw.Bin
+	builder.GetObject("result_page").Cast(&resultPage)
+	defer resultPage.Unref()
 
-	titleLabel := builder.GetObject("title_label").Cast().(*gtk.Label)
-	descriptionLabel := builder.GetObject("description_label").Cast().(*gtk.Label)
+	var titleLabel gtk.Label
+	builder.GetObject("title_label").Cast(&titleLabel)
+	defer titleLabel.Unref()
+
+	var descriptionLabel gtk.Label
+	builder.GetObject("description_label").Cast(&descriptionLabel)
+	defer descriptionLabel.Unref()
 
 	rp := ResultPage{
-		Bin:      resultPage,
+		Bin:      &resultPage,
 		settings: settings,
 		parent:   parent,
 
 		toastOverlay: toastOverlay,
 
-		titleLabel:       titleLabel,
-		descriptionLabel: descriptionLabel,
+		titleLabel:       &titleLabel,
+		descriptionLabel: &descriptionLabel,
 	}
 
 	return &rp
@@ -81,5 +88,5 @@ func (r *ResultPage) refresh() {
 
 	r.titleLabel.SetLabel(ResultStates[r.resultState])
 	r.descriptionLabel.SetLabel(description)
-	r.titleLabel.SetCSSClasses(classes)
+	r.titleLabel.SetCssClasses(classes)
 }
