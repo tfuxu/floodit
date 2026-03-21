@@ -1,6 +1,7 @@
 <img src="data/icons/hicolor/scalable/apps/io.github.tfuxu.floodit.svg" align="left" height="150px" vspace="10px">
 
-# Flood It
+Flood It
+========
 
 Challenge yourself with this simple, yet addictive strategy game, where you need to flood-it as efficiently as you can!
 
@@ -12,7 +13,7 @@ Challenge yourself with this simple, yet addictive strategy game, where you need
 
 </div>
 
-Flood It is a game with the simple premise of flooding the entire board with one color in the least amount of moves possible. It's based on the original Flood-It! by Lab Pixies [<sub>archived in Wayback Machine<sup>↗</sup></sub>](https://web.archive.org/web/20101226202442/http://www.labpixies.com/gadget_page.php?id=10&platform_id=0)
+Flood It is a game with the simple premise of flooding the entire board with one color in the least amount of moves possible. It's based on the original [Flood-It! by Lab Pixies](https://web.archive.org/web/20101226202442/http://www.labpixies.com/gadget_page.php?id=10&platform_id=0).
 
 ## How to install:
 You can install Flood It in many ways, here are some listed:
@@ -21,13 +22,15 @@ You can install Flood It in many ways, here are some listed:
 
 <a href='https://flathub.org/apps/details/io.github.tfuxu.floodit'>
   <img width='192' alt='Download on Flathub' src='https://flathub.org/api/badge?svg&locale=en'/>
-</a><br>
+</a><br><br>
 
 **2. Alternative package distributions:**
+
 > [!WARNING]
 > Although some of the methods listed here may be maintained by the Flood It maintainers, these methods **are not** officially supported and issues related to packaging in them should be reported outside this project's bug tracker.
 
-<a href="https://repology.org/project/floodit/versions">
+Get in from your distribution's package manager:
+<br><br><a href="https://repology.org/project/floodit/versions">
     <img src="https://repology.org/badge/vertical-allrepos/floodit.svg" alt="Packaging status">
 </a>
 
@@ -50,24 +53,22 @@ If you don't find any other options appealing to you, then you can always compil
 ### GNOME Builder:
 This is the easiest way of building Flood It if you want to build it as a Flatpak package. Highly recommended, but probably not for everyone, as GNOME Builder and Flatpak can be quite resource hungry.
 
-> [!IMPORTANT]
-> Building with GNOME Builder isn't currently supported. If you need to build a Flatpak package, see the [Flatpak Builder](https://github.com/tfuxu/floodit?tab=readme-ov-file#flatpak-builder) section.
-
 1. Download [GNOME Builder](https://flathub.org/apps/details/org.gnome.Builder).
 2. In Builder, click the _Clone Repository_ button at the bottom, using `https://github.com/tfuxu/floodit.git` as the URL.
 3. Click the _Build_ button at the top once the project is loaded.
 
 ### Flatpak Builder:
+This is a little bit more advanced way of building Flatpak packages, but if you don't want or can't have GNOME Builder, then this method would be your best bet.
 
 #### Prerequisites:
 
 - Flatpak Builder `flatpak-builder`
-- GNOME SDK runtime `org.gnome.Sdk//47`
-- GNOME Platform runtime `org.gnome.Platform//47`
+- GNOME SDK runtime `org.gnome.Sdk//50`
+- GNOME Platform runtime `org.gnome.Platform//50`
 
 Install required runtimes:
 ```sh
-flatpak install org.gnome.Sdk//47 org.gnome.Platform//47
+flatpak install org.gnome.Sdk//50 org.gnome.Platform//50
 ```
 
 #### Building Instructions:
@@ -87,14 +88,16 @@ flatpak-builder --install --system --force-clean repo/ build-aux/flatpak/io.gith
 ```
 
 ### Meson Build System:
+If you don't want to install Halftone as a Flatpak package, you can build it using Meson build system. Meson is used in majority of GTK apps and enforced on GNOME core apps, so learning how to use it would be pretty handy if you plan to contribute to other GTK projects.
 
 #### Prerequisites:
 
 The following packages are required to build this project:
 
-- Golang >= 1.22 `go`
-- Gtk4 >= 4.14 `gtk4`
-- Libadwaita >= 1.5 `libadwaita`
+- Golang >= 1.26 `go`
+- Blueprint [`blueprint-compiler`](https://gnome.pages.gitlab.gnome.org/blueprint-compiler/setup.html)
+- Gtk4 >= 4.18 `gtk4`
+- Libadwaita >= 1.8 `libadwaita`
 - Meson `meson`
 - Ninja `ninja-build`
 
