@@ -7,6 +7,10 @@
     "org.freedesktop.Sdk.Extension.golang"
   ],
   "command" : "floodit",
+  "build-options": {
+    "append-path": "/usr/lib/sdk/golang/bin",
+    "build-args": ["--filesystem=home"]
+  },
   "finish-args" : [
       "--share=ipc",
       "--device=dri",
@@ -27,14 +31,7 @@
   "modules" : [
       {
           "name" : "floodit",
-          "builddir" : true,
           "buildsystem" : "meson",
-          "build-options": {
-            "env": {
-              "GOBIN": "/app/bin",
-              "GOROOT": "/usr/lib/sdk/golang"
-            }
-          },
           "config-opts": [
               "-Dbuildtype=release"
           ],

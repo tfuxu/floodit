@@ -5,6 +5,7 @@ project('floodit',
                      'werror=false',
                    ],
 )
+add_project_arguments(['-I' + meson.project_build_root()], language: 'c')
 
 # Import modules
 gnome = import('gnome')
@@ -45,17 +46,8 @@ endif
 
 # Required dependencies
 dependency('glib-2.0')
-dependency('gtk4', version: '>= 4.14.0')
-dependency('libadwaita-1', version: '>= 1.5.0')
-
-go_root = run_command('printenv', 'GOROOT', check: false)
-
-# Find Go installation
-if go_root.returncode() != 0
-  go_bin = find_program('go')
-else
-  go_bin = find_program(join_paths(go_root.stdout().strip(), 'bin', 'go'))
-endif
+dependency('gtk4', version: '>= 4.18.0')
+dependency('libadwaita-1', version: '>= 1.8.0')
 
 # Install configuration data
 conf = configuration_data()
@@ -79,14 +71,20 @@ floodit_build_path = join_paths(meson.current_source_dir(), 'src')
 
 # Compile project
 custom_target(
-  'go-build',
-  build_by_default: true,
-  build_always_stale: true,
+  'floodit',
+  build_always_stale: true,  # Go caches internally
   output: meson.project_name(),
   console: true,
   install: true,
-  install_dir: get_option('bindir'),
-  command: [go_bin, 'build', '-v', '-o', '@OUTPUT@', floodit_build_path]
+  install_dir: join_paths(get_option('prefix'), get_option('bindir')),
+  command: [
+    find_program('go').full_path(),
+    'build',
+    '-v',
+    '-o',
+    '@OUTPUT@',
+    floodit_build_path
+  ]
 )
 
 # Execute post-installation GTK/GNOME scripts
