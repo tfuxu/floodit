@@ -8,6 +8,8 @@ import (
 )
 
 // HexToCairoRGB converts hexadecimal color codes to float64 representations of red, green and blue color channels.
+//
+// Remember to prefix hex code with hash (#) character!
 func HexToCairoRGB(hexCode string) ([3]float64, error) {
 	if !strings.HasPrefix(hexCode, "#") {
 		return [3]float64{}, errors.New("provided string isn't prefixed with hash (#) character")

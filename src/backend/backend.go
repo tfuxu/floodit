@@ -36,7 +36,7 @@ type Board struct {
 	Matrix [][]string
 }
 
-// Creates a new empty Board instance to use when initializing stuff
+// DefaultBoard creates a new empty Board instance to use when initializing.
 //
 // NOTE: Board matrix is set to nil, so make sure to fill it with data
 // before making operations on it.

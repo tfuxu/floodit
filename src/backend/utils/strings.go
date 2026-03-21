@@ -6,6 +6,10 @@ import (
 	"unicode/utf8"
 )
 
+// ToSentenceString takes a string and maps the first rune in a string to
+// upper case.
+//
+// Returnes unchanged string if something goes wrong with rune decoding.
 func ToSentenceString(text string) string {
 	if len(text) == 0 {
 		return ""
