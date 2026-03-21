@@ -14,6 +14,7 @@ import (
 	"codeberg.org/puregotk/puregotk/v4/glib"
 	"codeberg.org/puregotk/puregotk/v4/gobject"
 	"codeberg.org/puregotk/puregotk/v4/graphene"
+	"codeberg.org/puregotk/puregotk/v4/gsk"
 	"codeberg.org/puregotk/puregotk/v4/gtk"
 )
 
@@ -35,16 +36,6 @@ func NewGameBoard(board *backend.Board, FirstPropertyNameVar string, varArgs ...
 	gb.board = board
 
 	return v
-}
-
-// TODO: Implement board rounding
-func (gb *GameBoard) roundedRect(x, y, width, height, cornerRadius float64) {
-	/*ctx.NewSubPath()
-	ctx.Arc(x+width-cornerRadius, y+cornerRadius, cornerRadius, -math.Pi/2, 0)
-	ctx.Arc(x+width-cornerRadius, y+height-cornerRadius, cornerRadius, 0, math.Pi/2)
-	ctx.Arc(x+cornerRadius, y+height-cornerRadius, cornerRadius, math.Pi/2, math.Pi)
-	ctx.Arc(x+cornerRadius, y+cornerRadius, cornerRadius, math.Pi, 3*math.Pi/2)
-	ctx.ClosePath()*/
 }
 
 func init() {
@@ -99,6 +90,19 @@ func init() {
 
 				snapshot.Save()
 
+				roundedRect := gsk.RoundedRect{}
+				roundedRect.InitFromRect(
+					graphene.RectAlloc().Init(
+						float32(xOffset),
+						float32(yOffset),
+						float32(rectWidth*boardCols),
+						float32(rectHeight*boardRows),
+					),
+					12.0,
+				)
+
+				snapshot.PushRoundedClip(&roundedRect)
+
 				for row := 0; row < boardRows; row++ {
 					for col := 0; col < boardCols; col++ {
 						x := rectWidth*col + xOffset
@@ -133,6 +137,7 @@ func init() {
 					}
 				}
 
+				snapshot.Pop()
 				snapshot.Restore()
 			}
 		})
