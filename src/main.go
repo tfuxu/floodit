@@ -10,9 +10,8 @@ import (
 	"github.com/tfuxu/floodit/src/views"
 	"github.com/tfuxu/floodit/src/views/about"
 
-	"github.com/diamondburned/gotk4-adwaita/pkg/adw"
-	"github.com/diamondburned/gotk4/pkg/gio/v2"
-	"github.com/diamondburned/gotk4/pkg/glib/v2"
+	"codeberg.org/puregotk/puregotk/v4/adw"
+	"codeberg.org/puregotk/puregotk/v4/gio"
 )
 
 func init() {
@@ -23,6 +22,7 @@ func init() {
 		slog.SetLogLoggerLevel(slog.LevelInfo)
 	}
 
+	// TODO: Check if this will be needed after devenv removal
 	// Set `XDG_DATA_DIRS` to <builddir>/data if running in devenv
 	if os.Getenv("MESON_DEVENV") == "1" {
 		var data_dirs string
@@ -48,17 +48,18 @@ func init() {
 func main() {
 	settings := gio.NewSettings(constants.AppID)
 
-	app := adw.NewApplication(constants.AppID, gio.ApplicationFlagsNone)
-	app.SetResourceBasePath(constants.RootPath)
+	app := adw.NewApplication(constants.AppID, gio.GApplicationDefaultFlagsValue)
+	defer app.Unref()
 
+	app.SetResourceBasePath(constants.RootPath)
 	setupActions(app)
 
-	app.ConnectActivate(func() {
+	app.ConnectActivate(new(func(gio.Application) {
 		doActivate(app, settings)
-	})
+	}))
 
-	if code := app.Run(os.Args); code > 0 {
-		os.Exit(code)
+	if code := app.Run(int32(len(os.Args)), os.Args); code > 0 {
+		os.Exit(int(code))
 	}
 }
 
@@ -69,27 +70,26 @@ func doActivate(app *adw.Application, settings *gio.Settings) {
 
 func setupActions(app *adw.Application) {
 	aboutAction := gio.NewSimpleAction("about", nil)
-	aboutAction.ConnectActivate(func(parameter *glib.Variant) {
+	aboutAction.ConnectActivate(new(func(gio.SimpleAction, uintptr) {
 		onAbout(app)
-	})
+	}))
 	app.AddAction(aboutAction)
 
 	quitAction := gio.NewSimpleAction("quit", nil)
-	quitAction.ConnectActivate(func(parameter *glib.Variant) {
+	quitAction.ConnectActivate(new(func(gio.SimpleAction, uintptr) {
 		onQuit(app)
-	})
+	}))
 	app.AddAction(quitAction)
 
-	app.SetAccelsForAction("win.show-help-overlay", []string{"<Primary>question"})
 	app.SetAccelsForAction("win.play-again", []string{"<Primary>R"})
 	app.SetAccelsForAction("win.show-game-select", []string{"<Primary>N"})
-	//app.SetAccelsForAction("win.show-game-rules", []string{"F1"})
+	app.SetAccelsForAction("app.game-rules", []string{"F1"})
 	app.SetAccelsForAction("app.quit", []string{"<Primary>Q"})
 }
 
 func onAbout(app *adw.Application) {
 	a := about.NewAboutDialog()
-	a.Present(app.ActiveWindow())
+	a.Present(&app.GetActiveWindow().Widget)
 }
 
 func onQuit(app *adw.Application) {

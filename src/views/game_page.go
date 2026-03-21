@@ -3,19 +3,17 @@ package views
 import (
 	"fmt"
 	"log/slog"
-	"math"
 
-	"github.com/tfuxu/floodit/src/backend/utils"
 	"github.com/tfuxu/floodit/src/constants"
+	"github.com/tfuxu/floodit/src/views/board"
 	"github.com/tfuxu/floodit/src/views/keyboard"
 
 	"github.com/tfuxu/floodit/src/backend"
 
-	"github.com/diamondburned/gotk4-adwaita/pkg/adw"
-	"github.com/diamondburned/gotk4/pkg/cairo"
-	"github.com/diamondburned/gotk4/pkg/gio/v2"
-	"github.com/diamondburned/gotk4/pkg/glib/v2"
-	"github.com/diamondburned/gotk4/pkg/gtk/v4"
+	"codeberg.org/puregotk/puregotk/v4/adw"
+	"codeberg.org/puregotk/puregotk/v4/gio"
+	"codeberg.org/puregotk/puregotk/v4/glib"
+	"codeberg.org/puregotk/puregotk/v4/gtk"
 )
 
 type GamePage struct {
@@ -28,44 +26,53 @@ type GamePage struct {
 	toastOverlay  *adw.ToastOverlay
 	gameInfoTitle *adw.WindowTitle
 
-	gameBox     *gtk.Box
-	drawingArea *gtk.DrawingArea
+	gameBox   *gtk.Box
+	gameBoard *board.GameBoard
 }
 
 func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.ToastOverlay) *GamePage {
 	builder := gtk.NewBuilderFromResource(constants.RootPath + "/ui/game_page.ui")
 
-	gamePage := builder.GetObject("game_page").Cast().(*adw.Bin)
+	var gamePage adw.Bin
+	builder.GetObject("game_page").Cast(&gamePage)
+	defer gamePage.Unref()
 
-	gameInfoTitle := builder.GetObject("game_info_title").Cast().(*adw.WindowTitle)
+	var gameInfoTitle adw.WindowTitle
+	builder.GetObject("game_info_title").Cast(&gameInfoTitle)
+	defer gameInfoTitle.Unref()
 
-	gameBox := builder.GetObject("game_box").Cast().(*gtk.Box)
-	drawArea := builder.GetObject("draw_area").Cast().(*gtk.DrawingArea)
+	var gameBox gtk.Box
+	builder.GetObject("game_box").Cast(&gameBox)
+	defer gameBox.Unref()
 
-	board := backend.DefaultBoard()
+	defaultBoard := backend.DefaultBoard()
 
 	gp := GamePage{
-		Bin:      gamePage,
+		Bin:      &gamePage,
 		settings: settings,
 		parent:   parent,
 
-		board:    board,
+		board: defaultBoard,
 
 		toastOverlay:  toastOverlay,
-		gameInfoTitle: gameInfoTitle,
+		gameInfoTitle: &gameInfoTitle,
 
-		gameBox:     gameBox,
-		drawingArea: drawArea,
+		gameBox: &gameBox,
 	}
 
+	// TODO: Add a breakpoint that will set a higher content size when window width is >= 600px
+	gameBoard := board.NewGameBoard(
+		&gp.board,
+		"vexpand", true,
+		"hexpand", true,
+		"width-request", 300,
+		"height-request", 300,
+	)
+	gameBox.Append(&gameBoard.Widget)
+	gp.gameBoard = &gameBoard
+
 	colorKeyboard := keyboard.NewColorKeyboard(backend.DefaultColors, gp.onColorKeyboardUsed)
-	gameBox.Append(colorKeyboard)
-
-	/*drawArea.ConnectResize(func(width, height int) {
-		fmt.Println("resize", width, height)
-	})*/
-
-	drawArea.SetDrawFunc(gp.onDraw)
+	gameBox.Append(&colorKeyboard.Widget)
 
 	return &gp
 }
@@ -87,100 +94,29 @@ func (gp *GamePage) NewBoard(name string, rows, columns int, maxSteps uint, seed
 	slog.Debug(fmt.Sprintf("maxSteps: %d", gp.board.MaxSteps))
 	slog.Debug(fmt.Sprintf("rows: %d columns: %d", gp.board.Rows, gp.board.Columns))
 
-	gp.drawingArea.QueueDraw()
-}
-
-func (gp *GamePage) drawBoard(ctx *cairo.Context, width, height int) error {
-	boardMatrix := gp.board.Matrix
-
-	boardRows := gp.board.Rows
-	boardCols := gp.board.Columns
-
-	rectWidth := width / boardCols
-	rectHeight := height / boardRows
-	xOffset := (width - rectWidth*boardCols) / 2
-	yOffset := (height - rectHeight*boardRows) / 2
-
-	gp.roundedRect(
-		ctx,
-		float64(xOffset),
-		float64(yOffset),
-		float64(rectWidth*boardCols),
-		float64(rectHeight*boardRows),
-		12.0,
-	)
-	ctx.Clip()
-
-	ctx.NewPath()
-	for row := 0; row < boardRows; row++ {
-		for col := 0; col < boardCols; col++ {
-			x := rectWidth*col + xOffset
-			y := rectHeight*row + yOffset
-			var hexCode string
-
-			// TODO: This is a dirty workaround to get this working with array.
-			// Make sure in future to use array indexes in game matrix instead.
-			for _, color := range backend.DefaultColors {
-				if color[0] == boardMatrix[row][col] {
-					hexCode = color[1]
-				}
-			}
-
-			cairoRGB, err := utils.HexToCairoRGB(hexCode)
-			if err != nil {
-				return err
-			}
-
-			red := cairoRGB[0]
-			green := cairoRGB[1]
-			blue := cairoRGB[2]
-
-			ctx.SetSourceRGB(red, green, blue)
-			ctx.Rectangle(float64(x), float64(y), float64(rectWidth), float64(rectHeight))
-			ctx.Fill()
-		}
-	}
-
-	return nil
+	gp.gameBoard.QueueDraw()
 }
 
 func (gp *GamePage) GetCurrentSeed() int64 {
 	return gp.board.Seed
 }
 
-func (gp *GamePage) onDraw(area *gtk.DrawingArea, ctx *cairo.Context, width, height int) {
-	err := gp.drawBoard(ctx, width, height)
-	if err != nil {
-		gp.toastOverlay.AddToast(adw.NewToast("Failed to retrieve colors for board points"))
-		slog.Error("Failed to convert hex values to Cairo compatible RGB channels:", "msg", err)
-	}
-}
-
-func (gp *GamePage) roundedRect(ctx *cairo.Context, x, y, width, height, cornerRadius float64) {
-	ctx.NewSubPath()
-	ctx.Arc(x+width-cornerRadius, y+cornerRadius, cornerRadius, -math.Pi/2, 0)
-	ctx.Arc(x+width-cornerRadius, y+height-cornerRadius, cornerRadius, 0, math.Pi/2)
-	ctx.Arc(x+cornerRadius, y+height-cornerRadius, cornerRadius, math.Pi/2, math.Pi)
-	ctx.Arc(x+cornerRadius, y+cornerRadius, cornerRadius, math.Pi, 3*math.Pi/2)
-	ctx.ClosePath()
-}
-
 func (gp *GamePage) onColorKeyboardUsed(colorName string) {
 	if gp.board.GetStepsLeft() < 1 {
-		gp.ActivateAction("win.show-finish", glib.NewVariantBoolean(false))
+		gp.ActivateActionVariant("win.show-finish", glib.NewVariantBoolean(false))
 		return
 	}
 
 	gp.board.Flood(colorName)
 
 	if gp.board.IsAllFilled() {
-		gp.ActivateAction("win.show-finish", glib.NewVariantBoolean(true))
+		gp.ActivateActionVariant("win.show-finish", glib.NewVariantBoolean(true))
 		return
 	}
 
 	stepsLeft := gp.board.GetStepsLeft()
 	if stepsLeft < 1 {
-		gp.ActivateAction("win.show-finish", glib.NewVariantBoolean(false))
+		gp.ActivateActionVariant("win.show-finish", glib.NewVariantBoolean(false))
 		return
 	}
 
@@ -191,5 +127,5 @@ func (gp *GamePage) onColorKeyboardUsed(colorName string) {
 	slog.Debug(fmt.Sprintf("StepsLeft: %d", stepsLeft))
 	slog.Debug(fmt.Sprintf("IsAllFilled: %t", gp.board.IsAllFilled()))
 
-	gp.drawingArea.QueueDraw()
+	gp.gameBoard.QueueDraw()
 }

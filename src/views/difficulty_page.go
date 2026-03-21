@@ -3,9 +3,9 @@ package views
 import (
 	"github.com/tfuxu/floodit/src/constants"
 
-	"github.com/diamondburned/gotk4-adwaita/pkg/adw"
-	"github.com/diamondburned/gotk4/pkg/gio/v2"
-	"github.com/diamondburned/gotk4/pkg/gtk/v4"
+	"codeberg.org/puregotk/puregotk/v4/adw"
+	"codeberg.org/puregotk/puregotk/v4/gio"
+	"codeberg.org/puregotk/puregotk/v4/gtk"
 )
 
 type DifficultyPage struct {
@@ -24,24 +24,37 @@ type DifficultyPage struct {
 func NewDifficultyPage(parent *StartingView, settings *gio.Settings, toastOverlay *adw.ToastOverlay) *DifficultyPage {
 	builder := gtk.NewBuilderFromResource(constants.RootPath + "/ui/difficulty_page.ui")
 
-	difficultyPage := builder.GetObject("difficulty_page").Cast().(*adw.NavigationPage)
+	var difficultyPage adw.NavigationPage
+	builder.GetObject("difficulty_page").Cast(&difficultyPage)
+	defer difficultyPage.Unref()
 
-	easyModeRow := builder.GetObject("easy_mode_row").Cast().(*adw.ActionRow)
-	normalModeRow := builder.GetObject("normal_mode_row").Cast().(*adw.ActionRow)
-	hardModeRow := builder.GetObject("hard_mode_row").Cast().(*adw.ActionRow)
-	customModeRow := builder.GetObject("custom_mode_row").Cast().(*adw.ActionRow)
+	var easyModeRow adw.ActionRow
+	builder.GetObject("easy_mode_row").Cast(&easyModeRow)
+	defer easyModeRow.Unref()
+
+	var normalModeRow adw.ActionRow
+	builder.GetObject("normal_mode_row").Cast(&normalModeRow)
+	defer normalModeRow.Unref()
+
+	var hardModeRow adw.ActionRow
+	builder.GetObject("hard_mode_row").Cast(&hardModeRow)
+	defer hardModeRow.Unref()
+
+	var customModeRow adw.ActionRow
+	builder.GetObject("custom_mode_row").Cast(&customModeRow)
+	defer customModeRow.Unref()
 
 	cmp := DifficultyPage{
-		NavigationPage: difficultyPage,
+		NavigationPage: &difficultyPage,
 		settings:       settings,
 		parent:         parent,
 
 		toastOverlay: toastOverlay,
 
-		easyModeRow:   easyModeRow,
-		normalModeRow: normalModeRow,
-		hardModeRow:   hardModeRow,
-		customModeRow: customModeRow,
+		easyModeRow:   &easyModeRow,
+		normalModeRow: &normalModeRow,
+		hardModeRow:   &hardModeRow,
+		customModeRow: &customModeRow,
 	}
 
 	cmp.setupSignals()
@@ -50,10 +63,10 @@ func NewDifficultyPage(parent *StartingView, settings *gio.Settings, toastOverla
 }
 
 func (dp *DifficultyPage) setupSignals() {
-	dp.easyModeRow.ConnectActivated(dp.onEasyModeRowActivated)
-	dp.normalModeRow.ConnectActivated(dp.onNormalModeRowActivated)
-	dp.hardModeRow.ConnectActivated(dp.onHardModeRowActivated)
-	dp.customModeRow.ConnectActivated(dp.onCustomModeRowActivated)
+	dp.easyModeRow.ConnectActivated(new(func(adw.ActionRow) { dp.onEasyModeRowActivated() }))
+	dp.normalModeRow.ConnectActivated(new(func(adw.ActionRow) { dp.onNormalModeRowActivated() }))
+	dp.hardModeRow.ConnectActivated(new(func(adw.ActionRow) { dp.onHardModeRowActivated() }))
+	dp.customModeRow.ConnectActivated(new(func(adw.ActionRow) { dp.onCustomModeRowActivated() }))
 }
 
 /*func (dp *DifficultyPage) onBackButtonClicked() {

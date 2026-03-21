@@ -38,7 +38,7 @@ Adw.Bin result_page {
               justify: center;
 
               styles [
-                "title-1"
+                "title-1",
               ]
             }
 
@@ -63,11 +63,10 @@ Adw.Bin result_page {
                 label: _("_Play Again");
                 use-underline: true;
                 action-name: "win.play-again";
-                //clicked => $on_play_again_clicked();
 
                 styles [
                   "suggested-action",
-                  "pill"
+                  "pill",
                 ]
               }
 
@@ -76,10 +75,9 @@ Adw.Bin result_page {
                 label: _("_New Game");
                 use-underline: true;
                 action-name: "win.show-game-select";
-                //clicked => $on_return_clicked();
 
                 styles [
-                  "pill"
+                  "pill",
                 ]
               }
             }
@@ -96,6 +94,7 @@ menu result_menu {
       label: _("New Game");
       action: "win.show-game-select";
     }
+
     item {
       label: _("Play Again");
       action: "win.play-again";
@@ -108,9 +107,13 @@ menu result_menu {
       action: "app.preferences";
     }*/
 
+    /*item {
+      label: _("Game Rules");
+      action: "app.game-rules";
+    }*/
     item {
       label: _("Keyboard Shortcuts");
-      action: "win.show-help-overlay";
+      action: "app.shortcuts";
     }
 
     item {

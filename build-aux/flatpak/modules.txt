@@ -1,33 +1,24 @@
-# github.com/KarpelesLab/weak v0.1.1
+# codeberg.org/puregotk/purego v0.0.0-20260224095105-2513c838cb80
 ## explicit; go 1.18
-github.com/KarpelesLab/weak
-# github.com/diamondburned/gotk4-adwaita/pkg v0.0.0-20240712143708-824c3ce8a5f4
-## explicit; go 1.18
-github.com/diamondburned/gotk4-adwaita/pkg/adw
-# github.com/diamondburned/gotk4/pkg v0.3.0
-## explicit; go 1.21.0
-github.com/diamondburned/gotk4/pkg/cairo
-github.com/diamondburned/gotk4/pkg/cairo/swizzle
-github.com/diamondburned/gotk4/pkg/core/closure
-github.com/diamondburned/gotk4/pkg/core/gbox
-github.com/diamondburned/gotk4/pkg/core/gcancel
-github.com/diamondburned/gotk4/pkg/core/gdebug
-github.com/diamondburned/gotk4/pkg/core/gerror
-github.com/diamondburned/gotk4/pkg/core/gextras
-github.com/diamondburned/gotk4/pkg/core/glib
-github.com/diamondburned/gotk4/pkg/core/intern
-github.com/diamondburned/gotk4/pkg/core/slab
-github.com/diamondburned/gotk4/pkg/gdk/v4
-github.com/diamondburned/gotk4/pkg/gdkpixbuf/v2
-github.com/diamondburned/gotk4/pkg/gio/v2
-github.com/diamondburned/gotk4/pkg/glib/v2
-github.com/diamondburned/gotk4/pkg/graphene
-github.com/diamondburned/gotk4/pkg/gsk/v4
-github.com/diamondburned/gotk4/pkg/gtk/v4
-github.com/diamondburned/gotk4/pkg/pango
-# go4.org/unsafe/assume-no-moving-gc v0.0.0-20231121144256-b99613f794b6
-## explicit; go 1.11
-go4.org/unsafe/assume-no-moving-gc
-# golang.org/x/sync v0.7.0
-## explicit; go 1.18
-golang.org/x/sync/singleflight
+codeberg.org/puregotk/purego
+codeberg.org/puregotk/purego/internal/cgo
+codeberg.org/puregotk/purego/internal/fakecgo
+codeberg.org/puregotk/purego/internal/strings
+codeberg.org/puregotk/purego/internal/xreflect
+# codeberg.org/puregotk/puregotk v0.0.0-20260320050432-5bb8c3359c53
+## explicit; go 1.23.0
+codeberg.org/puregotk/puregotk/internal/core
+codeberg.org/puregotk/puregotk/pkg/core
+codeberg.org/puregotk/puregotk/v4/adw
+codeberg.org/puregotk/puregotk/v4/cairo
+codeberg.org/puregotk/puregotk/v4/gdk
+codeberg.org/puregotk/puregotk/v4/gdkpixbuf
+codeberg.org/puregotk/puregotk/v4/gio
+codeberg.org/puregotk/puregotk/v4/glib
+codeberg.org/puregotk/puregotk/v4/gmodule
+codeberg.org/puregotk/puregotk/v4/gobject
+codeberg.org/puregotk/puregotk/v4/gobject/types
+codeberg.org/puregotk/puregotk/v4/graphene
+codeberg.org/puregotk/puregotk/v4/gsk
+codeberg.org/puregotk/puregotk/v4/gtk
+codeberg.org/puregotk/puregotk/v4/pango

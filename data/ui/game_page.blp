@@ -5,9 +5,11 @@ Adw.Bin game_page {
   child: Adw.ToolbarView {
     [top]
     Adw.HeaderBar {
+      centering-policy: strict;
+
       [title]
       Adw.WindowTitle game_info_title {
-        //title: bind main_window.title;  // NOTE: This is changed dynamically in code
+        title: _("Custom");  // NOTE: This is changed dynamically in code
       }
 
       [end]
@@ -22,25 +24,14 @@ Adw.Bin game_page {
     content: Gtk.Box game_box {
       orientation: vertical;
       spacing: 40;
-
+      valign: center;
+      halign: center;
+      hexpand: true;
+      vexpand: true;
       margin-top: 20;
       margin-bottom: 20;
       margin-start: 20;
       margin-end: 20;
-
-      hexpand: true;
-      vexpand: true;
-      valign: center;
-      halign: center;
-
-      // TODO: Add a breakpoint that will set a higher content size when window width is >= 600px
-      Gtk.DrawingArea draw_area {
-        hexpand: true;
-        vexpand: true;
-
-        content-height: 300;
-        content-width: 300;
-      }
     };
   };
 }
@@ -51,6 +42,7 @@ menu game_menu {
       label: _("New Game");
       action: "win.show-game-select";
     }
+
     item {
       label: _("Play Again");
       action: "win.play-again";
@@ -63,15 +55,14 @@ menu game_menu {
       action: "app.preferences";
     }*/
 
-    item {
-      label: _("Keyboard Shortcuts");
-      action: "win.show-help-overlay";
-    }
-
     /*item {
       label: _("Game Rules");
-      action: "win.show-game-rules";
+      action: "app.game-rules";
     }*/
+    item {
+      label: _("Keyboard Shortcuts");
+      action: "app.shortcuts";
+    }
 
     item {
       label: _("About Flood It");

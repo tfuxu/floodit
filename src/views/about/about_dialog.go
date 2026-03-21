@@ -3,8 +3,8 @@ package about
 import (
 	"github.com/tfuxu/floodit/src/constants"
 
-	"github.com/diamondburned/gotk4-adwaita/pkg/adw"
-	"github.com/diamondburned/gotk4/pkg/gtk/v4"
+	"codeberg.org/puregotk/puregotk/v4/adw"
+	"codeberg.org/puregotk/puregotk/v4/gtk"
 )
 
 type AboutDialog struct {
@@ -17,8 +17,8 @@ func NewAboutDialog() *AboutDialog {
 	dialog.SetApplicationIcon(constants.AppID)
 	dialog.SetDeveloperName("tfuxu")
 	dialog.SetWebsite(constants.ProjectUrl)
-	dialog.SetSupportURL(constants.HelpUrl)
-	dialog.SetIssueURL(constants.BugtrackerUrl)
+	dialog.SetSupportUrl(constants.HelpUrl)
+	dialog.SetIssueUrl(constants.BugtrackerUrl)
 
 	dialog.SetDevelopers([]string{
 		"tfuxu https://github.com/tfuxu",
@@ -29,7 +29,7 @@ func NewAboutDialog() *AboutDialog {
 
 	dialog.SetTranslatorCredits("translator-credits")
 	dialog.SetCopyright("Copyright © 2024-2025 tfuxu")
-	dialog.SetLicenseType(gtk.LicenseGPL30)
+	dialog.SetLicenseType(gtk.LicenseGpl30Value)
 	dialog.SetVersion(constants.Version)
 	dialog.SetReleaseNotesVersion(constants.RelVer)
 

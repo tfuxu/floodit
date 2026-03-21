@@ -7,14 +7,14 @@ import (
 	"github.com/tfuxu/floodit/src/backend/utils"
 	"github.com/tfuxu/floodit/src/constants"
 
-	"github.com/diamondburned/gotk4/pkg/gdk/v4"
-	"github.com/diamondburned/gotk4/pkg/gtk/v4"
+	"codeberg.org/puregotk/puregotk/v4/gdk"
+	"codeberg.org/puregotk/puregotk/v4/gtk"
 )
 
 type ColorKeyboard struct {
 	*gtk.Box
 
-	cssProvider *gtk.CSSProvider
+	cssProvider *gtk.CssProvider
 
 	rowFirst  *gtk.Box
 	rowSecond *gtk.Box
@@ -25,26 +25,33 @@ type ColorKeyboard struct {
 func NewColorKeyboard(colorPalette [][2]string, callback func(colorName string)) *ColorKeyboard {
 	builder := gtk.NewBuilderFromResource(constants.RootPath + "/ui/color_keyboard.ui")
 
-	keyboard := builder.GetObject("color_keyboard").Cast().(*gtk.Box)
+	var keyboard gtk.Box
+	builder.GetObject("color_keyboard").Cast(&keyboard)
+	defer keyboard.Unref()
 
-	rowFirst := builder.GetObject("row_first").Cast().(*gtk.Box)
-	rowSecond := builder.GetObject("row_second").Cast().(*gtk.Box)
+	var rowFirst gtk.Box
+	builder.GetObject("row_first").Cast(&rowFirst)
+	defer rowFirst.Unref()
 
-	cssProvider := gtk.NewCSSProvider()
+	var rowSecond gtk.Box
+	builder.GetObject("row_second").Cast(&rowSecond)
+	defer rowSecond.Unref()
+
+	cssProvider := gtk.NewCssProvider()
 
 	gtk.StyleContextAddProviderForDisplay(
 		gdk.DisplayGetDefault(),
 		cssProvider,
-		gtk.STYLE_PROVIDER_PRIORITY_USER+1,
+		uint32(gtk.STYLE_PROVIDER_PRIORITY_USER+1),
 	)
 
 	ck := ColorKeyboard{
-		Box: keyboard,
+		Box: &keyboard,
 
 		cssProvider: cssProvider,
 
-		rowFirst:  rowFirst,
-		rowSecond: rowSecond,
+		rowFirst:  &rowFirst,
+		rowSecond: &rowSecond,
 	}
 
 	ck.setupButtons(colorPalette, callback)
@@ -64,11 +71,11 @@ func (ck *ColorKeyboard) setupButtons(colorPalette [][2]string, callback func(co
 		button := gtk.NewButton()
 		button.SetTooltipText(utils.ToSentenceString(colorName))
 		buttonColors = append(buttonColors, fmt.Sprintf(".%s-button { background-color: %s; }", colorName, colorHex))
-		button.SetCSSClasses([]string{"card", "circular", "color-button", fmt.Sprintf("%s-button", colorName)})
+		button.SetCssClasses([]string{"card", "circular", "color-button", fmt.Sprintf("%s-button", colorName)})
 
-		button.ConnectClicked(func() {
+		button.ConnectClicked(new(func(gtk.Button) {
 			callback(colorName)
-		})
+		}))
 
 		buttonStore[i] = button
 	}
@@ -84,7 +91,7 @@ func (ck *ColorKeyboard) setupButtons(colorPalette [][2]string, callback func(co
 			colorNo = 1
 		}
 
-		currentRow.Append(button)
+		currentRow.Append(&button.Widget)
 		colorNo += 1
 	}
 }

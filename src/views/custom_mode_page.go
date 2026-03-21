@@ -3,9 +3,9 @@ package views
 import (
 	"github.com/tfuxu/floodit/src/constants"
 
-	"github.com/diamondburned/gotk4-adwaita/pkg/adw"
-	"github.com/diamondburned/gotk4/pkg/gio/v2"
-	"github.com/diamondburned/gotk4/pkg/gtk/v4"
+	"codeberg.org/puregotk/puregotk/v4/adw"
+	"codeberg.org/puregotk/puregotk/v4/gio"
+	"codeberg.org/puregotk/puregotk/v4/gtk"
 )
 
 type CustomModePage struct {
@@ -25,26 +25,38 @@ type CustomModePage struct {
 func NewCustomModePage(parent *StartingView, settings *gio.Settings, toastOverlay *adw.ToastOverlay) *CustomModePage {
 	builder := gtk.NewBuilderFromResource(constants.RootPath + "/ui/custom_mode_page.ui")
 
-	customModePage := builder.GetObject("custom_mode_page").Cast().(*adw.NavigationPage)
+	var customModePage adw.NavigationPage
+	builder.GetObject("custom_mode_page").Cast(&customModePage)
+	defer customModePage.Unref()
 
-	boardSizeRow := builder.GetObject("board_size_row").Cast().(*adw.SpinRow)
-	enableCustomMoveLimitRow := builder.GetObject("enable_custom_move_limit_row").Cast().(*adw.SwitchRow)
-	moveLimitRow := builder.GetObject("move_limit_row").Cast().(*adw.SpinRow)
+	var boardSizeRow adw.SpinRow
+	builder.GetObject("board_size_row").Cast(&boardSizeRow)
+	defer boardSizeRow.Unref()
 
-	playButton := builder.GetObject("play_button").Cast().(*gtk.Button)
+	var enableCustomMoveLimitRow adw.SwitchRow
+	builder.GetObject("enable_custom_move_limit_row").Cast(&enableCustomMoveLimitRow)
+	defer enableCustomMoveLimitRow.Unref()
+
+	var moveLimitRow adw.SpinRow
+	builder.GetObject("move_limit_row").Cast(&moveLimitRow)
+	defer moveLimitRow.Unref()
+
+	var playButton gtk.Button
+	builder.GetObject("play_button").Cast(&playButton)
+	defer playButton.Unref()
 
 	cmp := CustomModePage{
-		NavigationPage: customModePage,
+		NavigationPage: &customModePage,
 		settings:       settings,
 		parent:         parent,
 
 		toastOverlay: toastOverlay,
 
-		boardSizeRow:             boardSizeRow,
-		enableCustomMoveLimitRow: enableCustomMoveLimitRow,
-		moveLimitRow:             moveLimitRow,
+		boardSizeRow:             &boardSizeRow,
+		enableCustomMoveLimitRow: &enableCustomMoveLimitRow,
+		moveLimitRow:             &moveLimitRow,
 
-		playButton: playButton,
+		playButton: &playButton,
 	}
 
 	// Workaround: Set default values for SpinRows
@@ -57,17 +69,17 @@ func NewCustomModePage(parent *StartingView, settings *gio.Settings, toastOverla
 }
 
 func (cmp *CustomModePage) setupSignals() {
-	cmp.enableCustomMoveLimitRow.Connect("notify::active", func() {
+	cmp.enableCustomMoveLimitRow.ConnectSignal("notify::active", new(func() {
 		cmp.onEnableCustomMoveLimitSwitched()
-	})
+	}))
 
-	cmp.playButton.ConnectClicked(func() {
+	cmp.playButton.ConnectClicked(new(func(gtk.Button) {
 		cmp.onPlayButtonClicked()
-	})
+	}))
 }
 
 func (cmp *CustomModePage) onEnableCustomMoveLimitSwitched() {
-	if cmp.enableCustomMoveLimitRow.Active() {
+	if cmp.enableCustomMoveLimitRow.GetActive() {
 		cmp.moveLimitRow.SetSensitive(true)
 	} else {
 		cmp.moveLimitRow.SetSensitive(false)
@@ -75,13 +87,13 @@ func (cmp *CustomModePage) onEnableCustomMoveLimitSwitched() {
 }
 
 func (cmp *CustomModePage) onPlayButtonClicked() {
-	rows := int(cmp.boardSizeRow.Value())
-	cols := int(cmp.boardSizeRow.Value())
+	rows := int(cmp.boardSizeRow.GetValue())
+	cols := int(cmp.boardSizeRow.GetValue())
 
 	var maxSteps uint
 
-	if cmp.enableCustomMoveLimitRow.Active() {
-		maxSteps = uint(cmp.moveLimitRow.Value())
+	if cmp.enableCustomMoveLimitRow.GetActive() {
+		maxSteps = uint(cmp.moveLimitRow.GetValue())
 	} else {
 		maxSteps = 0
 	}
