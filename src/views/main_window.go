@@ -1,12 +1,14 @@
 package views
 
 import (
+	"unsafe"
+
 	"github.com/tfuxu/floodit/src/constants"
 
-	"github.com/diamondburned/gotk4-adwaita/pkg/adw"
-	"github.com/diamondburned/gotk4/pkg/gio/v2"
-	"github.com/diamondburned/gotk4/pkg/glib/v2"
-	"github.com/diamondburned/gotk4/pkg/gtk/v4"
+	"codeberg.org/puregotk/puregotk/v4/adw"
+	"codeberg.org/puregotk/puregotk/v4/gio"
+	"codeberg.org/puregotk/puregotk/v4/glib"
+	"codeberg.org/puregotk/puregotk/v4/gtk"
 )
 
 type MainWindow struct {
@@ -19,6 +21,7 @@ type MainWindow struct {
 
 	statusPage *adw.StatusPage
 	playButton *gtk.Button
+	//guideButton *gtk.Button
 
 	startingView  *StartingView
 	gamePage      *GamePage
@@ -29,38 +32,56 @@ type MainWindow struct {
 func NewMainWindow(app *adw.Application, settings *gio.Settings) *MainWindow {
 	builder := gtk.NewBuilderFromResource(constants.RootPath + "/ui/main_window.ui")
 
-	window := builder.GetObject("main_window").Cast().(*adw.ApplicationWindow)
+	var window adw.ApplicationWindow
+	builder.GetObject("main_window").Cast(&window)
+	defer window.Unref()
+
 	window.SetApplication(&app.Application)
 	window.SetDefaultSize(
-		settings.Int("window-width"), settings.Int("window-height"),
+		settings.GetInt("window-width"), settings.GetInt("window-height"),
 	)
 
-	statusPage := builder.GetObject("status_page").Cast().(*adw.StatusPage)
-	playButton := builder.GetObject("play_button").Cast().(*gtk.Button)
+	var statusPage adw.StatusPage
+	builder.GetObject("status_page").Cast(&statusPage)
+	defer statusPage.Unref()
 
-	mainStack := builder.GetObject("main_stack").Cast().(*gtk.Stack)
-	toastOverlay := builder.GetObject("toast_overlay").Cast().(*adw.ToastOverlay)
+	var playButton gtk.Button
+	builder.GetObject("play_button").Cast(&playButton)
+	defer playButton.Unref()
+
+	//var guideButton gtk.Button
+	//builder.GetObject("guide_button").Cast(&guideButton)
+	//defer guideButton.Unref()
+
+	var mainStack gtk.Stack
+	builder.GetObject("main_stack").Cast(&mainStack)
+	defer mainStack.Unref()
+
+	var toastOverlay adw.ToastOverlay
+	builder.GetObject("toast_overlay").Cast(&toastOverlay)
+	defer toastOverlay.Unref()
 
 	w := MainWindow{
-		ApplicationWindow: window,
+		ApplicationWindow: &window,
 		app:               app,
 		settings:          settings,
 
-		statusPage: statusPage,
-		playButton: playButton,
+		statusPage: &statusPage,
+		playButton: &playButton,
+		//guideButton: &guideButton,
 
-		toastOverlay: toastOverlay,
-		mainStack:    mainStack,
+		toastOverlay: &toastOverlay,
+		mainStack:    &mainStack,
 	}
-	w.startingView = NewStartingView(&w, settings, toastOverlay)
-	w.gamePage = NewGamePage(&w, settings, toastOverlay)
-	w.gameRulesPage = NewGameRulesPage(&w, settings, toastOverlay)
-	w.resultPage = NewResultPage(&w, settings, toastOverlay)
+	w.startingView = NewStartingView(&w, settings, &toastOverlay)
+	w.gamePage = NewGamePage(&w, settings, &toastOverlay)
+	w.gameRulesPage = NewGameRulesPage(&w, settings, &toastOverlay)
+	w.resultPage = NewResultPage(&w, settings, &toastOverlay)
 
 	statusPage.SetIconName(constants.AppID)
 
 	if constants.BuildType == "debug" {
-		w.AddCSSClass("devel")
+		w.AddCssClass("devel")
 	}
 
 	w.setupActions()
@@ -73,52 +94,53 @@ func NewMainWindow(app *adw.Application, settings *gio.Settings) *MainWindow {
 func (w *MainWindow) setupActions() {
 	// TODO: Disable this action in certain parts of the app to prevent undefined behavior
 	playAgainAction := gio.NewSimpleAction("play-again", nil)
-	playAgainAction.ConnectActivate(func(parameter *glib.Variant) {
+	playAgainAction.ConnectActivate(new(func(gio.SimpleAction, uintptr) {
 		w.playAgain()
-	})
+	}))
 	w.AddAction(playAgainAction)
 
 	showWelcomeAction := gio.NewSimpleAction("show-welcome", nil)
-	showWelcomeAction.ConnectActivate(func(parameter *glib.Variant) {
+	showWelcomeAction.ConnectActivate(new(func(gio.SimpleAction, uintptr) {
 		w.showWelcomePage()
-	})
+	}))
 	w.AddAction(showWelcomeAction)
 
 	showGameSelectAction := gio.NewSimpleAction("show-game-select", nil)
-	showGameSelectAction.ConnectActivate(func(parameter *glib.Variant) {
+	showGameSelectAction.ConnectActivate(new(func(gio.SimpleAction, uintptr) {
 		w.startingView.Pop()
 		w.showStartingPage()
-	})
+	}))
 	w.AddAction(showGameSelectAction)
 
 	showGameRulesAction := gio.NewSimpleAction("show-game-rules", nil)
-	showGameRulesAction.ConnectActivate(func(parameter *glib.Variant) {
+	showGameRulesAction.ConnectActivate(new(func(gio.SimpleAction, uintptr) {
 		w.showRulesPage()
-	})
+	}))
 	w.AddAction(showGameRulesAction)
 
 	showFinishAction := gio.NewSimpleAction("show-finish", glib.NewVariantType("b"))
-	showFinishAction.ConnectActivate(func(parameter *glib.Variant) {
-		w.showResultPage(parameter.Boolean())
-	})
+	showFinishAction.ConnectActivate(new(func(_ gio.SimpleAction, parameter uintptr) {
+		variant := (*glib.Variant)(unsafe.Pointer(parameter))
+		w.showResultPage(variant.GetBoolean())
+	}))
 	w.AddAction(showFinishAction)
 }
 
 func (w *MainWindow) setupSignals() {
-	w.playButton.ConnectClicked(
-		w.onPlayClicked,
-	)
+	w.playButton.ConnectClicked(new(func(gtk.Button) {
+		w.onPlayClicked()
+	}))
 
-	w.ConnectUnrealize(func() {
+	w.ConnectUnrealize(new(func(gtk.Widget) {
 		w.saveWindowProps()
-	})
+	}))
 }
 
 func (w *MainWindow) setupStack() {
-	w.mainStack.AddNamed(w.startingView, "stack_starting_page")
-	w.mainStack.AddNamed(w.gamePage, "stack_game_page")
-	w.mainStack.AddNamed(w.gameRulesPage, "stack_game_rules_page")
-	w.mainStack.AddNamed(w.resultPage, "stack_result_page")
+	w.mainStack.AddNamed(&w.startingView.Widget, "stack_starting_page")
+	w.mainStack.AddNamed(&w.gamePage.Widget, "stack_game_page")
+	w.mainStack.AddNamed(&w.gameRulesPage.Widget, "stack_game_rules_page")
+	w.mainStack.AddNamed(&w.resultPage.Widget, "stack_result_page")
 }
 
 // StartNewGame calls NewBoard to initialize board, and changes view in
@@ -165,7 +187,8 @@ func (w *MainWindow) onPlayClicked() {
 }
 
 func (w *MainWindow) saveWindowProps() {
-	width, height := w.DefaultSize()
+	var width, height int32
+	w.GetDefaultSize(&width, &height)
 
 	w.settings.SetInt("window-width", width)
 	w.settings.SetInt("window-height", height)
