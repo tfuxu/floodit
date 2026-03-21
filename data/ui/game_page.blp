@@ -51,6 +51,7 @@ menu game_menu {
       label: _("New Game");
       action: "win.show-game-select";
     }
+
     item {
       label: _("Play Again");
       action: "win.play-again";
@@ -63,15 +64,14 @@ menu game_menu {
       action: "app.preferences";
     }*/
 
-    item {
-      label: _("Keyboard Shortcuts");
-      action: "win.show-help-overlay";
-    }
-
     /*item {
       label: _("Game Rules");
-      action: "win.show-game-rules";
+      action: "app.game-rules";
     }*/
+    item {
+      label: _("Keyboard Shortcuts");
+      action: "app.shortcuts";
+    }
 
     item {
       label: _("About Flood It");
