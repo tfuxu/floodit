@@ -1,5 +1,7 @@
 package constants
 
+const DataKeyGoInstance = "go_instance"
+
 var AppID = "@APP_ID@"
 var RelVer = "@RELEASE_VER@"
 var Version = "@VERSION@"
