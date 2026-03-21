@@ -1,11 +1,38 @@
 using Gtk 4.0;
 using Adw 1;
 
-Adw.Bin game_rules_page {
+Adw.NavigationPage game_guide_page {
+  title: _("Guide");
+  tag: "game-guide";
+
   child: Adw.ToolbarView {
     [top]
     Adw.HeaderBar {
       show-title: false;
+
+      [start]
+      Gtk.Button back_button {
+        icon-name: "go-previous-symbolic";
+        tooltip-text: _("Back");
+        action-name: "win.show-welcome";
+      }
     }
+
+    content: Adw.Clamp {
+      tightening-threshold: 400;
+      maximum-size: 600;
+
+      child: Gtk.Box {
+        orientation: vertical;
+
+        Gtk.Label {
+          label: _("Guide");
+
+          styles [
+            "title-1"
+          ]
+        }
+      };
+    };
   };
 }

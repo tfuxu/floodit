@@ -3,13 +3,13 @@ package views
 import (
 	"github.com/tfuxu/floodit/src/constants"
 
-	"github.com/diamondburned/gotk4-adwaita/pkg/adw"
-	"github.com/diamondburned/gotk4/pkg/gio/v2"
-	"github.com/diamondburned/gotk4/pkg/gtk/v4"
+	"codeberg.org/puregotk/puregotk/v4/adw"
+	"codeberg.org/puregotk/puregotk/v4/gio"
+	"codeberg.org/puregotk/puregotk/v4/gtk"
 )
 
 type GameRulesPage struct {
-	*adw.Bin
+	*adw.NavigationPage
 	settings *gio.Settings
 	parent   *MainWindow
 
@@ -19,12 +19,14 @@ type GameRulesPage struct {
 func NewGameRulesPage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.ToastOverlay) *GameRulesPage {
 	builder := gtk.NewBuilderFromResource(constants.RootPath + "/ui/game_rules_page.ui")
 
-	gameRulesPage := builder.GetObject("game_rules_page").Cast().(*adw.Bin)
+	var gameGuidePage adw.NavigationPage
+	builder.GetObject("game_guide_page").Cast(&gameGuidePage)
+	defer gameGuidePage.Unref()
 
 	grp := GameRulesPage{
-		Bin:      gameRulesPage,
-		settings: settings,
-		parent:   parent,
+		NavigationPage: &gameGuidePage,
+		settings:       settings,
+		parent:         parent,
 
 		toastOverlay: toastOverlay,
 	}
