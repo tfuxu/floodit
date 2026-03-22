@@ -11,8 +11,9 @@ import (
 	. "github.com/pojntfx/go-gettext/pkg/i18n"
 )
 
+// TODO: Translate when https://github.com/pojntfx/go-gettext/issues/1 gets resolved
 var ResultStates = map[string]string{
-	"win": L("You Won!"), "lose": L("You Lost!"),
+	"win": "You Won!", "lose": "You Lost!",
 }
 
 type ResultPage struct {
