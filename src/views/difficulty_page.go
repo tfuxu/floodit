@@ -6,6 +6,7 @@ import (
 	"codeberg.org/puregotk/puregotk/v4/adw"
 	"codeberg.org/puregotk/puregotk/v4/gio"
 	"codeberg.org/puregotk/puregotk/v4/gtk"
+	. "github.com/pojntfx/go-gettext/pkg/i18n"
 )
 
 type DifficultyPage struct {
@@ -75,15 +76,15 @@ func (dp *DifficultyPage) setupSignals() {
 }*/
 
 func (dp *DifficultyPage) onEasyModeRowActivated() {
-	dp.parent.parent.StartNewGame("Easy", 6, 6, 15, 0) // TODO: Make this translatable
+	dp.parent.parent.StartNewGame(L("Easy"), 6, 6, 15, 0)
 }
 
 func (dp *DifficultyPage) onNormalModeRowActivated() {
-	dp.parent.parent.StartNewGame("Normal", 10, 10, 20, 0) // TODO: Make this translatable
+	dp.parent.parent.StartNewGame(L("Normal"), 10, 10, 20, 0)
 }
 
 func (dp *DifficultyPage) onHardModeRowActivated() {
-	dp.parent.parent.StartNewGame("Hard", 14, 14, 25, 0) // TODO: Make this translatable
+	dp.parent.parent.StartNewGame(L("Hard"), 14, 14, 25, 0)
 }
 
 func (dp *DifficultyPage) onCustomModeRowActivated() {

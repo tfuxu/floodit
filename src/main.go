@@ -12,6 +12,8 @@ import (
 
 	"codeberg.org/puregotk/puregotk/v4/adw"
 	"codeberg.org/puregotk/puregotk/v4/gio"
+
+	"github.com/pojntfx/go-gettext/pkg/i18n"
 )
 
 func init() {
@@ -34,6 +36,12 @@ func init() {
 		}
 
 		os.Setenv("XDG_DATA_DIRS", fmt.Sprintf("%s:%s", constants.DataDir, data_dirs))
+	}
+
+	// Initialize i18n
+	if err := i18n.InitI18n("floodit", constants.LocaleDir, slog.Default()); err != nil {
+		slog.Error("Failed to initialize i18n.", "msg", err)
+		os.Exit(1)
 	}
 
 	// Load resources

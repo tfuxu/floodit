@@ -10,3 +10,8 @@ data/ui/main_window.blp
 data/ui/result_page.blp
 data/ui/shortcuts_dialog.blp
 data/ui/starting_view.blp
+src/views/about/about_dialog.go
+src/views/custom_mode_page.go
+src/views/difficulty_page.go
+src/views/game_page.go
+src/views/result_page.go

@@ -5,6 +5,7 @@ import (
 
 	"codeberg.org/puregotk/puregotk/v4/adw"
 	"codeberg.org/puregotk/puregotk/v4/gtk"
+	. "github.com/pojntfx/go-gettext/pkg/i18n"
 )
 
 type AboutDialog struct {
@@ -13,7 +14,7 @@ type AboutDialog struct {
 
 func NewAboutDialog() *AboutDialog {
 	dialog := adw.NewAboutDialog()
-	dialog.SetApplicationName("Flood It")
+	dialog.SetApplicationName(L("Flood It"))
 	dialog.SetApplicationIcon(constants.AppID)
 	dialog.SetDeveloperName("tfuxu")
 	dialog.SetWebsite(constants.ProjectUrl)
@@ -27,8 +28,9 @@ func NewAboutDialog() *AboutDialog {
 		"tfuxu https://github.com/tfuxu",
 	})
 
-	dialog.SetTranslatorCredits("translator-credits")
-	dialog.SetCopyright("Copyright © 2024-2025 tfuxu")
+	// TRANSLATORS: This is a place to put your credits (formats: "Name https://example.com" or "Name <email@example.com>", no quotes) and is not meant to be translated literally.
+	dialog.SetTranslatorCredits(L("translator-credits"))
+	dialog.SetCopyright(L("Copyright © 2026 tfuxu"))
 	dialog.SetLicenseType(gtk.LicenseGpl30Value)
 	dialog.SetVersion(constants.Version)
 	dialog.SetReleaseNotesVersion(constants.RelVer)

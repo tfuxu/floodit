@@ -14,6 +14,7 @@ import (
 	"codeberg.org/puregotk/puregotk/v4/gio"
 	"codeberg.org/puregotk/puregotk/v4/glib"
 	"codeberg.org/puregotk/puregotk/v4/gtk"
+	. "github.com/pojntfx/go-gettext/pkg/i18n"
 )
 
 type GamePage struct {
@@ -88,8 +89,8 @@ func (gp *GamePage) NewBoard(name string, rows, columns int, maxSteps uint, seed
 	gp.board = backend.InitializeBoard(name, rows, columns, seed, maxSteps)
 
 	gp.gameInfoTitle.SetTitle(name)
-	// TODO: Translate this
-	gp.gameInfoTitle.SetSubtitle(fmt.Sprintf("Steps Left: %d", gp.board.GetStepsLeft()))
+	// TRANSLATORS: DO NOT translate the '%d' part of the text.
+	gp.gameInfoTitle.SetSubtitle(fmt.Sprintf(L("Steps Left: %d"), gp.board.GetStepsLeft()))
 
 	slog.Debug(fmt.Sprintf("maxSteps: %d", gp.board.MaxSteps))
 	slog.Debug(fmt.Sprintf("rows: %d columns: %d", gp.board.Rows, gp.board.Columns))
@@ -120,8 +121,8 @@ func (gp *GamePage) onColorKeyboardUsed(colorName string) {
 		return
 	}
 
-	// TODO: Translate this
-	gp.gameInfoTitle.SetSubtitle(fmt.Sprintf("Steps Left: %d", stepsLeft))
+	// TRANSLATORS: DO NOT translate the '%d' part of the text.
+	gp.gameInfoTitle.SetSubtitle(fmt.Sprintf(L("Steps Left: %d"), stepsLeft))
 
 	slog.Debug(fmt.Sprintf("Step: %d", gp.board.Step))
 	slog.Debug(fmt.Sprintf("StepsLeft: %d", stepsLeft))
