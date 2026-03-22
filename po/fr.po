@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: floodit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-22 12:58+0100\n"
+"POT-Creation-Date: 2026-03-22 14:25+0100\n"
 "PO-Revision-Date: 2026-03-19 19:52+0100\n"
 "Last-Translator: Malo Billoré <malo.billore@gmail.com>\n"
 "Language-Team: French <gnomefr@traduc.org>\n"
@@ -205,22 +205,14 @@ msgstr ""
 msgid "Steps Left: %d"
 msgstr ""
 
-#: src/views/result_page.go:15
-msgid "You Won!"
-msgstr ""
-
-#: src/views/result_page.go:15
-msgid "You Lost!"
-msgstr ""
-
 #. TRANSLATORS: DO NOT translate '<b>%s</b>' and '<b>%d</b>'.
-#: src/views/result_page.go:78
+#: src/views/result_page.go:79
 #, go-format
 msgid "You flooded the <b>%s</b> board in <b>%d</b> moves!"
 msgstr ""
 
 #. TRANSLATORS: DO NOT translate '<b>%s</b>' and '\n'.
-#: src/views/result_page.go:86
+#: src/views/result_page.go:87
 #, go-format
 msgid ""
 "You failed to finish the <b>%s</b> board.\n"
