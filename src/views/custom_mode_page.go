@@ -6,6 +6,7 @@ import (
 	"codeberg.org/puregotk/puregotk/v4/adw"
 	"codeberg.org/puregotk/puregotk/v4/gio"
 	"codeberg.org/puregotk/puregotk/v4/gtk"
+	. "github.com/pojntfx/go-gettext/pkg/i18n"
 )
 
 type CustomModePage struct {
@@ -98,5 +99,5 @@ func (cmp *CustomModePage) onPlayButtonClicked() {
 		maxSteps = 0
 	}
 
-	cmp.parent.parent.StartNewGame("Custom", rows, cols, maxSteps, 0) // TODO: Make this translatable
+	cmp.parent.parent.StartNewGame(L("Custom"), rows, cols, maxSteps, 0)
 }

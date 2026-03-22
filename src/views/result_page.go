@@ -8,11 +8,11 @@ import (
 	"codeberg.org/puregotk/puregotk/v4/adw"
 	"codeberg.org/puregotk/puregotk/v4/gio"
 	"codeberg.org/puregotk/puregotk/v4/gtk"
+	. "github.com/pojntfx/go-gettext/pkg/i18n"
 )
 
-// TODO: Make this translatable
 var ResultStates = map[string]string{
-	"win": "You Won!", "lose": "You Lost!",
+	"win": L("You Won!"), "lose": L("You Lost!"),
 }
 
 type ResultPage struct {
@@ -74,14 +74,16 @@ func (r *ResultPage) refresh() {
 	if r.resultState == "win" {
 		classes = []string{"title-1", "success"}
 		description = fmt.Sprintf(
-			"You flooded the <b>%s</b> board in <b>%d</b> moves!", // TODO: Make this translatable
+			// TRANSLATORS: DO NOT translate '<b>%s</b>' and '<b>%d</b>'.
+			L("You flooded the <b>%s</b> board in <b>%d</b> moves!"),
 			r.parent.gamePage.board.Name,
 			r.parent.gamePage.board.Step,
 		)
 	} else {
 		classes = []string{"title-1", "error"}
 		description = fmt.Sprintf(
-			"You failed to finish the <b>%s</b> board.\nBetter luck next time!", // TODO: Make this translatable
+			// TRANSLATORS: DO NOT translate '<b>%s</b>' and '\n'.
+			L("You failed to finish the <b>%s</b> board.\nBetter luck next time!"),
 			r.parent.gamePage.board.Name,
 		)
 	}
