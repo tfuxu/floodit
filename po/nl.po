@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: floodit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 21:53+0100\n"
+"POT-Creation-Date: 2026-03-22 12:58+0100\n"
 "PO-Revision-Date: 2025-02-11 11:40+0100\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: \n"
@@ -19,12 +19,13 @@ msgstr ""
 "X-Generator: Poedit 3.5\n"
 
 #: data/io.github.tfuxu.floodit.metainfo.xml.in.in:4
-#: data/io.github.tfuxu.floodit.desktop.in.in:7 data/ui/main_window.blp:5
+#: data/io.github.tfuxu.floodit.desktop.in.in:6 data/ui/main_window.blp:5
+#: data/ui/main_window.blp:30 src/views/about/about_dialog.go:17
 msgid "Flood It"
 msgstr "Overstroming"
 
 #: data/io.github.tfuxu.floodit.metainfo.xml.in.in:5
-#: data/io.github.tfuxu.floodit.desktop.in.in:8 data/ui/main_window.blp:31
+#: data/io.github.tfuxu.floodit.desktop.in.in:7 data/ui/main_window.blp:31
 msgid "Flood the board"
 msgstr "Overspoel het bord"
 
@@ -41,7 +42,7 @@ msgstr ""
 "dient te zijn!"
 
 #. Translators: These are search terms to find this application. Keep the English keywords and append your own keywords in your language. Do NOT translate or localize the semicolons. The list MUST also end with a semicolon.
-#: data/io.github.tfuxu.floodit.desktop.in.in:12
+#: data/io.github.tfuxu.floodit.desktop.in.in:11
 msgid "game;strategy;flood;flood-it;"
 msgstr "spel;strategie;overstroming;overspoelen;flood;flood-it;"
 
@@ -78,7 +79,7 @@ msgstr "S_pelen"
 msgid "Select Difficulty"
 msgstr "Kies een moeilijkheidsgraad"
 
-#: data/ui/difficulty_page.blp:16
+#: data/ui/difficulty_page.blp:16 data/ui/game_rules_page.blp:16
 msgid "Back"
 msgstr "Terug"
 
@@ -86,7 +87,7 @@ msgstr "Terug"
 msgid "Play casually or challenge yourself"
 msgstr "Speel voor de lol of daag jezelf uit"
 
-#: data/ui/difficulty_page.blp:35
+#: data/ui/difficulty_page.blp:35 src/views/difficulty_page.go:79
 msgid "Easy"
 msgstr "Makkelijk"
 
@@ -94,7 +95,7 @@ msgstr "Makkelijk"
 msgid "A 6x6 board with 15 moves"
 msgstr "Een bord van 6x6 met 15 zetten"
 
-#: data/ui/difficulty_page.blp:41
+#: data/ui/difficulty_page.blp:41 src/views/difficulty_page.go:83
 msgid "Normal"
 msgstr "Normaal"
 
@@ -102,7 +103,7 @@ msgstr "Normaal"
 msgid "A 10x10 board with 20 moves"
 msgstr "Een bord van 10x10 met 20 zetten"
 
-#: data/ui/difficulty_page.blp:47
+#: data/ui/difficulty_page.blp:47 src/views/difficulty_page.go:87
 msgid "Hard"
 msgstr "Moeilijk"
 
@@ -110,7 +111,8 @@ msgstr "Moeilijk"
 msgid "A 14x14 board with 25 moves"
 msgstr "Een bord van 14x14 met 25 zetten"
 
-#: data/ui/difficulty_page.blp:53
+#: data/ui/difficulty_page.blp:53 data/ui/game_page.blp:12
+#: src/views/custom_mode_page.go:102
 msgid "Custom"
 msgstr "Aangepast"
 
@@ -118,54 +120,110 @@ msgstr "Aangepast"
 msgid "Specify your own board size and move limit"
 msgstr "Bepaal zelf de bordgrootte en het maximumaantal zetten"
 
-#: data/ui/game_page.blp:15 data/ui/result_page.blp:12
+#: data/ui/game_page.blp:17 data/ui/result_page.blp:12
 msgid "Main Menu"
 msgstr "Hoofdmenu"
 
-#: data/ui/game_page.blp:51 data/ui/result_page.blp:96
+#: data/ui/game_page.blp:42 data/ui/result_page.blp:118
 msgid "New Game"
 msgstr "Nieuw spel"
 
-#: data/ui/game_page.blp:63 data/ui/result_page.blp:108
+#: data/ui/game_page.blp:47 data/ui/result_page.blp:123
+#, fuzzy
+msgid "Play Again"
+msgstr "O_pnieuw beginnen"
+
+#: data/ui/game_page.blp:63 data/ui/result_page.blp:139
 msgid "Keyboard Shortcuts"
 msgstr "Sneltoetsen"
 
-#: data/ui/game_page.blp:73 data/ui/main_window.blp:23
-#: data/ui/result_page.blp:113
+#: data/ui/game_page.blp:68 data/ui/main_window.blp:23
+#: data/ui/result_page.blp:144
 msgid "About Flood It"
 msgstr "Over Overstroming"
 
-#: data/ui/help_overlay.blp:11
+#: data/ui/game_rules_page.blp:5 data/ui/game_rules_page.blp:29
+msgid "Guide"
+msgstr ""
+
+#. Translators: The prefixed underscore is used to indicate a mnemonic. Do NOT remove it.
+#: data/ui/result_page.blp:87
+msgid "_Play Again"
+msgstr "O_pnieuw beginnen"
+
+#. Translators: The prefixed underscore is used to indicate a mnemonic. Do NOT remove it.
+#: data/ui/result_page.blp:99
+#, fuzzy
+msgid "_New Game"
+msgstr "Nieuw spel"
+
+#: data/ui/shortcuts_dialog.blp:6
 msgctxt "shortcut window"
 msgid "Game"
 msgstr "Spel"
 
-#: data/ui/help_overlay.blp:14
+#: data/ui/shortcuts_dialog.blp:9
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Play Again"
+msgstr "O_pnieuw beginnen"
+
+#: data/ui/shortcuts_dialog.blp:14
 msgctxt "shortcut window"
 msgid "Start New Game"
 msgstr "Nieuw spel starten"
 
-#: data/ui/help_overlay.blp:20
+#: data/ui/shortcuts_dialog.blp:20
 msgctxt "shortcut window"
 msgid "General"
 msgstr "Algemeen"
 
-#: data/ui/help_overlay.blp:23
+#: data/ui/shortcuts_dialog.blp:27
 msgctxt "shortcut window"
 msgid "Show Shortcuts"
 msgstr "Sneltoetsen tonen"
 
-#: data/ui/help_overlay.blp:33
+#: data/ui/shortcuts_dialog.blp:36
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Afsluiten"
 
-#. Translators: The prefixed underscore is used to indicate a mnemonic. Do NOT remove it.
-#: data/ui/result_page.blp:63
-msgid "_Go Home"
-msgstr "Starts_cherm tonen"
+#. TRANSLATORS: This is a place to put your credits (formats: "Name https://example.com" or "Name <email@example.com>", no quotes) and is not meant to be translated literally.
+#: src/views/about/about_dialog.go:32
+msgid "translator-credits"
+msgstr ""
 
-#. Translators: The prefixed underscore is used to indicate a mnemonic. Do NOT remove it.
-#: data/ui/result_page.blp:75
-msgid "_Play Again"
-msgstr "O_pnieuw beginnen"
+#: src/views/about/about_dialog.go:33
+msgid "Copyright © 2026 tfuxu"
+msgstr ""
+
+#. TRANSLATORS: DO NOT translate the '%d' part of the text.
+#: src/views/game_page.go:93 src/views/game_page.go:125
+#, go-format
+msgid "Steps Left: %d"
+msgstr ""
+
+#: src/views/result_page.go:15
+msgid "You Won!"
+msgstr ""
+
+#: src/views/result_page.go:15
+msgid "You Lost!"
+msgstr ""
+
+#. TRANSLATORS: DO NOT translate '<b>%s</b>' and '<b>%d</b>'.
+#: src/views/result_page.go:78
+#, go-format
+msgid "You flooded the <b>%s</b> board in <b>%d</b> moves!"
+msgstr ""
+
+#. TRANSLATORS: DO NOT translate '<b>%s</b>' and '\n'.
+#: src/views/result_page.go:86
+#, go-format
+msgid ""
+"You failed to finish the <b>%s</b> board.\n"
+"Better luck next time!"
+msgstr ""
+
+#~ msgid "_Go Home"
+#~ msgstr "Starts_cherm tonen"
