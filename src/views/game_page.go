@@ -3,6 +3,7 @@ package views
 import (
 	"fmt"
 	"log/slog"
+	"unsafe"
 
 	"github.com/tfuxu/floodit/src/constants"
 	"github.com/tfuxu/floodit/src/views/board"
@@ -11,6 +12,7 @@ import (
 	"github.com/tfuxu/floodit/src/backend"
 
 	"codeberg.org/puregotk/puregotk/v4/adw"
+	"codeberg.org/puregotk/puregotk/v4/gdk"
 	"codeberg.org/puregotk/puregotk/v4/gio"
 	"codeberg.org/puregotk/puregotk/v4/glib"
 	"codeberg.org/puregotk/puregotk/v4/gtk"
@@ -24,8 +26,9 @@ type GamePage struct {
 
 	board backend.Board
 
-	toastOverlay  *adw.ToastOverlay
-	gameInfoTitle *adw.WindowTitle
+	shortcutController *gtk.ShortcutController
+	toastOverlay       *adw.ToastOverlay
+	gameInfoTitle      *adw.WindowTitle
 
 	gameBox   *gtk.Box
 	gameBoard *board.GameBoard
@@ -33,6 +36,10 @@ type GamePage struct {
 
 func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.ToastOverlay) *GamePage {
 	builder := gtk.NewBuilderFromResource(constants.RootPath + "/ui/game_page.ui")
+
+	var shortcutController gtk.ShortcutController
+	builder.GetObject("shortcut_controller").Cast(&shortcutController)
+	defer shortcutController.Unref()
 
 	var gamePage adw.Bin
 	builder.GetObject("game_page").Cast(&gamePage)
@@ -55,8 +62,9 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 
 		board: defaultBoard,
 
-		toastOverlay:  toastOverlay,
-		gameInfoTitle: &gameInfoTitle,
+		shortcutController: &shortcutController,
+		toastOverlay:       toastOverlay,
+		gameInfoTitle:      &gameInfoTitle,
 
 		gameBox: &gameBox,
 	}
@@ -72,8 +80,10 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 	gameBox.Append(&gameBoard.Widget)
 	gp.gameBoard = &gameBoard
 
-	colorKeyboard := keyboard.NewColorKeyboard(backend.DefaultColors, gp.onColorKeyboardUsed)
+	colorKeyboard := keyboard.NewColorKeyboard(backend.DefaultColors)
 	gameBox.Append(&colorKeyboard.Widget)
+
+	gp.setupActions()
 
 	return &gp
 }
@@ -100,6 +110,33 @@ func (gp *GamePage) NewBoard(name string, rows, columns int, maxSteps uint, seed
 
 func (gp *GamePage) GetCurrentSeed() int64 {
 	return gp.board.Seed
+}
+
+func (gp *GamePage) setupActions() {
+	gameActionGroup := gio.NewSimpleActionGroup()
+
+	selectColorAction := gio.NewSimpleAction("select-color", glib.NewVariantType("s"))
+	selectColorAction.ConnectActivate(new(func(_ gio.SimpleAction, parameter uintptr) {
+		variant := (*glib.Variant)(unsafe.Pointer(parameter))
+		gp.onColorKeyboardUsed(variant.GetString(nil))
+	}))
+	gameActionGroup.Insert(selectColorAction)
+
+	gp.InsertActionGroup("game", gameActionGroup)
+
+	// TODO: Modify this code if implementing custom palette support
+	for i := range backend.DefaultColors {
+		keyval := uint32(48 + (i + 1)) // 48 is '0' in GDK
+		color := backend.DefaultColors[i][0]
+		shortcut := gtk.NewShortcutWithArguments(
+			&gtk.NewKeyvalTrigger(keyval, gdk.ControlMaskValue).ShortcutTrigger,
+			&gtk.NewNamedAction("game.select-color").ShortcutAction,
+			"s",
+			color,
+		)
+
+		gp.shortcutController.AddShortcut(shortcut)
+	}
 }
 
 func (gp *GamePage) onColorKeyboardUsed(colorName string) {

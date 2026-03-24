@@ -88,7 +88,7 @@ flatpak-builder --install --system --force-clean repo/ build-aux/flatpak/io.gith
 ```
 
 ### Meson Build System:
-If you don't want to install Halftone as a Flatpak package, you can build it using Meson build system. Meson is used in majority of GTK apps and enforced on GNOME core apps, so learning how to use it would be pretty handy if you plan to contribute to other GTK projects.
+If you don't want to install Flood It as a Flatpak package, you can build it using Meson build system. Meson is used in majority of GTK apps and enforced on GNOME core apps, so learning how to use it would be pretty handy if you plan to contribute to other GTK projects.
 
 #### Prerequisites:
 

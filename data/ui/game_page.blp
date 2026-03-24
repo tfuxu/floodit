@@ -2,6 +2,10 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.Bin game_page {
+  Gtk.ShortcutController shortcut_controller {
+    scope: global;
+  }
+
   child: Adw.ToolbarView {
     [top]
     Adw.HeaderBar {
