@@ -130,9 +130,31 @@ func init() {
 							Alpha: 1.0,
 						}
 
+						black := gdk.RGBA{
+							Red:   0.0,
+							Green: 0.0,
+							Blue:  0.0,
+							Alpha: 1.0,
+						}
+
 						snapshot.AppendColor(
 							&color,
 							graphene.RectAlloc().Init(float32(x), float32(y), float32(rectWidth), float32(rectHeight)),
+						)
+
+						// Adds black squares at the center of every square shown in board
+						// TODO: Make it show color number instead of square
+						centerX := x + rectWidth/4
+						centerY := y + rectHeight/4
+
+						snapshot.AppendColor(
+							&black,
+							graphene.RectAlloc().Init(
+								float32(centerX),
+								float32(centerY),
+								float32(rectWidth/2),
+								float32(rectHeight/2),
+							),
 						)
 					}
 				}
