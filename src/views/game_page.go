@@ -80,7 +80,7 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 	gameBox.Append(&gameBoard.Widget)
 	gp.gameBoard = &gameBoard
 
-	colorKeyboard := keyboard.NewColorKeyboard(backend.DefaultColors)
+	colorKeyboard := keyboard.NewColorKeyboard(settings, backend.DefaultColors)
 	gameBox.Append(&colorKeyboard.Widget)
 
 	gp.setupActions()
