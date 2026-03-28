@@ -8,7 +8,6 @@ import (
 	"github.com/tfuxu/floodit/src/constants"
 
 	"github.com/tfuxu/floodit/src/backend"
-	"github.com/tfuxu/floodit/src/backend/utils"
 
 	"codeberg.org/puregotk/puregotk/v4/gdk"
 	"codeberg.org/puregotk/puregotk/v4/glib"
@@ -116,17 +115,11 @@ func init() {
 							}
 						}
 
-						cairoRGB, err := utils.HexToCairoRGB(hexCode)
-						if err != nil {
+						color := gdk.RGBA{}
+						if ok := color.Parse(hexCode); !ok {
 							// TODO: Show user some feedback in UI when this happens
-							slog.Error("Failed to convert hex values to Cairo compatible RGB channels:", "msg", err)
-						}
-
-						color := gdk.RGBA{
-							Red:   float32(cairoRGB[0]),
-							Green: float32(cairoRGB[1]),
-							Blue:  float32(cairoRGB[2]),
-							Alpha: 1.0,
+							slog.Error("Failed to convert hex values to Cairo compatible RGB channels.")
+							return
 						}
 
 						snapshot.AppendColor(
