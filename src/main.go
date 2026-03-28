@@ -24,7 +24,6 @@ func init() {
 		slog.SetLogLoggerLevel(slog.LevelInfo)
 	}
 
-	// TODO: Check if this will be needed after devenv removal
 	// Set `XDG_DATA_DIRS` to <builddir>/data if running in devenv
 	if os.Getenv("MESON_DEVENV") == "1" {
 		var data_dirs string

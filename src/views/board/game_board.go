@@ -73,7 +73,6 @@ func init() {
 			}
 
 			slog.Debug("GameBoard snapshot hit!")
-			slog.Debug("Current board addr:", gb.board)
 
 			if gb.board != nil {
 				width := int(widget.GetWidth())
