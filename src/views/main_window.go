@@ -21,7 +21,6 @@ type MainWindow struct {
 
 	statusPage *adw.StatusPage
 	playButton *gtk.Button
-	//guideButton *gtk.Button
 
 	gameRulesDialog *GameRulesDialog
 
@@ -50,10 +49,6 @@ func NewMainWindow(app *adw.Application, settings *gio.Settings) *MainWindow {
 	builder.GetObject("play_button").Cast(&playButton)
 	defer playButton.Unref()
 
-	//var guideButton gtk.Button
-	//builder.GetObject("guide_button").Cast(&guideButton)
-	//defer guideButton.Unref()
-
 	var mainStack gtk.Stack
 	builder.GetObject("main_stack").Cast(&mainStack)
 	defer mainStack.Unref()
@@ -73,7 +68,6 @@ func NewMainWindow(app *adw.Application, settings *gio.Settings) *MainWindow {
 
 		statusPage: &statusPage,
 		playButton: &playButton,
-		//guideButton: &guideButton,
 
 		toastOverlay: &toastOverlay,
 		mainStack:    &mainStack,
