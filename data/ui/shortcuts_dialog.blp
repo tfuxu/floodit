@@ -12,25 +12,31 @@ Adw.ShortcutsDialog shortcuts_dialog {
     }
 
     Adw.ShortcutsItem {
-      title: C_("shortcut window", "Play Again");
-      action-name: "win.play-again";
+      title: C_("shortcut window", "Start New Game");
+      action-name: "win.show-game-select";
     }
 
     Adw.ShortcutsItem {
-      title: C_("shortcut window", "Start New Game");
-      action-name: "win.show-game-select";
+      title: C_("shortcut window", "Play Again");
+      action-name: "win.play-again";
     }
   }
 
   Adw.ShortcutsSection {
     title: C_("shortcut window", "General");
 
-    /*Adw.ShortcutsItem {
-      title: C_("shortcut window", "Show Help");
-      action-name: "app.help";
-    }*/
     Adw.ShortcutsItem {
-      title: C_("shortcut window", "Show Shortcuts");
+      title: C_("shortcut window", "Show Game Rules");
+      action-name: "win.present-game-rules";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Show Main Menu");
+      accelerator: "F10";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Show Keyboard Shortcuts");
       action-name: "app.shortcuts";
     }
 
