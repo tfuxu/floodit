@@ -5,7 +5,7 @@
     <file preprocess="xml-stripblanks">ui/custom_mode_page.ui</file>
     <file preprocess="xml-stripblanks">ui/difficulty_page.ui</file>
     <file preprocess="xml-stripblanks">ui/game_page.ui</file>
-    <file preprocess="xml-stripblanks">ui/game_rules_page.ui</file>
+    <file preprocess="xml-stripblanks">ui/game_rules_dialog.ui</file>
     <file preprocess="xml-stripblanks" alias="shortcuts-dialog.ui">ui/shortcuts_dialog.ui</file>
     <file preprocess="xml-stripblanks">ui/main_window.ui</file>
     <file preprocess="xml-stripblanks">ui/result_page.ui</file>
@@ -13,7 +13,10 @@
     <file>style.css</file>
   </gresource>
   <gresource prefix="/io/github/tfuxu/Floodit/icons/scalable/actions/">
-    <file preprocess="xml-stripblanks" alias="question-round-outline-symbolic.svg">icons/scalable/actions/question-round-outline-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="fill-tool-symbolic.svg">icons/scalable/actions/fill-tool-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="mouse-click-symbolic.svg">icons/scalable/actions/mouse-click-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="open-book-symbolic.svg">icons/scalable/actions/open-book-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="sentiment-very-satisfied-symbolic.svg">icons/scalable/actions/sentiment-very-satisfied-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="trophy-symbolic.svg">icons/scalable/actions/trophy-symbolic.svg</file>
   </gresource>
 </gresources>

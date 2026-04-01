@@ -5,7 +5,7 @@ data/ui/color_keyboard.blp
 data/ui/custom_mode_page.blp
 data/ui/difficulty_page.blp
 data/ui/game_page.blp
-data/ui/game_rules_page.blp
+data/ui/game_rules_dialog.blp
 data/ui/main_window.blp
 data/ui/result_page.blp
 data/ui/shortcuts_dialog.blp
