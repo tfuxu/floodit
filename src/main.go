@@ -90,7 +90,7 @@ func setupActions(app *adw.Application) {
 
 	app.SetAccelsForAction("win.play-again", []string{"<Primary>R"})
 	app.SetAccelsForAction("win.show-game-select", []string{"<Primary>N"})
-	app.SetAccelsForAction("app.game-rules", []string{"F1"})
+	app.SetAccelsForAction("win.present-game-rules", []string{"F1"})
 	app.SetAccelsForAction("app.quit", []string{"<Primary>Q"})
 }
 
