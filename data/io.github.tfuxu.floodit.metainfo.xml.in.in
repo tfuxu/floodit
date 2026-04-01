@@ -60,16 +60,17 @@
   </custom>
 
   <releases>
-    <release version="2.0.0" date="2026-03-27">
+    <release version="2.0.0" date="2026-04-01">
       <description translate="no">
         <p>
           After almost 2 years since the last release, there's finally another!
-          It brings the ability to replay the board, shortcuts for color buttons that allow you to easily play the game using only the keyboard and full translation support that makes the game easier for international players to understand.
+          It brings a handy game rules dialog for beginners, the ability to replay the board, and shortcuts for color buttons that allow you to easily play the game using only the keyboard. It also offers full translation support, making the game easier for international players to understand.
           There are also many under-the-hood improvements that will make developing future features much easier (and in some cases, possible).
         </p>
 
         <p>General changes:</p>
         <ul>
+          <li>Added game rules</li>
           <li>Added ability to replay the board</li>
           <li>Added shortcuts for color buttons</li>
           <li>Made almost all visible text translatable</li>
