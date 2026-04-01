@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: floodit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-22 14:25+0100\n"
+"POT-Creation-Date: 2026-04-01 23:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,12 +19,12 @@ msgstr ""
 
 #: data/io.github.tfuxu.floodit.metainfo.xml.in.in:4
 #: data/io.github.tfuxu.floodit.desktop.in.in:6 data/ui/main_window.blp:5
-#: data/ui/main_window.blp:30 src/views/about/about_dialog.go:17
+#: data/ui/main_window.blp:32 src/views/about/about_dialog.go:17
 msgid "Flood It"
 msgstr ""
 
 #: data/io.github.tfuxu.floodit.metainfo.xml.in.in:5
-#: data/io.github.tfuxu.floodit.desktop.in.in:7 data/ui/main_window.blp:31
+#: data/io.github.tfuxu.floodit.desktop.in.in:7 data/ui/main_window.blp:33
 msgid "Flood the board"
 msgstr ""
 
@@ -66,7 +66,7 @@ msgid "Move Limit"
 msgstr ""
 
 #. Translators: The prefixed underscore is used to indicate a mnemonic. Do NOT remove it.
-#: data/ui/custom_mode_page.blp:59 data/ui/main_window.blp:44
+#: data/ui/custom_mode_page.blp:59 data/ui/main_window.blp:46
 msgid "_Play"
 msgstr ""
 
@@ -74,7 +74,7 @@ msgstr ""
 msgid "Select Difficulty"
 msgstr ""
 
-#: data/ui/difficulty_page.blp:16 data/ui/game_rules_page.blp:16
+#: data/ui/difficulty_page.blp:16
 msgid "Back"
 msgstr ""
 
@@ -106,7 +106,7 @@ msgstr ""
 msgid "A 14x14 board with 25 moves"
 msgstr ""
 
-#: data/ui/difficulty_page.blp:53 data/ui/game_page.blp:12
+#: data/ui/difficulty_page.blp:53 data/ui/game_page.blp:16
 #: src/views/custom_mode_page.go:102
 msgid "Custom"
 msgstr ""
@@ -115,29 +115,56 @@ msgstr ""
 msgid "Specify your own board size and move limit"
 msgstr ""
 
-#: data/ui/game_page.blp:17 data/ui/result_page.blp:12
+#: data/ui/game_page.blp:21 data/ui/result_page.blp:12
 msgid "Main Menu"
 msgstr ""
 
-#: data/ui/game_page.blp:42 data/ui/result_page.blp:118
+#: data/ui/game_page.blp:46 data/ui/result_page.blp:118
 msgid "New Game"
 msgstr ""
 
-#: data/ui/game_page.blp:47 data/ui/result_page.blp:123
+#: data/ui/game_page.blp:51 data/ui/result_page.blp:123
 msgid "Play Again"
 msgstr ""
 
-#: data/ui/game_page.blp:63 data/ui/result_page.blp:139
+#: data/ui/game_page.blp:62 data/ui/game_rules_dialog.blp:6
+#: data/ui/main_window.blp:59 data/ui/result_page.blp:134
+msgid "Game Rules"
+msgstr ""
+
+#: data/ui/game_page.blp:67 data/ui/result_page.blp:139
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: data/ui/game_page.blp:68 data/ui/main_window.blp:23
+#: data/ui/game_page.blp:72 data/ui/main_window.blp:25
 #: data/ui/result_page.blp:144
 msgid "About Flood It"
 msgstr ""
 
-#: data/ui/game_rules_page.blp:5 data/ui/game_rules_page.blp:29
-msgid "Guide"
+#: data/ui/game_rules_dialog.blp:18
+msgid "You start from the top-right corner of the board"
+msgstr ""
+
+#: data/ui/game_rules_dialog.blp:23
+msgid "Your objective is to fill the board before you run out of moves"
+msgstr ""
+
+#: data/ui/game_rules_dialog.blp:28
+msgid "To achieve this, click the rounded color button to spill a new color"
+msgstr ""
+
+#: data/ui/game_rules_dialog.blp:29
+msgid "Alternatively, use the Ctrl+1…6 keyboard shortcut"
+msgstr ""
+
+#: data/ui/game_rules_dialog.blp:34
+msgid ""
+"Remember that newly adjacent squares of the same color increase the total "
+"filled space"
+msgstr ""
+
+#: data/ui/game_rules_dialog.blp:39
+msgid "That’s all. Good luck!"
 msgstr ""
 
 #. Translators: The prefixed underscore is used to indicate a mnemonic. Do NOT remove it.
@@ -157,25 +184,40 @@ msgstr ""
 
 #: data/ui/shortcuts_dialog.blp:9
 msgctxt "shortcut window"
-msgid "Play Again"
+msgid "Select Color"
 msgstr ""
 
-#: data/ui/shortcuts_dialog.blp:14
+#: data/ui/shortcuts_dialog.blp:15
 msgctxt "shortcut window"
 msgid "Start New Game"
 msgstr ""
 
 #: data/ui/shortcuts_dialog.blp:20
 msgctxt "shortcut window"
+msgid "Play Again"
+msgstr ""
+
+#: data/ui/shortcuts_dialog.blp:26
+msgctxt "shortcut window"
 msgid "General"
 msgstr ""
 
-#: data/ui/shortcuts_dialog.blp:27
+#: data/ui/shortcuts_dialog.blp:29
 msgctxt "shortcut window"
-msgid "Show Shortcuts"
+msgid "Show Game Rules"
 msgstr ""
 
-#: data/ui/shortcuts_dialog.blp:36
+#: data/ui/shortcuts_dialog.blp:34
+msgctxt "shortcut window"
+msgid "Show Main Menu"
+msgstr ""
+
+#: data/ui/shortcuts_dialog.blp:39
+msgctxt "shortcut window"
+msgid "Show Keyboard Shortcuts"
+msgstr ""
+
+#: data/ui/shortcuts_dialog.blp:48
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr ""
@@ -190,7 +232,7 @@ msgid "Copyright © 2026 tfuxu"
 msgstr ""
 
 #. TRANSLATORS: DO NOT translate the '%d' part of the text.
-#: src/views/game_page.go:93 src/views/game_page.go:125
+#: src/views/game_page.go:103 src/views/game_page.go:162
 #, go-format
 msgid "Steps Left: %d"
 msgstr ""
