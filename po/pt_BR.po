@@ -146,7 +146,7 @@ msgid "About Flood It"
 msgstr "Sobre Flood It"
 
 #: data/ui/game_rules_dialog.blp:18
-msgid "You start from the top-right corner of the board"
+msgid "You start from the top-left corner of the board"
 msgstr ""
 
 #: data/ui/game_rules_dialog.blp:23
