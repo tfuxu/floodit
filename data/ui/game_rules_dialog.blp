@@ -4,7 +4,6 @@ using Adw 1;
 template $GameRulesDialog: Adw.Dialog {
   content-width: 600;
   title: _("Game Rules");
-  follows-content-size: true;
 
   child: Adw.ToolbarView {
     [top]
@@ -12,8 +11,17 @@ template $GameRulesDialog: Adw.Dialog {
       centering-policy: strict;
     }
 
-    content: Adw.PreferencesPage {
-      Adw.PreferencesGroup {
+    content: Adw.Clamp {
+      maximum-size: 600;
+      tightening-threshold: 400;
+      unit: sp;
+
+      margin-top: 20;
+      margin-bottom: 25;
+      margin-start: 10;
+      margin-end: 10;
+
+      child: Adw.PreferencesGroup {
         Adw.ActionRow {
           icon-name: "io.github.tfuxu.floodit-symbolic";
           title: _("You start from the top-left corner of the board");
@@ -39,7 +47,7 @@ template $GameRulesDialog: Adw.Dialog {
           icon-name: "sentiment-very-satisfied-symbolic";
           title: _("That’s all. Good luck!");
         }
-      }
+      };
     };
   };
 }
