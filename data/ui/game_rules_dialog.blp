@@ -2,8 +2,8 @@ using Gtk 4.0;
 using Adw 1;
 
 template $GameRulesDialog: Adw.Dialog {
-  content-width: 600;
   title: _("Game Rules");
+  follows-content-size: true;
 
   child: Adw.ToolbarView {
     [top]
@@ -11,42 +11,47 @@ template $GameRulesDialog: Adw.Dialog {
       centering-policy: strict;
     }
 
-    content: Adw.Clamp {
-      maximum-size: 600;
-      tightening-threshold: 400;
-      unit: sp;
+    content: Gtk.ScrolledWindow {
+      hscrollbar-policy: never;
+      propagate-natural-height: true;
+      propagate-natural-width: true;
 
-      margin-top: 20;
-      margin-bottom: 25;
-      margin-start: 10;
-      margin-end: 10;
+      child: Adw.Clamp {
+        maximum-size: 550;
+        tightening-threshold: 500;
+        unit: sp;
+        margin-top: 20;
+        margin-bottom: 25;
+        margin-start: 10;
+        margin-end: 10;
 
-      child: Adw.PreferencesGroup {
-        Adw.ActionRow {
-          icon-name: "io.github.tfuxu.floodit-symbolic";
-          title: _("You start from the top-left corner of the board");
-        }
+        child: Adw.PreferencesGroup {
+          Adw.ActionRow {
+            icon-name: "io.github.tfuxu.floodit-symbolic";
+            title: _("You start from the top-left corner of the board");
+          }
 
-        Adw.ActionRow {
-          icon-name: "trophy-symbolic";
-          title: _("Your objective is to fill the board before you run out of moves");
-        }
+          Adw.ActionRow {
+            icon-name: "trophy-symbolic";
+            title: _("Your objective is to fill the board before you run out of moves");
+          }
 
-        Adw.ActionRow {
-          icon-name: "mouse-click-symbolic";
-          title: _("To achieve this, click the rounded color button to spill a new color");
-          subtitle: _("Alternatively, use the Ctrl+1…6 keyboard shortcut");
-        }
+          Adw.ActionRow {
+            icon-name: "mouse-click-symbolic";
+            title: _("To achieve this, click the rounded color button to spill a new color");
+            subtitle: _("Alternatively, use the Ctrl+1…6 keyboard shortcut");
+          }
 
-        Adw.ActionRow {
-          icon-name: "fill-tool-symbolic";
-          title: _("Remember that newly adjacent squares of the same color increase the total filled space");
-        }
+          Adw.ActionRow {
+            icon-name: "fill-tool-symbolic";
+            title: _("Remember that newly adjacent squares of the same color increase the total filled space");
+          }
 
-        Adw.ActionRow {
-          icon-name: "sentiment-very-satisfied-symbolic";
-          title: _("That’s all. Good luck!");
-        }
+          Adw.ActionRow {
+            icon-name: "sentiment-very-satisfied-symbolic";
+            title: _("That’s all. Good luck!");
+          }
+        };
       };
     };
   };
