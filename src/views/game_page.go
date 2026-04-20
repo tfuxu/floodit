@@ -72,6 +72,7 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 	// TODO: Add a breakpoint that will set a higher content size when window width is >= 600px
 	gameBoard := board.NewGameBoard(
 		&gp.board,
+		gp.settings,
 		"vexpand", true,
 		"hexpand", true,
 		"width-request", 300,
@@ -80,7 +81,7 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 	gameBox.Append(&gameBoard.Widget)
 	gp.gameBoard = &gameBoard
 
-	colorKeyboard := keyboard.NewColorKeyboard(backend.DefaultColors)
+	colorKeyboard := keyboard.NewColorKeyboard(settings, backend.DefaultColors)
 	gameBox.Append(&colorKeyboard.Widget)
 
 	gp.setupActions()
