@@ -75,7 +75,7 @@ func (ck *ColorKeyboard) setupButtons(colorPalette [][2]string) {
 		// TODO: Change label color depending on contrast (eg. white isn't readable from away on yellow)
 		label := gtk.NewLabel(buttonLabel)
 		label.SetVisible(ck.settings.GetBoolean("show-color-numbers"))
-		label.AddCssClass("title-4")
+		label.AddCssClass("title-1")
 		label.SetHalign(gtk.AlignCenterValue)
 		label.SetValign(gtk.AlignCenterValue)
 
