@@ -5,6 +5,8 @@ Adw.ApplicationWindow main_window {
   title: _("Flood It");
   default-height: 600;
   default-width: 360;
+  width-request: 360;
+  height-request: 294;
 
   content: Adw.ToastOverlay toast_overlay {
     Gtk.Stack main_stack {
@@ -34,8 +36,8 @@ Adw.ApplicationWindow main_window {
 
             child: Gtk.Box {
               halign: center;
-              orientation: vertical;
-              spacing: 14;
+              orientation: horizontal;
+              spacing: 10;
 
               Gtk.Button play_button {
                 valign: center;
@@ -50,17 +52,18 @@ Adw.ApplicationWindow main_window {
                 ]
               }
 
-              /*Gtk.Button help_button {
-                child: Adw.ButtonContent {
-                  icon-name: "open-book-symbolic";
-                  label: _("_Read Rules");
-                  use-underline: true;
-                };
+              Gtk.Button rules_button {
+                valign: center;
+                halign: center;
+                icon-name: "open-book-symbolic";
+                tooltip-text: _("Game Rules");
+                action-name: "win.present-game-rules";
 
                 styles [
-                  "pill"
+                  "circular",
+                  "flat",
                 ]
-              }*/
+              }
             };
           };
         };
@@ -68,3 +71,5 @@ Adw.ApplicationWindow main_window {
     }
   };
 }
+
+$GameRulesDialog game_rules_dialog {}

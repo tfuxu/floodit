@@ -24,7 +24,6 @@ func init() {
 		slog.SetLogLoggerLevel(slog.LevelInfo)
 	}
 
-	// TODO: Check if this will be needed after devenv removal
 	// Set `XDG_DATA_DIRS` to <builddir>/data if running in devenv
 	if os.Getenv("MESON_DEVENV") == "1" {
 		var data_dirs string
@@ -91,7 +90,7 @@ func setupActions(app *adw.Application) {
 
 	app.SetAccelsForAction("win.play-again", []string{"<Primary>R"})
 	app.SetAccelsForAction("win.show-game-select", []string{"<Primary>N"})
-	app.SetAccelsForAction("app.game-rules", []string{"F1"})
+	app.SetAccelsForAction("win.present-game-rules", []string{"F1"})
 	app.SetAccelsForAction("app.quit", []string{"<Primary>Q"})
 }
 

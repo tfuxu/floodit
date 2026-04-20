@@ -11,17 +11,19 @@ import (
 	. "github.com/pojntfx/go-gettext/pkg/i18n"
 )
 
-// TODO: Translate when https://github.com/pojntfx/go-gettext/issues/1 gets resolved
-var ResultStates = map[string]string{
-	"win": "You Won!", "lose": "You Lost!",
-}
+type ResultState int
+
+const (
+	StateWin ResultState = iota
+	StateLose
+)
 
 type ResultPage struct {
 	*adw.Bin
 	settings *gio.Settings
 	parent   *MainWindow
 
-	resultState string
+	resultState ResultState
 
 	toastOverlay *adw.ToastOverlay
 
@@ -60,9 +62,9 @@ func NewResultPage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw
 
 func (r *ResultPage) SetResultState(isWin bool) {
 	if isWin {
-		r.resultState = "win"
+		r.resultState = StateWin
 	} else {
-		r.resultState = "lose"
+		r.resultState = StateLose
 	}
 
 	r.refresh()
@@ -70,10 +72,12 @@ func (r *ResultPage) SetResultState(isWin bool) {
 
 func (r *ResultPage) refresh() {
 	var classes []string
+	var label string
 	var description string
 
-	if r.resultState == "win" {
+	if r.resultState == StateWin {
 		classes = []string{"title-1", "success"}
+		label = L("You Won!")
 		description = fmt.Sprintf(
 			// TRANSLATORS: DO NOT translate '<b>%s</b>' and '<b>%d</b>'.
 			L("You flooded the <b>%s</b> board in <b>%d</b> moves!"),
@@ -82,6 +86,7 @@ func (r *ResultPage) refresh() {
 		)
 	} else {
 		classes = []string{"title-1", "error"}
+		label = L("You Lost!")
 		description = fmt.Sprintf(
 			// TRANSLATORS: DO NOT translate '<b>%s</b>' and '\n'.
 			L("You failed to finish the <b>%s</b> board.\nBetter luck next time!"),
@@ -89,7 +94,7 @@ func (r *ResultPage) refresh() {
 		)
 	}
 
-	r.titleLabel.SetLabel(ResultStates[r.resultState])
+	r.titleLabel.SetLabel(label)
 	r.descriptionLabel.SetLabel(description)
 	r.titleLabel.SetCssClasses(classes)
 }

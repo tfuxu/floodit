@@ -13,7 +13,7 @@ Adw.Bin game_page {
 
       [title]
       Adw.WindowTitle game_info_title {
-        title: _("Custom");  // NOTE: This is changed dynamically in code
+        title: _("Custom"); // NOTE: This is changed dynamically in code
       }
 
       [end]
@@ -58,11 +58,11 @@ menu game_menu {
       label: _("Preferences");
       action: "app.preferences";
     }*/
-
-    /*item {
+    item {
       label: _("Game Rules");
-      action: "app.game-rules";
-    }*/
+      action: "win.present-game-rules";
+    }
+
     item {
       label: _("Keyboard Shortcuts");
       action: "app.shortcuts";

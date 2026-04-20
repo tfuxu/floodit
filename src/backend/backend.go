@@ -8,11 +8,11 @@ import (
 // TODO: Allow users to provide a custom palette and check if it consists of:
 // min 3 colors; max 9 colors
 var DefaultColors = [][2]string{
-	{"blue",   "#3584e4"},
-	{"green",  "#33d17a"},
-	{"yellow", "#f6d32d"},
-	{"orange", "#ff7800"},
 	{"red",    "#ed333b"},
+	{"orange", "#ff7800"},
+	{"yellow", "#f6d32d"},
+	{"green",  "#33d17a"},
+	{"blue",   "#3584e4"},
 	{"purple", "#9141ac"},
 	//{"brown",  "#b5835a"},
 }

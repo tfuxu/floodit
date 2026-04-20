@@ -21,12 +21,12 @@ type MainWindow struct {
 
 	statusPage *adw.StatusPage
 	playButton *gtk.Button
-	//guideButton *gtk.Button
 
-	startingView  *StartingView
-	gamePage      *GamePage
-	gameRulesPage *GameRulesPage
-	resultPage    *ResultPage
+	gameRulesDialog *GameRulesDialog
+
+	startingView *StartingView
+	gamePage     *GamePage
+	resultPage   *ResultPage
 }
 
 func NewMainWindow(app *adw.Application, settings *gio.Settings) *MainWindow {
@@ -49,10 +49,6 @@ func NewMainWindow(app *adw.Application, settings *gio.Settings) *MainWindow {
 	builder.GetObject("play_button").Cast(&playButton)
 	defer playButton.Unref()
 
-	//var guideButton gtk.Button
-	//builder.GetObject("guide_button").Cast(&guideButton)
-	//defer guideButton.Unref()
-
 	var mainStack gtk.Stack
 	builder.GetObject("main_stack").Cast(&mainStack)
 	defer mainStack.Unref()
@@ -61,6 +57,10 @@ func NewMainWindow(app *adw.Application, settings *gio.Settings) *MainWindow {
 	builder.GetObject("toast_overlay").Cast(&toastOverlay)
 	defer toastOverlay.Unref()
 
+	var gameRulesDialog GameRulesDialog
+	builder.GetObject("game_rules_dialog").Cast(&gameRulesDialog)
+	defer gameRulesDialog.Unref()
+
 	w := MainWindow{
 		ApplicationWindow: &window,
 		app:               app,
@@ -68,14 +68,14 @@ func NewMainWindow(app *adw.Application, settings *gio.Settings) *MainWindow {
 
 		statusPage: &statusPage,
 		playButton: &playButton,
-		//guideButton: &guideButton,
 
 		toastOverlay: &toastOverlay,
 		mainStack:    &mainStack,
+
+		gameRulesDialog: &gameRulesDialog,
 	}
 	w.startingView = NewStartingView(&w, settings, &toastOverlay)
 	w.gamePage = NewGamePage(&w, settings, &toastOverlay)
-	w.gameRulesPage = NewGameRulesPage(&w, settings, &toastOverlay)
 	w.resultPage = NewResultPage(&w, settings, &toastOverlay)
 
 	statusPage.SetIconName(constants.AppID)
@@ -112,11 +112,11 @@ func (w *MainWindow) setupActions() {
 	}))
 	w.AddAction(showGameSelectAction)
 
-	showGameRulesAction := gio.NewSimpleAction("show-game-rules", nil)
-	showGameRulesAction.ConnectActivate(new(func(gio.SimpleAction, uintptr) {
-		w.showRulesPage()
+	presentGameRulesAction := gio.NewSimpleAction("present-game-rules", nil)
+	presentGameRulesAction.ConnectActivate(new(func(gio.SimpleAction, uintptr) {
+		w.presentRulesDialog()
 	}))
-	w.AddAction(showGameRulesAction)
+	w.AddAction(presentGameRulesAction)
 
 	showFinishAction := gio.NewSimpleAction("show-finish", glib.NewVariantType("b"))
 	showFinishAction.ConnectActivate(new(func(_ gio.SimpleAction, parameter uintptr) {
@@ -139,7 +139,6 @@ func (w *MainWindow) setupSignals() {
 func (w *MainWindow) setupStack() {
 	w.mainStack.AddNamed(&w.startingView.Widget, "stack_starting_page")
 	w.mainStack.AddNamed(&w.gamePage.Widget, "stack_game_page")
-	w.mainStack.AddNamed(&w.gameRulesPage.Widget, "stack_game_rules_page")
 	w.mainStack.AddNamed(&w.resultPage.Widget, "stack_result_page")
 }
 
@@ -173,13 +172,13 @@ func (w *MainWindow) showStartingPage() {
 	w.mainStack.SetVisibleChildName("stack_starting_page")
 }
 
-func (w *MainWindow) showRulesPage() {
-	w.mainStack.SetVisibleChildName("stack_game_rules_page")
-}
-
 func (w *MainWindow) showResultPage(isWin bool) {
 	w.resultPage.SetResultState(isWin)
 	w.mainStack.SetVisibleChildName("stack_result_page")
+}
+
+func (w *MainWindow) presentRulesDialog() {
+	w.gameRulesDialog.Present(&w.Widget)
 }
 
 func (w *MainWindow) onPlayClicked() {

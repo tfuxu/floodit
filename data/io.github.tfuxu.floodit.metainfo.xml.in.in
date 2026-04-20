@@ -39,10 +39,10 @@
   </branding>
 
   <url type="homepage">@PROJECT_URL@</url>
+  <url type="vcs-browser">@VCS_BROWSER_URL@</url>
   <url type="bugtracker">@BUGTRACKER_URL@</url>
   <url type="help">@HELP_URL@</url>
   <!--<url type="translate">@TRANSLATE_URL@</url>-->
-  <url type="vcs-browser">@VCS_BROWSER_URL@</url>
 
   <requires>
     <internet>offline-only</internet>
@@ -60,6 +60,38 @@
   </custom>
 
   <releases>
+    <release version="2.0.0" date="2026-04-01">
+      <description translate="no">
+        <p>
+          After almost 2 years since the last release, there's finally another!
+          It brings a handy game rules dialog for beginners, the ability to replay the board, and shortcuts for color buttons that allow you to easily play the game using only the keyboard. It also offers full translation support, making the game easier for international players to understand.
+          There are also many under-the-hood improvements that will make developing future features much easier (and in some cases, possible).
+        </p>
+
+        <p>General changes:</p>
+        <ul>
+          <li>Added game rules</li>
+          <li>Added ability to replay the board</li>
+          <li>Added shortcuts for color buttons</li>
+          <li>Made almost all visible text translatable</li>
+          <li>Added more information to the game result page (Now it says which difficulty level you won/lost)</li>
+          <li>Added Turkish (tr) translation</li>
+          <li>Added Brazilian Portuguese (pt_BR) translation</li>
+          <li>Added Dutch (nl) translation</li>
+          <li>Added French (fr) translation</li>
+        </ul>
+
+        <p>Technical changes:</p>
+        <ul>
+          <li>Changed UI library from gotk4 to puregotk (dynamic bindings, 99% faster build times, custom widgets, etc.)</li>
+          <li>Added custom seed support in backend</li>
+          <li>Ported shortcuts window to Adw.ShortcutsDialog (thanks in part to UrtsiSantsi)</li>
+          <li>Replaced Gtk.DrawingArea with a custom widget (uses Gtk.Snapshot)</li>
+          <li>Updated Gnome runtime to 50</li>
+          <li>Fixed Flatpak builds in Gnome Builder</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.1.0" date="2024-10-06">
       <description translate="no">
         <ul>

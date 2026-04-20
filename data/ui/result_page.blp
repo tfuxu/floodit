@@ -47,7 +47,6 @@ Adw.Bin result_page {
               wrap-mode: word_char;
               justify: center;
               use-markup: true;
-
               margin-top: 12;
             }
 
@@ -55,7 +54,6 @@ Adw.Bin result_page {
               orientation: horizontal;
               halign: center;
               spacing: 10;
-
               margin-top: 36;
 
               Gtk.Button {
@@ -106,11 +104,11 @@ menu result_menu {
       label: _("Preferences");
       action: "app.preferences";
     }*/
-
-    /*item {
+    item {
       label: _("Game Rules");
-      action: "app.game-rules";
-    }*/
+      action: "win.present-game-rules";
+    }
+
     item {
       label: _("Keyboard Shortcuts");
       action: "app.shortcuts";
