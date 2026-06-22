@@ -88,6 +88,7 @@ func setupActions(app *adw.Application) {
 	}))
 	app.AddAction(quitAction)
 
+	app.SetAccelsForAction("win.show-preferences", []string{"<Primary>comma"})
 	app.SetAccelsForAction("win.play-again", []string{"<Primary>R"})
 	app.SetAccelsForAction("win.show-game-select", []string{"<Primary>N"})
 	app.SetAccelsForAction("win.present-game-rules", []string{"F1"})
