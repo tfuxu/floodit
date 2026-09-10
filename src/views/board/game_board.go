@@ -28,6 +28,8 @@ type GameBoard struct {
 	settings *gio.Settings
 
 	board *backend.Board
+
+	showColorNumbers bool
 }
 
 func NewGameBoard(board *backend.Board, settings *gio.Settings, FirstPropertyNameVar string, varArgs ...interface{}) GameBoard {
@@ -39,8 +41,20 @@ func NewGameBoard(board *backend.Board, settings *gio.Settings, FirstPropertyNam
 	gb := (*GameBoard)(unsafe.Pointer(object.GetData(constants.DataKeyGoInstance)))
 	gb.settings = settings
 	gb.board = board
+	gb.showColorNumbers = settings.GetBoolean("show-color-numbers")
+
+	gb.setupSignals()
 
 	return v
+}
+
+func (gb *GameBoard) setupSignals() {
+	gb.settings.ConnectChanged(new(func(settings gio.Settings, key string) {
+		if key == "show-color-numbers" {
+			gb.showColorNumbers = settings.GetBoolean("show-color-numbers")
+			gb.QueueDraw()
+		}
+	}))
 }
 
 func init() {
@@ -142,7 +156,7 @@ func init() {
 							),
 						)
 
-						if gb.settings.GetBoolean("show-color-numbers") {
+						if gb.showColorNumbers {
 							// TODO: Check how to get what font is currently used for UI
 							fontDescription := pango.FontDescriptionFromString(
 								"Adwaita Sans Bold " + strconv.Itoa(rectWidth/2),
