@@ -3,15 +3,15 @@
   path: modules.txt
   type: file
 - dest: vendor/codeberg.org/puregotk/puregotk
-  sha256: 9d9a3c7b34bd5a9b1556630adf8da2fc24c177ebbc3cce37fcaf3ada283e79ca
+  sha256: 5c292f8635562bc086c0a7f7f096316b0cc571bc8b94147704009a5d7eb22115
   strip-components: 3
   type: archive
-  url: https://proxy.golang.org/codeberg.org/puregotk/puregotk/@v/v0.0.0-20260320050432-5bb8c3359c53.zip
+  url: https://proxy.golang.org/codeberg.org/puregotk/puregotk/@v/v0.0.0-20260512093256-2a5b38c3a1c6.zip
 - dest: vendor/github.com/pojntfx/go-gettext
-  sha256: d0ad3df0fd73beaa2af18ce69102097b1f352d5dc5083eb1148655272ef4e999
+  sha256: df8924f8c5945ac2157739497e85168322b20f2a4337c114315b2c384cb028a0
   strip-components: 3
   type: archive
-  url: https://proxy.golang.org/github.com/pojntfx/go-gettext/@v/v0.4.1.zip
+  url: https://proxy.golang.org/github.com/pojntfx/go-gettext/@v/v0.4.2.zip
 - dest: vendor/codeberg.org/puregotk/purego
   sha256: 0d5fb9e11934b151ac357a9c0660e4dcd287d2f93db0829356415f6e6a8ef84b
   strip-components: 3
