@@ -10,5 +10,8 @@
     <key name="window-maximized" type="b">
       <default>false</default>
     </key>
+    <key name="show-color-numbers" type="b">
+      <default>false</default>
+    </key>
   </schema>
 </schemalist>

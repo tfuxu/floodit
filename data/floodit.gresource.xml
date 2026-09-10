@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <gresources>
   <gresource prefix="/io/github/tfuxu/Floodit">
+    <file preprocess="xml-stripblanks">ui/app_preferences_dialog.ui</file>
     <file preprocess="xml-stripblanks">ui/color_keyboard.ui</file>
     <file preprocess="xml-stripblanks">ui/custom_mode_page.ui</file>
     <file preprocess="xml-stripblanks">ui/difficulty_page.ui</file>
