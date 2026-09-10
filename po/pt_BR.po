@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: floodit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 23:10+0200\n"
+"POT-Creation-Date: 2026-09-10 14:12+0200\n"
 "PO-Revision-Date: 2025-02-02 14:00-0300\n"
 "Last-Translator: Matheus Ribeiro <eng.rodrigues@proton.me>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -43,6 +43,23 @@ msgstr ""
 #: data/io.github.tfuxu.floodit.desktop.in.in:11
 msgid "game;strategy;flood;flood-it;"
 msgstr "game;strategy;flood;flood-it;jogo;estratégia;tabuleiro;"
+
+#: data/ui/app_preferences_dialog.blp:5 data/ui/game_page.blp:65
+#: data/ui/result_page.blp:111
+msgid "Preferences"
+msgstr ""
+
+#: data/ui/app_preferences_dialog.blp:11
+msgid "Accessibility"
+msgstr ""
+
+#: data/ui/app_preferences_dialog.blp:14
+msgid "Show Numbers on Colors"
+msgstr ""
+
+#: data/ui/app_preferences_dialog.blp:15
+msgid "Shows color indicators on cubes and color keyboard"
+msgstr ""
 
 #: data/ui/custom_mode_page.blp:5 data/ui/custom_mode_page.blp:21
 msgid "Custom Mode"
@@ -122,62 +139,62 @@ msgstr "Defina o tamanho do tabuleiro e o limite de movimentos"
 msgid "Main Menu"
 msgstr "Menu Principal"
 
-#: data/ui/game_page.blp:46 data/ui/result_page.blp:118
+#: data/ui/game_page.blp:46 data/ui/result_page.blp:92
 msgid "New Game"
 msgstr "Novo Jogo"
 
-#: data/ui/game_page.blp:51 data/ui/result_page.blp:123
+#: data/ui/game_page.blp:51 data/ui/result_page.blp:97
 #, fuzzy
 msgid "Play Again"
 msgstr "_Jogar novamente"
 
-#: data/ui/game_page.blp:62 data/ui/game_rules_dialog.blp:6
-#: data/ui/main_window.blp:59 data/ui/result_page.blp:134
+#: data/ui/game_page.blp:58 data/ui/game_rules_dialog.blp:5
+#: data/ui/main_window.blp:59 data/ui/result_page.blp:104
 msgid "Game Rules"
 msgstr ""
 
-#: data/ui/game_page.blp:67 data/ui/result_page.blp:139
+#: data/ui/game_page.blp:70 data/ui/result_page.blp:116
 msgid "Keyboard Shortcuts"
 msgstr "Atalhos de Teclado"
 
-#: data/ui/game_page.blp:72 data/ui/main_window.blp:25
-#: data/ui/result_page.blp:144
+#: data/ui/game_page.blp:75 data/ui/main_window.blp:25
+#: data/ui/result_page.blp:121
 msgid "About Flood It"
 msgstr "Sobre Flood It"
 
-#: data/ui/game_rules_dialog.blp:18
+#: data/ui/game_rules_dialog.blp:31
 msgid "You start from the top-left corner of the board"
 msgstr ""
 
-#: data/ui/game_rules_dialog.blp:23
+#: data/ui/game_rules_dialog.blp:36
 msgid "Your objective is to fill the board before you run out of moves"
 msgstr ""
 
-#: data/ui/game_rules_dialog.blp:28
+#: data/ui/game_rules_dialog.blp:41
 msgid "To achieve this, click the rounded color button to spill a new color"
 msgstr ""
 
-#: data/ui/game_rules_dialog.blp:29
+#: data/ui/game_rules_dialog.blp:42
 msgid "Alternatively, use the Ctrl+1…6 keyboard shortcut"
 msgstr ""
 
-#: data/ui/game_rules_dialog.blp:34
+#: data/ui/game_rules_dialog.blp:47
 msgid ""
 "Remember that newly adjacent squares of the same color increase the total "
 "filled space"
 msgstr ""
 
-#: data/ui/game_rules_dialog.blp:39
+#: data/ui/game_rules_dialog.blp:52
 msgid "That’s all. Good luck!"
 msgstr ""
 
 #. Translators: The prefixed underscore is used to indicate a mnemonic. Do NOT remove it.
-#: data/ui/result_page.blp:87
+#: data/ui/result_page.blp:61
 msgid "_Play Again"
 msgstr "_Jogar novamente"
 
 #. Translators: The prefixed underscore is used to indicate a mnemonic. Do NOT remove it.
-#: data/ui/result_page.blp:99
+#: data/ui/result_page.blp:73
 #, fuzzy
 msgid "_New Game"
 msgstr "Novo Jogo"
@@ -225,6 +242,11 @@ msgctxt "shortcut window"
 msgid "Show Keyboard Shortcuts"
 msgstr "Atalhos de Teclado"
 
+#: data/ui/shortcuts_dialog.blp:44
+msgctxt "shortcut window"
+msgid "Show Preferences"
+msgstr ""
+
 #: data/ui/shortcuts_dialog.blp:48
 msgctxt "shortcut window"
 msgid "Quit"
@@ -240,19 +262,27 @@ msgid "Copyright © 2026 tfuxu"
 msgstr ""
 
 #. TRANSLATORS: DO NOT translate the '%d' part of the text.
-#: src/views/game_page.go:103 src/views/game_page.go:162
+#: src/views/game_page.go:100 src/views/game_page.go:159
 #, go-format
 msgid "Steps Left: %d"
 msgstr ""
 
+#: src/views/result_page.go:80
+msgid "You Won!"
+msgstr ""
+
 #. TRANSLATORS: DO NOT translate '<b>%s</b>' and '<b>%d</b>'.
-#: src/views/result_page.go:79
+#: src/views/result_page.go:83
 #, go-format
 msgid "You flooded the <b>%s</b> board in <b>%d</b> moves!"
 msgstr ""
 
+#: src/views/result_page.go:89
+msgid "You Lost!"
+msgstr ""
+
 #. TRANSLATORS: DO NOT translate '<b>%s</b>' and '\n'.
-#: src/views/result_page.go:87
+#: src/views/result_page.go:92
 #, go-format
 msgid ""
 "You failed to finish the <b>%s</b> board.\n"
