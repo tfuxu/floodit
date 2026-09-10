@@ -73,10 +73,6 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 	gameBoard := board.NewGameBoard(
 		&gp.board,
 		gp.settings,
-		"vexpand", true,
-		"hexpand", true,
-		"width-request", 300,
-		"height-request", 300,
 	)
 	gameBox.Append(&gameBoard.Widget)
 	gp.gameBoard = &gameBoard

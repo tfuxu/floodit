@@ -32,8 +32,8 @@ type GameBoard struct {
 	showColorNumbers bool
 }
 
-func NewGameBoard(board *backend.Board, settings *gio.Settings, FirstPropertyNameVar string, varArgs ...interface{}) GameBoard {
-	object := gobject.NewObject(gTypeGameBoard, FirstPropertyNameVar, varArgs...)
+func NewGameBoard(board *backend.Board, settings *gio.Settings) GameBoard {
+	object := gobject.NewObject(gTypeGameBoard, "css-name")
 
 	var v GameBoard
 	object.Cast(&v)
@@ -72,7 +72,8 @@ func init() {
 				Widget: parent,
 			}
 
-			//gb.SetOverflow(gtk.OverflowHiddenValue)
+			gb.SetPropertyWidthRequest(300)
+			gb.SetPropertyHeightRequest(300)
 
 			var pinner runtime.Pinner
 			pinner.Pin(gb)
