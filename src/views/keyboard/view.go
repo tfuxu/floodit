@@ -18,6 +18,8 @@ type ColorKeyboard struct {
 	settings    *gio.Settings
 	cssProvider *gtk.CssProvider
 
+	buttonStore []*gtk.Button
+
 	rowFirst  *gtk.Box
 	rowSecond *gtk.Box
 }
@@ -52,21 +54,29 @@ func NewColorKeyboard(settings *gio.Settings, colorPalette [][2]string) *ColorKe
 		settings:    settings,
 		cssProvider: cssProvider,
 
+		buttonStore: make([]*gtk.Button, len(colorPalette)),
+
 		rowFirst:  &rowFirst,
 		rowSecond: &rowSecond,
 	}
 
 	ck.setupButtons(colorPalette)
+	ck.setupSignals()
 
 	return &ck
 }
 
-func (ck *ColorKeyboard) setupButtons(colorPalette [][2]string) {
-	buttonStore := make([]*gtk.Button, len(colorPalette))
+func (ck *ColorKeyboard) setupSignals() {
+	ck.settings.ConnectChanged(new(func(settings gio.Settings, key string) {
+		if key == "show-color-numbers" {
+			ck.setColorNumbers(settings.GetBoolean("show-color-numbers"))
+		}
+	}))
+}
 
+func (ck *ColorKeyboard) setupButtons(colorPalette [][2]string) {
 	var buttonColors []string
 
-	// TODO: Subclass gtk.Button and implement this as a custom widget
 	for i, color := range colorPalette {
 		colorName := color[0]
 		colorHex := color[1]
@@ -87,7 +97,7 @@ func (ck *ColorKeyboard) setupButtons(colorPalette [][2]string) {
 		button.SetActionName("game.select-color")
 		button.SetActionTarget("s", colorName)
 
-		buttonStore[i] = button
+		ck.buttonStore[i] = button
 	}
 
 	ckCSS := strings.Join(buttonColors, " ")
@@ -95,7 +105,7 @@ func (ck *ColorKeyboard) setupButtons(colorPalette [][2]string) {
 
 	colorNo := 1
 	currentRow := ck.rowFirst
-	for _, button := range buttonStore {
+	for _, button := range ck.buttonStore {
 		if colorNo > 4 {
 			currentRow = ck.rowSecond
 			colorNo = 1
@@ -103,5 +113,11 @@ func (ck *ColorKeyboard) setupButtons(colorPalette [][2]string) {
 
 		currentRow.Append(&button.Widget)
 		colorNo += 1
+	}
+}
+
+func (ck *ColorKeyboard) setColorNumbers(showColorNumbers bool) {
+	for _, button := range ck.buttonStore {
+		button.GetChild().SetVisible(showColorNumbers)
 	}
 }
