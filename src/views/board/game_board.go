@@ -171,11 +171,16 @@ func init() {
 							layout.SetText(colorLabel, -1)
 							layout.GetPixelSize(&layoutWidth, &layoutHeight)
 
-							// TODO: Switch between black and white depending on a background/text contrast
 							black := gdk.RGBA{
 								Red:   0.0,
 								Green: 0.0,
 								Blue:  0.0,
+								Alpha: 1.0,
+							}
+							white := gdk.RGBA{
+								Red:   1.0,
+								Green: 1.0,
+								Blue:  1.0,
 								Alpha: 1.0,
 							}
 
@@ -190,7 +195,13 @@ func init() {
 									float32(centerY),
 								),
 							)
-							snapshot.AppendLayout(layout, &black)
+
+							// TODO: Add text color value to DefaultColors to remove this jank
+							if colorLabel == "1" || colorLabel == "5" || colorLabel == "6" {
+								snapshot.AppendLayout(layout, &white)
+							} else {
+								snapshot.AppendLayout(layout, &black)
+							}
 
 							snapshot.Restore()
 						}

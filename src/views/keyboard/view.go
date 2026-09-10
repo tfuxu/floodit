@@ -11,6 +11,7 @@ import (
 	"codeberg.org/puregotk/puregotk/v4/gdk"
 	"codeberg.org/puregotk/puregotk/v4/gio"
 	"codeberg.org/puregotk/puregotk/v4/gtk"
+	"codeberg.org/puregotk/puregotk/v4/pango"
 )
 
 type ColorKeyboard struct {
@@ -88,6 +89,13 @@ func (ck *ColorKeyboard) setupButtons(colorPalette [][2]string) {
 		label.AddCssClass("title-1")
 		label.SetHalign(gtk.AlignCenterValue)
 		label.SetValign(gtk.AlignCenterValue)
+
+		// TODO: Add text color value to DefaultColors to remove this jank
+		if buttonLabel == "1" || buttonLabel == "5" || buttonLabel == "6" {
+			label.SetAttributes(pango.AttrListFromString("foreground white"))
+		} else {
+			label.SetAttributes(pango.AttrListFromString("foreground black"))
+		}
 
 		button := gtk.NewButton()
 		button.SetChild(&label.Widget)
