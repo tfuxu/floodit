@@ -1,0 +1,20 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.PreferencesDialog app_preferences_dialog {
+  title: _("Preferences");
+
+  Adw.PreferencesPage {
+    name: "preferences";
+
+    Adw.PreferencesGroup {
+      title: _("Accessibility");
+
+      Adw.SwitchRow show_numbers_switch {
+        title: _("Show Numbers on Colors");
+        // TODO: Describe this better
+        subtitle: _("Show numbers on colors to easily distinguish between different colors");
+      }
+    }
+  }
+}

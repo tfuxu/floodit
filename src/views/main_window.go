@@ -22,7 +22,8 @@ type MainWindow struct {
 	statusPage *adw.StatusPage
 	playButton *gtk.Button
 
-	gameRulesDialog *GameRulesDialog
+	gameRulesDialog      *GameRulesDialog
+	appPreferencesDialog *AppPreferencesDialog
 
 	startingView *StartingView
 	gamePage     *GamePage
@@ -77,6 +78,7 @@ func NewMainWindow(app *adw.Application, settings *gio.Settings) *MainWindow {
 	w.startingView = NewStartingView(&w, settings, &toastOverlay)
 	w.gamePage = NewGamePage(&w, settings, &toastOverlay)
 	w.resultPage = NewResultPage(&w, settings, &toastOverlay)
+	w.appPreferencesDialog = NewAppPreferencesDialog(&w, settings)
 
 	statusPage.SetIconName(constants.AppID)
 
@@ -117,6 +119,12 @@ func (w *MainWindow) setupActions() {
 		w.presentRulesDialog()
 	}))
 	w.AddAction(presentGameRulesAction)
+
+	showPreferencesAction := gio.NewSimpleAction("show-preferences", nil)
+	showPreferencesAction.ConnectActivate(new(func(gio.SimpleAction, uintptr) {
+		w.showPreferences()
+	}))
+	w.AddAction(showPreferencesAction)
 
 	showFinishAction := gio.NewSimpleAction("show-finish", glib.NewVariantType("b"))
 	showFinishAction.ConnectActivate(new(func(_ gio.SimpleAction, parameter uintptr) {
@@ -179,6 +187,10 @@ func (w *MainWindow) showResultPage(isWin bool) {
 
 func (w *MainWindow) presentRulesDialog() {
 	w.gameRulesDialog.Present(&w.Widget)
+}
+
+func (w *MainWindow) showPreferences() {
+	w.appPreferencesDialog.Present(&w.Widget)
 }
 
 func (w *MainWindow) onPlayClicked() {

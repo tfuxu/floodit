@@ -3,6 +3,7 @@ package board
 import (
 	"log/slog"
 	"runtime"
+	"strconv"
 	"unsafe"
 
 	"github.com/tfuxu/floodit/src/constants"
@@ -10,11 +11,13 @@ import (
 	"github.com/tfuxu/floodit/src/backend"
 
 	"codeberg.org/puregotk/puregotk/v4/gdk"
+	"codeberg.org/puregotk/puregotk/v4/gio"
 	"codeberg.org/puregotk/puregotk/v4/glib"
 	"codeberg.org/puregotk/puregotk/v4/gobject"
 	"codeberg.org/puregotk/puregotk/v4/graphene"
 	"codeberg.org/puregotk/puregotk/v4/gsk"
 	"codeberg.org/puregotk/puregotk/v4/gtk"
+	"codeberg.org/puregotk/puregotk/v4/pango"
 )
 
 var gTypeGameBoard gobject.Type
@@ -22,19 +25,36 @@ var gTypeGameBoard gobject.Type
 type GameBoard struct {
 	gtk.Widget
 
+	settings *gio.Settings
+
 	board *backend.Board
+
+	showColorNumbers bool
 }
 
-func NewGameBoard(board *backend.Board, FirstPropertyNameVar string, varArgs ...interface{}) GameBoard {
-	object := gobject.NewObject(gTypeGameBoard, FirstPropertyNameVar, varArgs...)
+func NewGameBoard(board *backend.Board, settings *gio.Settings) GameBoard {
+	object := gobject.NewObject(gTypeGameBoard, "css-name")
 
 	var v GameBoard
 	object.Cast(&v)
 
 	gb := (*GameBoard)(unsafe.Pointer(object.GetData(constants.DataKeyGoInstance)))
+	gb.settings = settings
 	gb.board = board
+	gb.showColorNumbers = settings.GetBoolean("show-color-numbers")
+
+	gb.setupSignals()
 
 	return v
+}
+
+func (gb *GameBoard) setupSignals() {
+	gb.settings.ConnectChanged(new(func(settings gio.Settings, key string) {
+		if key == "show-color-numbers" {
+			gb.showColorNumbers = settings.GetBoolean("show-color-numbers")
+			gb.QueueDraw()
+		}
+	}))
 }
 
 func init() {
@@ -52,7 +72,8 @@ func init() {
 				Widget: parent,
 			}
 
-			//gb.SetOverflow(gtk.OverflowHiddenValue)
+			gb.SetPropertyWidthRequest(300)
+			gb.SetPropertyHeightRequest(300)
 
 			var pinner runtime.Pinner
 			pinner.Pin(gb)
@@ -86,6 +107,8 @@ func init() {
 				xOffset := (width - rectWidth*boardCols) / 2
 				yOffset := (height - rectHeight*boardRows) / 2
 
+				pangoContext := widget.CreatePangoContext()
+
 				snapshot.Save()
 
 				roundedRect := gsk.RoundedRect{}
@@ -106,12 +129,14 @@ func init() {
 						x := rectWidth*col + xOffset
 						y := rectHeight*row + yOffset
 						var hexCode string
+						var colorLabel string
 
 						// TODO: This is a dirty workaround to get this working with array.
 						// Make sure in future to use array indexes in game matrix instead.
-						for _, color := range backend.DefaultColors {
+						for i, color := range backend.DefaultColors {
 							if color[0] == boardMatrix[row][col] {
 								hexCode = color[1]
+								colorLabel = strconv.Itoa(i + 1)
 							}
 						}
 
@@ -124,8 +149,51 @@ func init() {
 
 						snapshot.AppendColor(
 							&color,
-							graphene.RectAlloc().Init(float32(x), float32(y), float32(rectWidth), float32(rectHeight)),
+							graphene.RectAlloc().Init(
+								float32(x),
+								float32(y),
+								float32(rectWidth),
+								float32(rectHeight),
+							),
 						)
+
+						if gb.showColorNumbers {
+							// TODO: Check how to get what font is currently used for UI
+							fontDescription := pango.FontDescriptionFromString(
+								"Adwaita Sans Bold " + strconv.Itoa(rectWidth/2),
+							)
+
+							var layoutWidth int32
+							var layoutHeight int32
+
+							layout := pango.NewLayout(pangoContext)
+							layout.SetFontDescription(fontDescription)
+							layout.SetText(colorLabel, -1)
+							layout.GetPixelSize(&layoutWidth, &layoutHeight)
+
+							// TODO: Switch between black and white depending on a background/text contrast
+							black := gdk.RGBA{
+								Red:   0.0,
+								Green: 0.0,
+								Blue:  0.0,
+								Alpha: 1.0,
+							}
+
+							centerX := x + (rectWidth-int(layoutWidth))/2
+							centerY := y + (rectHeight-int(layoutHeight))/2
+
+							snapshot.Save()
+
+							snapshot.Translate(
+								graphene.PointAlloc().Init(
+									float32(centerX),
+									float32(centerY),
+								),
+							)
+							snapshot.AppendLayout(layout, &black)
+
+							snapshot.Restore()
+						}
 					}
 				}
 
