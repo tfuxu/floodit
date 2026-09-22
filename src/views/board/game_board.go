@@ -145,7 +145,7 @@ func init() {
 						float32(rectWidth*boardCols),
 						float32(rectHeight*boardRows),
 					),
-					12.0,
+					max(float32(cubeSize) / 5.0, 8.0),
 				)
 
 				snapshot.PushRoundedClip(&roundedRect)
