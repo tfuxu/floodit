@@ -173,15 +173,15 @@ func init() {
 							return
 						}
 
-						snapshot.AppendColor(
-							&color,
-							graphene.RectAlloc().Init(
-								float32(x),
-								float32(y),
-								float32(rectWidth),
-								float32(rectHeight),
-							),
+						rect := graphene.RectAlloc().Init(
+							float32(x),
+							float32(y),
+							float32(rectWidth),
+							float32(rectHeight),
 						)
+						defer rect.Free()
+
+						snapshot.AppendColor(&color, rect)
 
 						if gb.showColorNumbers {
 							fontDescription := pango.FontDescriptionFromString(
