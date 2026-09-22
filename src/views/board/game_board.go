@@ -187,6 +187,7 @@ func init() {
 							fontDescription := pango.FontDescriptionFromString(
 								"Adwaita Sans Bold " + strconv.Itoa(rectWidth/2),
 							)
+							defer fontDescription.Free()
 
 							var layoutWidth int32
 							var layoutHeight int32
@@ -214,14 +215,14 @@ func init() {
 							centerX := x + (rectWidth-int(layoutWidth))/2
 							centerY := y + (rectHeight-int(layoutHeight))/2
 
-							snapshot.Save()
-
-							snapshot.Translate(
-								graphene.PointAlloc().Init(
-									float32(centerX),
-									float32(centerY),
-								),
+							centerPoint := graphene.PointAlloc().Init(
+								float32(centerX),
+								float32(centerY),
 							)
+							defer centerPoint.Free()
+
+							snapshot.Save()
+							snapshot.Translate(centerPoint)
 
 							// TODO: Add text color value to DefaultColors to remove this jank
 							if colorLabel == "1" || colorLabel == "5" || colorLabel == "6" {
