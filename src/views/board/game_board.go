@@ -100,26 +100,6 @@ func init() {
 				width := int(widget.GetWidth())
 				height := int(widget.GetHeight())
 
-				// TODO: Remove when done implementing
-				debugRect := graphene.RectAlloc().Init(
-					0.0,
-					0.0,
-					float32(width),
-					float32(height),
-				)
-				defer debugRect.Free()
-
-				black := gdk.RGBA{
-					Red: 0.0,
-					Green: 0.0,
-					Blue: 0.0,
-					Alpha: 1.0,
-				}
-
-				snapshot.AppendColor(
-					&black, debugRect,
-				)
-
 				boardMatrix := gb.board.Matrix
 				boardRows := gb.board.Rows
 				boardCols := gb.board.Columns
