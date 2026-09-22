@@ -74,6 +74,8 @@ func init() {
 
 			gb.SetPropertyWidthRequest(300)
 			gb.SetPropertyHeightRequest(300)
+			gb.SetHexpand(true)
+			gb.SetVexpand(true)
 
 			var pinner runtime.Pinner
 			pinner.Pin(gb)
@@ -98,16 +100,40 @@ func init() {
 				width := int(widget.GetWidth())
 				height := int(widget.GetHeight())
 
+				// TODO: Remove when done implementing
+				debugRect := graphene.RectAlloc().Init(
+					0.0,
+					0.0,
+					float32(width),
+					float32(height),
+				)
+				defer debugRect.Free()
+
+				black := gdk.RGBA{
+					Red: 0.0,
+					Green: 0.0,
+					Blue: 0.0,
+					Alpha: 1.0,
+				}
+
+				snapshot.AppendColor(
+					&black, debugRect,
+				)
+
 				boardMatrix := gb.board.Matrix
 				boardRows := gb.board.Rows
 				boardCols := gb.board.Columns
 
-				rectWidth := width / boardCols
-				rectHeight := height / boardRows
+				cubeSize := min(
+					width / boardCols,
+					height / boardRows,
+				)
+
+				rectWidth := cubeSize
+				rectHeight := cubeSize
+
 				xOffset := (width - rectWidth*boardCols) / 2
 				yOffset := (height - rectHeight*boardRows) / 2
-
-				pangoContext := widget.CreatePangoContext()
 
 				snapshot.Save()
 
@@ -158,7 +184,6 @@ func init() {
 						)
 
 						if gb.showColorNumbers {
-							// TODO: Check how to get what font is currently used for UI
 							fontDescription := pango.FontDescriptionFromString(
 								"Adwaita Sans Bold " + strconv.Itoa(rectWidth/2),
 							)
@@ -166,7 +191,9 @@ func init() {
 							var layoutWidth int32
 							var layoutHeight int32
 
-							layout := pango.NewLayout(pangoContext)
+							layout := pango.NewLayout(widget.GetPangoContext())
+							defer layout.Unref()
+
 							layout.SetFontDescription(fontDescription)
 							layout.SetText(colorLabel, -1)
 							layout.GetPixelSize(&layoutWidth, &layoutHeight)
