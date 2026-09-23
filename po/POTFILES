@@ -1,13 +1,13 @@
 data/io.github.tfuxu.floodit.metainfo.xml.in.in
 data/io.github.tfuxu.floodit.desktop.in.in
 data/io.github.tfuxu.floodit.gschema.xml.in
-data/ui/app_preferences_dialog.blp
 data/ui/color_keyboard.blp
 data/ui/custom_mode_page.blp
 data/ui/difficulty_page.blp
 data/ui/game_page.blp
 data/ui/game_rules_dialog.blp
 data/ui/main_window.blp
+data/ui/preferences_dialog.blp
 data/ui/result_page.blp
 data/ui/shortcuts_dialog.blp
 data/ui/starting_view.blp

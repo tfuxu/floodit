@@ -22,8 +22,8 @@ type MainWindow struct {
 	statusPage *adw.StatusPage
 	playButton *gtk.Button
 
-	gameRulesDialog      *GameRulesDialog
-	appPreferencesDialog *AppPreferencesDialog
+	gameRulesDialog   *GameRulesDialog
+	preferencesDialog *PreferencesDialog
 
 	startingView *StartingView
 	gamePage     *GamePage
@@ -78,7 +78,7 @@ func NewMainWindow(app *adw.Application, settings *gio.Settings) *MainWindow {
 	w.startingView = NewStartingView(&w, settings, &toastOverlay)
 	w.gamePage = NewGamePage(&w, settings, &toastOverlay)
 	w.resultPage = NewResultPage(&w, settings, &toastOverlay)
-	w.appPreferencesDialog = NewAppPreferencesDialog(&w, settings)
+	w.preferencesDialog = NewPreferencesDialog(&w, settings)
 
 	statusPage.SetIconName(constants.AppID)
 
@@ -190,7 +190,7 @@ func (w *MainWindow) presentRulesDialog() {
 }
 
 func (w *MainWindow) showPreferences() {
-	w.appPreferencesDialog.Present(&w.Widget)
+	w.preferencesDialog.Present(&w.Widget)
 }
 
 func (w *MainWindow) onPlayClicked() {
