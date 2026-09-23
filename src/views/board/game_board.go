@@ -74,6 +74,8 @@ func init() {
 
 			gb.SetPropertyWidthRequest(300)
 			gb.SetPropertyHeightRequest(300)
+			gb.SetHexpand(true)
+			gb.SetVexpand(true)
 
 			var pinner runtime.Pinner
 			pinner.Pin(gb)
@@ -102,12 +104,16 @@ func init() {
 				boardRows := gb.board.Rows
 				boardCols := gb.board.Columns
 
-				rectWidth := width / boardCols
-				rectHeight := height / boardRows
-				xOffset := (width - rectWidth*boardCols) / 2
-				yOffset := (height - rectHeight*boardRows) / 2
+				cubeSize := min(
+					width/boardCols,
+					height/boardRows,
+				)
 
-				pangoContext := widget.CreatePangoContext()
+				cubeWidth := cubeSize
+				cubeHeight := cubeSize
+
+				xOffset := (width - cubeWidth*boardCols) / 2
+				yOffset := (height - cubeHeight*boardRows) / 2
 
 				snapshot.Save()
 
@@ -116,18 +122,18 @@ func init() {
 					graphene.RectAlloc().Init(
 						float32(xOffset),
 						float32(yOffset),
-						float32(rectWidth*boardCols),
-						float32(rectHeight*boardRows),
+						float32(cubeWidth*boardCols),
+						float32(cubeHeight*boardRows),
 					),
-					12.0,
+					max(float32(cubeSize)/5.0, 8.0),
 				)
 
 				snapshot.PushRoundedClip(&roundedRect)
 
 				for row := 0; row < boardRows; row++ {
 					for col := 0; col < boardCols; col++ {
-						x := rectWidth*col + xOffset
-						y := rectHeight*row + yOffset
+						x := cubeWidth*col + xOffset
+						y := cubeHeight*row + yOffset
 						var hexCode string
 						var colorLabel string
 
@@ -147,26 +153,28 @@ func init() {
 							return
 						}
 
-						snapshot.AppendColor(
-							&color,
-							graphene.RectAlloc().Init(
-								float32(x),
-								float32(y),
-								float32(rectWidth),
-								float32(rectHeight),
-							),
+						cube := graphene.RectAlloc().Init(
+							float32(x),
+							float32(y),
+							float32(cubeWidth),
+							float32(cubeHeight),
 						)
+						defer cube.Free()
+
+						snapshot.AppendColor(&color, cube)
 
 						if gb.showColorNumbers {
-							// TODO: Check how to get what font is currently used for UI
 							fontDescription := pango.FontDescriptionFromString(
-								"Adwaita Sans Bold " + strconv.Itoa(rectWidth/2),
+								"Adwaita Sans Bold " + strconv.Itoa(cubeWidth/2),
 							)
+							defer fontDescription.Free()
 
 							var layoutWidth int32
 							var layoutHeight int32
 
-							layout := pango.NewLayout(pangoContext)
+							layout := pango.NewLayout(widget.GetPangoContext())
+							defer layout.Unref()
+
 							layout.SetFontDescription(fontDescription)
 							layout.SetText(colorLabel, -1)
 							layout.GetPixelSize(&layoutWidth, &layoutHeight)
@@ -184,17 +192,17 @@ func init() {
 								Alpha: 1.0,
 							}
 
-							centerX := x + (rectWidth-int(layoutWidth))/2
-							centerY := y + (rectHeight-int(layoutHeight))/2
+							centerX := x + (cubeWidth-int(layoutWidth))/2
+							centerY := y + (cubeHeight-int(layoutHeight))/2
+
+							centerPoint := graphene.PointAlloc().Init(
+								float32(centerX),
+								float32(centerY),
+							)
+							defer centerPoint.Free()
 
 							snapshot.Save()
-
-							snapshot.Translate(
-								graphene.PointAlloc().Init(
-									float32(centerX),
-									float32(centerY),
-								),
-							)
+							snapshot.Translate(centerPoint)
 
 							// TODO: Add text color value to DefaultColors to remove this jank
 							if colorLabel == "1" || colorLabel == "5" || colorLabel == "6" {
