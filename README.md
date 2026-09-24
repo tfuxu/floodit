@@ -63,12 +63,12 @@ This is a little bit more advanced way of building Flatpak packages, but if you 
 #### Prerequisites:
 
 - Flatpak Builder `flatpak-builder`
-- GNOME SDK runtime `org.gnome.Sdk//50`
-- GNOME Platform runtime `org.gnome.Platform//50`
+- GNOME SDK runtime `org.gnome.Sdk//51`
+- GNOME Platform runtime `org.gnome.Platform//51`
 
 Install required runtimes:
 ```sh
-flatpak install org.gnome.Sdk//50 org.gnome.Platform//50
+flatpak install org.gnome.Sdk//51 org.gnome.Platform//51
 ```
 
 #### Building Instructions:
