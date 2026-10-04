@@ -1,8 +1,8 @@
 package keyboard
 
 import (
-	"strconv"
 	"log/slog"
+	"strconv"
 
 	"github.com/tfuxu/floodit/src/backend/utils"
 	"github.com/tfuxu/floodit/src/constants"
@@ -42,8 +42,8 @@ func NewColorKeyboard(settings *gio.Settings, colorPalette [][2]string) *ColorKe
 	defer rowSecond.Unref()
 
 	ck := ColorKeyboard{
-		Box:         &keyboard,
-		settings:    settings,
+		Box:      &keyboard,
+		settings: settings,
 
 		buttonStore: make([]*widgets.ColorButton, len(colorPalette)),
 

@@ -24,7 +24,6 @@ var gTypeGameBoard gobject.Type
 
 type GameBoard struct {
 	gtk.Widget
-
 	settings *gio.Settings
 
 	board *backend.Board
