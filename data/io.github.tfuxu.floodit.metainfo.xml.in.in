@@ -24,12 +24,15 @@
   <screenshots>
     <screenshot type="default">
       <image type="source">https://raw.githubusercontent.com/tfuxu/floodit/master/data/screenshots/screenshot-3.png</image>
+      <caption>Playing on "Normal" difficulty</caption>
     </screenshot>
     <screenshot>
       <image type="source">https://raw.githubusercontent.com/tfuxu/floodit/master/data/screenshots/screenshot-2.png</image>
+      <caption>Game difficulty selection page</caption>
     </screenshot>
     <screenshot>
       <image type="source">https://raw.githubusercontent.com/tfuxu/floodit/master/data/screenshots/screenshot-4.png</image>
+      <caption>Winning page</caption>
     </screenshot>
   </screenshots>
 
