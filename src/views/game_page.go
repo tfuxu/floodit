@@ -30,8 +30,9 @@ type GamePage struct {
 	toastOverlay       *adw.ToastOverlay
 	gameInfoTitle      *adw.WindowTitle
 
-	gameBox   *gtk.Box
-	gameBoard *board.GameBoard
+	gameBox    *gtk.Box
+	gameBoard  *board.GameBoard
+	boardClamp *adw.Clamp
 }
 
 func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.ToastOverlay) *GamePage {
@@ -53,6 +54,10 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 	builder.GetObject("game_box").Cast(&gameBox)
 	defer gameBox.Unref()
 
+	var boardClamp adw.Clamp
+	builder.GetObject("board_clamp").Cast(&boardClamp)
+	defer boardClamp.Unref()
+
 	defaultBoard := backend.DefaultBoard()
 
 	gp := GamePage{
@@ -66,14 +71,15 @@ func NewGamePage(parent *MainWindow, settings *gio.Settings, toastOverlay *adw.T
 		toastOverlay:       toastOverlay,
 		gameInfoTitle:      &gameInfoTitle,
 
-		gameBox: &gameBox,
+		gameBox:    &gameBox,
+		boardClamp: &boardClamp,
 	}
 
 	gameBoard := board.NewGameBoard(
 		&gp.board,
 		gp.settings,
 	)
-	gameBox.Append(&gameBoard.Widget)
+	boardClamp.SetChild(&gameBoard.Widget)
 	gp.gameBoard = &gameBoard
 
 	colorKeyboard := keyboard.NewColorKeyboard(settings, backend.DefaultColors)
