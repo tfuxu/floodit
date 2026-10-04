@@ -1,12 +1,12 @@
 package keyboard
 
 import (
-	"fmt"
 	"strconv"
-	"strings"
+	"log/slog"
 
 	"github.com/tfuxu/floodit/src/backend/utils"
 	"github.com/tfuxu/floodit/src/constants"
+	"github.com/tfuxu/floodit/src/widgets"
 
 	"codeberg.org/puregotk/puregotk/v4/gdk"
 	"codeberg.org/puregotk/puregotk/v4/gio"
@@ -16,10 +16,9 @@ import (
 
 type ColorKeyboard struct {
 	*gtk.Box
-	settings    *gio.Settings
-	cssProvider *gtk.CssProvider
+	settings *gio.Settings
 
-	buttonStore []*gtk.Button
+	buttonStore []*widgets.ColorButton
 
 	rowFirst  *gtk.Box
 	rowSecond *gtk.Box
@@ -42,20 +41,11 @@ func NewColorKeyboard(settings *gio.Settings, colorPalette [][2]string) *ColorKe
 	builder.GetObject("row_second").Cast(&rowSecond)
 	defer rowSecond.Unref()
 
-	cssProvider := gtk.NewCssProvider()
-
-	gtk.StyleContextAddProviderForDisplay(
-		gdk.DisplayGetDefault(),
-		cssProvider,
-		uint32(gtk.STYLE_PROVIDER_PRIORITY_USER+1),
-	)
-
 	ck := ColorKeyboard{
 		Box:         &keyboard,
 		settings:    settings,
-		cssProvider: cssProvider,
 
-		buttonStore: make([]*gtk.Button, len(colorPalette)),
+		buttonStore: make([]*widgets.ColorButton, len(colorPalette)),
 
 		rowFirst:  &rowFirst,
 		rowSecond: &rowSecond,
@@ -76,8 +66,6 @@ func (ck *ColorKeyboard) setupSignals() {
 }
 
 func (ck *ColorKeyboard) setupButtons(colorPalette [][2]string) {
-	var buttonColors []string
-
 	for i, color := range colorPalette {
 		colorName := color[0]
 		colorHex := color[1]
@@ -96,19 +84,20 @@ func (ck *ColorKeyboard) setupButtons(colorPalette [][2]string) {
 			label.SetAttributes(pango.AttrListFromString("foreground black"))
 		}
 
-		button := gtk.NewButton()
+		color := gdk.RGBA{}
+		if ok := color.Parse(colorHex); !ok {
+			// TODO: Show user some feedback in UI when this happens
+			slog.Error("Failed to convert hex values to Cairo compatible RGB channels.", "colorName", colorName, "colorHex", colorHex)
+		}
+
+		button := widgets.NewColorButton(&color)
 		button.SetChild(&label.Widget)
 		button.SetTooltipText(utils.ToSentenceString(colorName))
-		buttonColors = append(buttonColors, fmt.Sprintf(".%s-button { background-color: %s; }", colorName, colorHex))
-		button.SetCssClasses([]string{"card", "circular", "color-button", fmt.Sprintf("%s-button", colorName)})
 		button.SetActionName("game.select-color")
 		button.SetActionTarget("s", colorName)
 
 		ck.buttonStore[i] = button
 	}
-
-	ckCSS := strings.Join(buttonColors, " ")
-	ck.cssProvider.LoadFromString(ckCSS)
 
 	colorNo := 1
 	currentRow := ck.rowFirst
