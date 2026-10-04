@@ -24,7 +24,6 @@ var gTypeGameBoard gobject.Type
 
 type GameBoard struct {
 	gtk.Widget
-
 	settings *gio.Settings
 
 	board *backend.Board
@@ -149,7 +148,7 @@ func init() {
 						color := gdk.RGBA{}
 						if ok := color.Parse(hexCode); !ok {
 							// TODO: Show user some feedback in UI when this happens
-							slog.Error("Failed to convert hex values to Cairo compatible RGB channels.")
+							slog.Error("Failed to convert hex values to Cairo compatible RGB channels.", "colorLabel", colorLabel, "hexCode", hexCode)
 							return
 						}
 

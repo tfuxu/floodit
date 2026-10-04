@@ -34,6 +34,12 @@ Adw.Bin game_page {
       margin-bottom: 20;
       margin-start: 20;
       margin-end: 20;
+
+      Adw.Clamp board_clamp {
+        orientation: vertical;
+        maximum-size: 1000;
+        tightening-threshold: 800;
+      }
     };
   };
 }
