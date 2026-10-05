@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: floodit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-10 14:12+0200\n"
+"POT-Creation-Date: 2026-10-05 15:04+0200\n"
 "PO-Revision-Date: 2025-02-02 14:00-0300\n"
 "Last-Translator: Matheus Ribeiro <eng.rodrigues@proton.me>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -39,27 +39,22 @@ msgstr ""
 "jogo de estratégia, ainda que viciante, onde você precisa inundar o "
 "tabuleiro eficientemente!"
 
+#: data/io.github.tfuxu.floodit.metainfo.xml.in.in:27
+msgid "Playing on \"Normal\" difficulty"
+msgstr ""
+
+#: data/io.github.tfuxu.floodit.metainfo.xml.in.in:31
+msgid "Game difficulty selection page"
+msgstr ""
+
+#: data/io.github.tfuxu.floodit.metainfo.xml.in.in:35
+msgid "Winning page"
+msgstr ""
+
 #. Translators: These are search terms to find this application. Keep the English keywords and append your own keywords in your language. Do NOT translate or localize the semicolons. The list MUST also end with a semicolon.
 #: data/io.github.tfuxu.floodit.desktop.in.in:11
 msgid "game;strategy;flood;flood-it;"
 msgstr "game;strategy;flood;flood-it;jogo;estratégia;tabuleiro;"
-
-#: data/ui/app_preferences_dialog.blp:5 data/ui/game_page.blp:65
-#: data/ui/result_page.blp:111
-msgid "Preferences"
-msgstr ""
-
-#: data/ui/app_preferences_dialog.blp:11
-msgid "Accessibility"
-msgstr ""
-
-#: data/ui/app_preferences_dialog.blp:14
-msgid "Show Numbers on Colors"
-msgstr ""
-
-#: data/ui/app_preferences_dialog.blp:15
-msgid "Shows color indicators on cubes and color keyboard"
-msgstr ""
 
 #: data/ui/custom_mode_page.blp:5 data/ui/custom_mode_page.blp:21
 msgid "Custom Mode"
@@ -139,25 +134,30 @@ msgstr "Defina o tamanho do tabuleiro e o limite de movimentos"
 msgid "Main Menu"
 msgstr "Menu Principal"
 
-#: data/ui/game_page.blp:46 data/ui/result_page.blp:92
+#: data/ui/game_page.blp:50 data/ui/result_page.blp:92
 msgid "New Game"
 msgstr "Novo Jogo"
 
-#: data/ui/game_page.blp:51 data/ui/result_page.blp:97
+#: data/ui/game_page.blp:55 data/ui/result_page.blp:97
 #, fuzzy
 msgid "Play Again"
 msgstr "_Jogar novamente"
 
-#: data/ui/game_page.blp:58 data/ui/game_rules_dialog.blp:5
+#: data/ui/game_page.blp:62 data/ui/game_rules_dialog.blp:5
 #: data/ui/main_window.blp:59 data/ui/result_page.blp:104
 msgid "Game Rules"
 msgstr ""
 
-#: data/ui/game_page.blp:70 data/ui/result_page.blp:116
+#: data/ui/game_page.blp:69 data/ui/preferences_dialog.blp:5
+#: data/ui/result_page.blp:111
+msgid "Preferences"
+msgstr ""
+
+#: data/ui/game_page.blp:74 data/ui/result_page.blp:116
 msgid "Keyboard Shortcuts"
 msgstr "Atalhos de Teclado"
 
-#: data/ui/game_page.blp:75 data/ui/main_window.blp:25
+#: data/ui/game_page.blp:79 data/ui/main_window.blp:25
 #: data/ui/result_page.blp:121
 msgid "About Flood It"
 msgstr "Sobre Flood It"
@@ -186,6 +186,18 @@ msgstr ""
 
 #: data/ui/game_rules_dialog.blp:52
 msgid "That’s all. Good luck!"
+msgstr ""
+
+#: data/ui/preferences_dialog.blp:11
+msgid "Accessibility"
+msgstr ""
+
+#: data/ui/preferences_dialog.blp:14
+msgid "Show Numbers on Colors"
+msgstr ""
+
+#: data/ui/preferences_dialog.blp:15
+msgid "Shows color indicators on cubes and color keyboard"
 msgstr ""
 
 #. Translators: The prefixed underscore is used to indicate a mnemonic. Do NOT remove it.
@@ -262,7 +274,7 @@ msgid "Copyright © 2026 tfuxu"
 msgstr ""
 
 #. TRANSLATORS: DO NOT translate the '%d' part of the text.
-#: src/views/game_page.go:100 src/views/game_page.go:159
+#: src/views/game_page.go:105 src/views/game_page.go:164
 #, go-format
 msgid "Steps Left: %d"
 msgstr ""

@@ -24,12 +24,15 @@
   <screenshots>
     <screenshot type="default">
       <image type="source">https://raw.githubusercontent.com/tfuxu/floodit/master/data/screenshots/screenshot-3.png</image>
+      <caption>Playing on "Normal" difficulty</caption>
     </screenshot>
     <screenshot>
       <image type="source">https://raw.githubusercontent.com/tfuxu/floodit/master/data/screenshots/screenshot-2.png</image>
+      <caption>Game difficulty selection page</caption>
     </screenshot>
     <screenshot>
       <image type="source">https://raw.githubusercontent.com/tfuxu/floodit/master/data/screenshots/screenshot-4.png</image>
+      <caption>Winning page</caption>
     </screenshot>
   </screenshots>
 
@@ -60,6 +63,20 @@
   </custom>
 
   <releases>
+    <release version="3.0.0" date="2026-10-05">
+      <description translate="no">
+        <p>
+          This release makes the game board resizable, allowing users to better see the board from afar, and adds number indicators on colors, togglable in the preferences dialog.
+        </p>
+
+        <p>Changes:</p>
+        <ul>
+          <li>Modified game board to resize with window</li>
+          <li>Added number indicators on colors toggable via preferences</li>
+          <li>Improved color button visibility while in focus</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.0.0" date="2026-04-01">
       <description translate="no">
         <p>
